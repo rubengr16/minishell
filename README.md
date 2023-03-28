@@ -1,8 +1,8 @@
 # Minishell - As beautiful as a shell
 
 ## Allowed functions
-- *char \*readline (const char *prompt);*
-	>sdkjfhkjsdh
+- **char \*readline (const char \*prompt);**
+ sdkjfhkjsdh
 - rl_clear_history, rl_on_new_line,
 rl_replace_line, rl_redisplay, add_history,
 printf, malloc, free, write, access, open, read,
