@@ -4,9 +4,9 @@
 Install readline:  
 * Mac:  
 &emsp; Install brew:  
-> rm -rf $HOME/.brew && git clone --depth=1 https://github.com/Homebrew/brew $HOME/.brew && echo 'export PATH=$HOME/.brew/bin:$PATH' >> $HOME/.zshrc && source $HOME/.zshrc && brew update  
+`rm -rf $HOME/.brew && git clone --depth=1 https://github.com/Homebrew/brew $HOME/.brew && echo 'export PATH=$HOME/.brew/bin:$PATH' >> $HOME/.zshrc && source $HOME/.zshrc && brew update`  
 &emsp; Install Readline Library:  
-> brew install readline  
+`brew install readline`  
 
 
 ## Allowed functions
