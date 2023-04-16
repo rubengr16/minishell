@@ -13,7 +13,7 @@ Install readline:
 * Ubuntu/Debian:  
 &emsp; List every library name \*readline\*:  
 &emsp; `apt-cache search readline`  
-&emsp; Chose latest libreadline<$VERSION_NUMBER> and install Readline Library:  
+&emsp; Choose latest libreadline<$VERSION_NUMBER> and install Readline Library:  
 &emsp; `sudo apt-get install libreadline-dev libreadline<$VERSION_NUMBER>`  
 
 
