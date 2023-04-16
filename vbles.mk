@@ -6,7 +6,7 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/03/28 20:25:33 by rgallego         ###   ########.fr        #
+#    Updated: 2023/04/16 18:57:25 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,10 @@ RM		=			-rm -f
 
 CFLAGS	=			-Wall -Werror -Wextra -MD
 
-NAME	=			
+NAME	=			minishell
 
 INC_ALL	=			\
-					$(INC_DIR) \
+					$(INC_DIR)
+
+LIB_ALL = 			\
 					readline

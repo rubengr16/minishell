@@ -38,6 +38,4 @@ typedef struct s_pipe
 	struct s_cmd left;
 }t_pipe;
 
-// Ha venido ya mi hermano, so...
-
 #endif

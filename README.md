@@ -6,7 +6,10 @@ Install readline:
 &emsp; Install brew:  
 &emsp; `rm -rf $HOME/.brew && git clone --depth=1 https://github.com/Homebrew/brew $HOME/.brew && echo 'export PATH=$HOME/.brew/bin:$PATH' >> $HOME/.zshrc && source $HOME/.zshrc && brew update`  
 &emsp; Install Readline Library:  
-&emsp; `brew install readline`  
+&emsp; `brew install readline` 
+* Linux (Fedora tested): 
+&emsp; Install brew:  
+&emsp; `sudo dnf install readline-devel`  
 
 
 ## Allowed functions
