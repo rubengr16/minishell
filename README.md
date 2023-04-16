@@ -6,15 +6,20 @@ Install readline:
 &emsp; Install brew:  
 &emsp; `rm -rf $HOME/.brew && git clone --depth=1 https://github.com/Homebrew/brew $HOME/.brew && echo 'export PATH=$HOME/.brew/bin:$PATH' >> $HOME/.zshrc && source $HOME/.zshrc && brew update`  
 &emsp; Install Readline Library:  
-&emsp; `brew install readline` 
-* Linux (Fedora tested): 
-&emsp; Install brew:  
+&emsp; `brew install readline`  
+* Fedora:  
+&emsp; Install Readline Library:  
 &emsp; `sudo dnf install readline-devel`  
+* Ubuntu/Debian:  
+&emsp; List every library name \*readline\*:  
+&emsp; `apt-cache search readline`  
+&emsp; Chose latest libreadline<$VERSION_NUMBER> and install Readline Library:  
+&emsp; `sudo apt-get install libreadline-dev libreadline<$VERSION_NUMBER>`  
 
 
 ## Allowed functions
 - **char \*readline (const char \*prompt);**  
-&emsp; sdkjfhkjsdh
+&emsp; sdkjfhkjsdh  
 - rl_clear_history, rl_on_new_line,
 rl_replace_line, rl_redisplay, add_history,
 printf, malloc, free, write, access, open, read,
