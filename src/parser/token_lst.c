@@ -19,5 +19,6 @@ t_token	*new_token(char *str)
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
-	new_token.
+	new_token->token = str;
+	new_token->next = NULL; // ?
 }

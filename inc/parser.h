@@ -12,6 +12,14 @@
 
 # include <stdlib.h>
 
+/* ******************************* ENUM ******************************* */
+enum
+{
+	NORMAL = 1,
+	SIMPLE_QUOTES = 2,
+	DOUBLE_QUOTES = 3
+};
+
 /* ******************************* TOKEN LIST ******************************* */
 typedef struct s_token
 {
