@@ -1,11 +1,15 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "../inc/parser.h"
 
 int	main(/*int argc, char **argv, char **env*/)
 {
 	char	*line;
+	t_list	*list;
 
 	line = readline("minishell> ");
-	printf("%s", line);
+	list = tokenize(line);
+	print_list(list);
+	delete_list(list);
 }

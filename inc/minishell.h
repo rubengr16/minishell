@@ -8,34 +8,21 @@
 # include <dirent.h>
 # include <stdlib.h>
 # include <stdio.h>
-# include "libft.h"
+//# include "libft/libft.h"
 
 // Lista
-
+/*
 typedef struct s_node
 {
 
 }t_node;
 
-
-// Arbol
-
-typedef struct s_redirect
+typedef struct command
 {
-	struct s_pipe right;
-	struct s_redirect left;
-}t_redirect;
-
-typedef struct s_cmd
-{
-	struct s_pipe right;
-	struct s_redirect left;
-}t_cmd;
-
-typedef struct s_pipe
-{
-	struct s_pipe right;
-	struct s_cmd left;
-}t_pipe;
-
+	char	*name;
+	char	*path;
+	char	**redirectin;
+	char	**redirectout;
+};
+*/
 #endif

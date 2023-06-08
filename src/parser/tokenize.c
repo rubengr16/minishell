@@ -10,30 +10,66 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/parser.h"
+#include "../../inc/parser.h"
 
-int	changeStatus(char position, int state) // Comprueba si esta en comillas simples dobles o ningunas
+void changeStatus(char position, int *state, int *n_position) // Comprueba si esta en comillas simples dobles o ningunas
 {
-	if (position == '\'' && state == NORMAL)
-			state = SIMPLE_QUOTES;
-	else if (position == '\'' && state == SIMPLE_QUOTES)
-			state = NORMAL;	
-	if (position == '\"' && state == NORMAL)
-			state = DOUBLE_QUOTES;
-	else if (position == '\"' && state == DOUBLE_QUOTES)
-			state = NORMAL;
+	if (position == '\'' && *state == NORMAL)
+		*state = SINGLE_QUOTES;
+	else if (position == '\'' && *state == SINGLE_QUOTES)
+		*state = NORMAL;	
+	if (position == '\"' && *state == NORMAL)
+		*state = DOUBLE_QUOTES;
+	else if (position == '\"' && *state == DOUBLE_QUOTES)
+		*state = NORMAL;
+	if (position == '\"' || position == '\'')
+		*n_position = *n_position + 1;
 }
 
-int tokenize(char *line)
+/*
+unsigned int	getToken(char *line, unsigned int length, int *state)
 {
+	unsigned int	position;
+
+	position = length;
+	while (line[position] != ' ' || *state == NORMAL)
+	{
+		changeStatus(line[position], state, &position)
+		position++;
+	}
+	return (position);
+}
+*/
+t_list *tokenize(char *line)
+{
+	t_list *list;
+	t_token *token;
 	unsigned int	scan;	//Variable para iterar la linea
-	int				state;	
+	int				state;
+	unsigned int	aux; // Variable auxiliar para calcular el tamaño de las variables
 
 	scan = 0;
+	aux = 0;
 	state = NORMAL;
+	list = create_list();
 	while (line[scan])	// Recorremos la linea
 	{
-		changeStatus(line[scan], &state);
-		scan++;
+		if (line[scan] == ' ' && state == NORMAL) // omitimos espacios
+		{
+			scan++;
+			continue; //Esto esta permitido?
+		}
+		//changeStatus(line[scan], &state, &scan); // Cambiamos el estado cada
+		aux = scan;
+		while (line[aux] != ' ' && line[aux])
+			aux++;
+		token = new_token(line + scan, (aux - scan) + 1);
+		if(add_to_list(list, token))
+		{
+			delete_list(list);
+			return(NULL);
+		}
+		scan = aux;
 	}
+	return (list);
 }
