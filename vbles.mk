@@ -12,12 +12,20 @@
 
 SRC_DIR	=			src/
 
+PARSER_DIR		=	parser/
+
 INC_DIR	=			inc/
 
 MINISHELL	=		main.c
 
+PARSER		=		$(addprefix $(PARSER_DIR), \
+					token_lst.c \
+					tokenize.c \
+					)
+
 SRCS	= 			$(addprefix $(SRC_DIR), \
 					$(MINISHELL) \
+					$(PARSER) \
 					)
 
 OBJS	=			$(SRCS:.c=.o)
@@ -30,6 +38,8 @@ RM		=			-rm -f
 
 CFLAGS	=			-Wall -Werror -Wextra -MD
 
+LDFLAGS	=			$(LIBFTNAME)
+
 NAME	=			minishell
 
 INC_ALL	=			\
@@ -37,3 +47,7 @@ INC_ALL	=			\
 
 LIB_ALL = 			\
 					readline
+
+LIBFT	=			libft/
+
+LIBFTNAME	=		$(LIBFT)libft.a

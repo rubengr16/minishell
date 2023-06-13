@@ -93,4 +93,9 @@ t_list	*create_list()
 	if (!list)
 		return (NULL);
 	list->start = NULL;
+	/*
+		Just to avoid the error.
+		TODO: Revise function
+	*/
+	return (list);
 }
