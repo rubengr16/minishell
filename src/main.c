@@ -6,7 +6,7 @@
 int	main(/*int argc, char **argv, char **env*/)
 {
 	char	*line;
-	t_list	*list;
+	t_token_list	*list;
 
 	line = readline("minishell> ");
 	list = tokenize(line);

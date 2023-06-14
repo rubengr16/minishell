@@ -6,7 +6,7 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/04/16 18:57:25 by rgallego         ###   ########.fr        #
+#    Updated: 2023/06/15 00:33:52 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ LDFLAGS	=			$(LIBFTNAME)
 NAME	=			minishell
 
 INC_ALL	=			\
-					$(INC_DIR)
+					$(INC_DIR) \
+					$(LIBFT)$(INC_DIR)
 
 LIB_ALL = 			\
 					readline

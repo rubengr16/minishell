@@ -6,13 +6,19 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/04/16 19:16:24 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/15 00:35:26 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/parser.h"
+#include "parser.h"
 
-t_token	*new_token(char *str, unsigned int length)
+/**
+ * Creates a new token from str with the given size
+ * INPUT:	char *str, unsigned int size
+ * OUTPUT:	t_token *	:	!NULL	Token allocation is correct
+ * 							NULL	Something failed
+ */
+t_token	*new_token(char *str, unsigned int size)
 {
 	t_token			*new_token;
 	unsigned int	i;
@@ -21,13 +27,13 @@ t_token	*new_token(char *str, unsigned int length)
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
-	new_token->token = malloc(sizeof(char) * length);
+	new_token->token = malloc(sizeof(char) * size);
 	if (!new_token->token)
 	{
 		free(new_token);
 		return (NULL);
 	}
-	while (i < length)
+	while (i < size)
 	{
 		new_token->token[i] = str[i];
 		i++;
@@ -37,7 +43,14 @@ t_token	*new_token(char *str, unsigned int length)
 	return (new_token);
 }
 
-int	add_to_list(t_list *list, t_token *token) // Si todo funciona devuelve 0, si no 1
+/**
+ * Creates a new lnode and establishes its value to mvnt and its
+ * pointers
+ * INPUT:	t_token_list *list, t_token *token
+ * OUTPUT:	int	:	0	Fullfilled
+ * 					1	Failed
+ */
+int	add_to_list(t_token_list *list, t_token *token)
 {
 	if (token)
 	{
@@ -58,11 +71,17 @@ int	add_to_list(t_list *list, t_token *token) // Si todo funciona devuelve 0, si
 	return (1);
 }
 
-void	delete_list(t_list *list)
+/**
+ * Deletes a list
+ * INPUT:	t_token_list *list
+ * OUTPUT:	void
+ */
+void	delete_list(t_token_list *list)
 {
 	t_token	*aux;
 
-	while(aux)
+	aux = list->start;
+	while (list->start)
 	{
 		aux = aux->next;
 		free(list->start->token);
@@ -71,11 +90,12 @@ void	delete_list(t_list *list)
 	}
 }
 
-void	print_list(t_list *list)
+void	print_list(t_token_list *list)
 {
 	t_token	*aux;
-	int		i = 1;
+	int		i;
 
+	i = 1;
 	aux = list->start;
 	while (aux)
 	{
@@ -85,17 +105,19 @@ void	print_list(t_list *list)
 	}
 }
 
-t_list	*create_list()
+/**
+ * Creates an empty list with its values initialized to NULL
+ * INPUT:	void
+ * OUTPUT:	t_token_list *
+ */
+t_token_list	*create_list(void)
 {
-	t_list	*list;
+	t_token_list	*list;
 
-	list = malloc(sizeof(t_list));
+	list = malloc(sizeof(t_token_list));
 	if (!list)
 		return (NULL);
 	list->start = NULL;
-	/*
-		Just to avoid the error.
-		TODO: Revise function
-	*/
+	list->end = NULL;
 	return (list);
 }
