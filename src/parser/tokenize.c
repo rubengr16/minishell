@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/15 00:35:51 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/16 01:13:07 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,36 +40,49 @@ unsigned int	getToken(char *line, unsigned int length, int *state)
 	return (position);
 }
 */
+
+unsigned int	is_metacharacter(int i, char *line)
+{
+	if (0 < i && line[i - 1] == '\\')
+		return (NORMAL);
+	else if (line[i] == '<' || line[i] == '>' || line[i] == '|')
+		return (METACHARACTER);
+	else if (line[i] == '\'')
+		return (SINGLE_QUOTES);
+	else if (line[i] == '\"')
+		return (DOUBLE_QUOTES);
+	else
+		return (NORMAL);
+}
+
 t_token_list *tokenize(char *line)
 {
 	t_token_list *list;
 	t_token *token;
 	unsigned int	i;	//Variable para iterar la linea
-	unsigned int	aux; // Variable auxiliar para calcular el tamaño de las variables
+	unsigned int	start; // Variable startiliar para calcular el tamaño de las variables
 	enum e_state	state;
 
 	i = 0;
-	aux = 0;
-	state = NORMAL;
 	list = create_list();
+	if (!list)
+		return (NULL);
 	while (line[i])	// Recorremos la linea
 	{
-		if (line[i] == ' ' && state == NORMAL) // omitimos espacios
-		{
+		while (line[i] == ' ')
 			i++;
-			continue; //Esto esta permitido?
-		}
-		//changeStatus(line[i], &state, &i); // Cambiamos el estado cada
-		aux = i;
-		while (line[aux] != ' ' && line[aux])
-			aux++;
-		token = new_token(line + i, (aux - i) + 1);
+		//NOTE (Ruben): DEPRECATED?: changeStatus(line[i], &state, &i); // Cambiamos el estado cada
+		start = i;
+		state = is_metacharacter(i, line);
+		if (state != METACHARACTER)
+			while (line[i] && line[i] != (char)state)
+				i++;
+		token = new_token(&line[start], start - i, state);
 		if(add_to_list(list, token))
 		{
 			delete_list(list);
 			return(NULL);
 		}
-		i = aux;
 	}
 	return (list);
 }

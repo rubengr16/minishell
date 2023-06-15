@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/15 00:35:26 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/16 01:14:20 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 /**
  * Creates a new token from str with the given size
  * INPUT:	char *str, unsigned int size
- * OUTPUT:	t_token *	:	!NULL	Token allocation is correct
- * 							NULL	Something failed
+ * OUTPUT:	t_token *	:	NULL	Something failed
+ * 							!NULL	Token allocation is correct
+ * 							
  */
-t_token	*new_token(char *str, unsigned int size)
+t_token	*new_token(char *str, unsigned int size, enum e_state context)
 {
 	t_token			*new_token;
 	unsigned int	i;
@@ -27,18 +28,19 @@ t_token	*new_token(char *str, unsigned int size)
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
-	new_token->token = malloc(sizeof(char) * size);
+	new_token->token = malloc(sizeof(char) * (size + 1));
 	if (!new_token->token)
 	{
 		free(new_token);
 		return (NULL);
 	}
-	while (i < size)
+	while (str[i] && i < size)
 	{
 		new_token->token[i] = str[i];
 		i++;
 	}
 	new_token->token[i] = '\0';
+	new_token->context = context;
 	new_token->next = NULL;
 	return (new_token);
 }
@@ -47,27 +49,26 @@ t_token	*new_token(char *str, unsigned int size)
  * Creates a new lnode and establishes its value to mvnt and its
  * pointers
  * INPUT:	t_token_list *list, t_token *token
- * OUTPUT:	int	:	0	Fullfilled
- * 					1	Failed
+ * OUTPUT:	int	:	0	Failed
+ * 					1	Fullfilled
  */
 int	add_to_list(t_token_list *list, t_token *token)
 {
-	if (token)
+	if (!token)
 	{
-		if (!list->start)
-		{
-			list->start = token;
-			list->end = token;
-		}
-		else
-		{
-			list->end->next = token;
-			list->end = token;
-		}
+		write(2, "minishell: Allocation failed\n", 29);
 		return (0);
 	}
+	if (!list->start)
+	{
+		list->start = token;
+		list->end = token;
+	}
 	else
-		write(2, "minishell: Allocation failed\n", 29);
+	{
+		list->end->next = token;
+		list->end = token;
+	}
 	return (1);
 }
 
