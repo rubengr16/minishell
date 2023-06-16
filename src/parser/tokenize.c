@@ -6,11 +6,12 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/16 01:13:07 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/16 08:04:42 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include <unistd.h>
 
 void changeStatus(char position, int *state, int *n_position) // Comprueba si esta en comillas simples dobles o ningunas
 {
@@ -77,8 +78,8 @@ t_token_list *tokenize(char *line)
 		if (state != METACHARACTER)
 			while (line[i] && line[i] != (char)state)
 				i++;
-		token = new_token(&line[start], start - i, state);
-		if(add_to_list(list, token))
+		token = new_token(&line[start], i - start, state);
+		if(!add_to_list(list, token))
 		{
 			delete_list(list);
 			return(NULL);
