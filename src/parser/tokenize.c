@@ -6,11 +6,12 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/19 01:55:32 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/19 01:58:09 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+#include <unistd.h>
 
 unsigned int	is_metacharacter(char c)
 {
