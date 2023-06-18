@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/30 10:22:38 by socana-b          #+#    #+#             */
-/*   Updated: 2021/09/30 10:22:39 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/06/18 15:58:47 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	forge(char const *s, char c, char *m, int *j)
 	m[i] = '\0';
 }
 
-static void	*memfree(char **matrix, int	i)
+static void	*memfree(char **matrix, int i)
 {
 	while (i > -1)
 	{

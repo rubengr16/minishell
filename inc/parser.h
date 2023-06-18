@@ -6,13 +6,14 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:10:35 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/16 01:12:03 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/19 01:09:17 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
+# include <stdlib.h>	// getenv()
 # include "minishell.h"
 # include "libft.h"
 
@@ -20,6 +21,7 @@
 enum	e_state
 {
 	NORMAL,
+	SPACE_CHAR = ' ',
 	SINGLE_QUOTES = '\'',
 	DOUBLE_QUOTES = '\"',
 	METACHARACTER
@@ -29,7 +31,6 @@ enum	e_state
 typedef struct s_token
 {
 	char			*token;
-	enum e_state	context;
 	struct s_token	*next;
 }	t_token;
 
@@ -39,9 +40,15 @@ typedef struct s_token_list
 	t_token	*end;
 }	t_token_list;
 
-/* ***************************** FUNC DECLARATION ************************** */
+typedef struct s_env_vbles
+{
+	char			*value;
+	unsigned int	len;
+}	t_env_vbles;
 
-t_token			*new_token(char *str, unsigned int size, enum e_state context);
+/* ***************************** FUNC DECLARATION ************************** */
+t_token			*new_token(char *str, unsigned int size,
+	t_env_vbles **env_vbles);
 void			print_list(t_token_list *list);
 t_token_list	*tokenize(char *line);
 void			delete_list(t_token_list *list);

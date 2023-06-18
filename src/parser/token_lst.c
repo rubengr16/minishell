@@ -6,11 +6,34 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/16 01:14:20 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/19 01:46:43 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+unsigned int	copy_env_vbles(char *token, unsigned int *j,
+	unsigned int *k, t_env_vbles **env_vbles)
+{
+	unsigned int i;
+
+	if (!env_vbles)
+		return (0);
+	i = 0;
+	while (env_vbles[*k]->value[i])
+	{
+		token[*j] = env_vbles[*k]->value[i];
+		(*j)++;
+		i++;
+	}
+	i = env_vbles[*k]->len;
+	free(env_vbles[*k]->value);
+	free(env_vbles[*k]);
+	(*k)++;
+	if (!env_vbles[*k])
+		free(env_vbles);
+	return (i);
+}
 
 /**
  * Creates a new token from str with the given size
@@ -19,28 +42,30 @@
  * 							!NULL	Token allocation is correct
  * 							
  */
-t_token	*new_token(char *str, unsigned int size, enum e_state context)
+t_token	*new_token(char *str, unsigned int size, t_env_vbles **env_vbles)
 {
 	t_token			*new_token;
 	unsigned int	i;
+	unsigned int	j;
+	unsigned int	k;
 
 	i = 0;
+	j = 0;
+	k = 0;
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
 	new_token->token = malloc(sizeof(char) * (size + 1));
 	if (!new_token->token)
-	{
-		free(new_token);
 		return (NULL);
-	}
 	while (str[i] && i < size)
 	{
-		new_token->token[i] = str[i];
-		i++;
+		if (str[i] == '$')
+			i = i + copy_env_vbles(new_token->token, &j, &k, env_vbles) + 1;
+		else if (str[i] != '\'' && str[i] != '\"' )
+			new_token->token[j++] = str[i++];
 	}
-	new_token->token[i] = '\0';
-	new_token->context = context;
+	new_token->token[j] = '\0';
 	new_token->next = NULL;
 	return (new_token);
 }
@@ -81,6 +106,8 @@ void	delete_list(t_token_list *list)
 {
 	t_token	*aux;
 
+	if (!list)
+		return ;
 	aux = list->start;
 	while (list->start)
 	{
@@ -97,6 +124,8 @@ void	print_list(t_token_list *list)
 	int		i;
 
 	i = 1;
+	if (!list)
+		return ;
 	aux = list->start;
 	while (aux)
 	{

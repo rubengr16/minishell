@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include "../inc/parser.h"
+#include "parser.h"
 
 int	main(/*int argc, char **argv, char **env*/)
 {
