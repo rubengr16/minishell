@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/19 01:46:43 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:33:49 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,14 @@ t_token	*new_token(char *str, unsigned int size, t_env_vbles **env_vbles)
 	new_token->token = malloc(sizeof(char) * (size + 1));
 	if (!new_token->token)
 		return (NULL);
-	while (str[i] && i < size)
+	while (str[i] && j < size)
 	{
 		if (str[i] == '$')
 			i = i + copy_env_vbles(new_token->token, &j, &k, env_vbles) + 1;
 		else if (str[i] != '\'' && str[i] != '\"' )
 			new_token->token[j++] = str[i++];
+		else
+			i++;
 	}
 	new_token->token[j] = '\0';
 	new_token->next = NULL;

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/19 01:58:09 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/19 10:32:46 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,8 @@ int	expand(char *line, unsigned int *i, int *adjust_size,
 	return (add_vble(env_vbles, vble));
 }
 
-void	manage_quotes(enum e_state *state, unsigned int *i,
-	int *adjust_size, char c)
+void	manage_quotes(enum e_state *state, int *adjust_size, char c)
 {
-	(*i)++;
 	(*adjust_size)++;
 	if (*state != NORMAL)
 		*state = NORMAL;
@@ -114,7 +112,7 @@ t_token	*get_token(char *line, unsigned int *i, enum e_state state)
 			if (!expand(line, i, &adjust_size, &env_vbles))
 				return (NULL);
 		if (line[*i] == '\'' || line[*i] =='\"')
-			manage_quotes(&state, i, &adjust_size, line[*i]);
+			manage_quotes(&state, &adjust_size, line[*i]);
 		(*i)++;
 	}
 	if (state != NORMAL)
