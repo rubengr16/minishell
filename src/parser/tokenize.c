@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/19 10:32:46 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/19 17:21:01 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,23 @@ int	add_vble(t_env_vbles ***env_vble, t_env_vbles	*vble)
 	if (!env_vble)
 		return (0);
 	i = 0;
-	while (aux_env[i])
+	if (aux_env)
 	{
-		*env_vble[i] = aux_env[i];
-		i++;
+		while (aux_env[i])
+		{
+			*env_vble[i] = aux_env[i];
+			i++;
+		}
 	}
-	*env_vble[i] = vble;
-	*env_vble[i + 1] = NULL;
+	(*env_vble)[i] = vble;
+	(*env_vble)[i + 1] = NULL;
 	i = 0;
-	while (aux_env[i])
-		free(aux_env[i++]);
-	free(*aux_env);
+	if (aux_env)
+	{
+		while (aux_env[i])
+			free(aux_env[i++]);
+		free(*aux_env);
+	}
 	return (1);
 }
 
@@ -69,16 +75,17 @@ int	expand(char *line, unsigned int *i, int *adjust_size,
 	while (line[*i + vble->len] && line[*i + vble->len] != ' '
 		&& line[*i + vble->len] != '\"')
 		vble->len++;
-	*adjust_size += vble->len;
 	name = malloc(sizeof(char) * (vble->len + 1));
 	if (!name)
 		return (0);
 	ft_strlcpy(name, &line[*i], vble->len + 1);
-	vble->value = getenv(name);
+	vble->value = ft_strdup(getenv(name));
 	if (!vble->value)
 		vble->value = name;
 	else
 		free(name);
+	*i += vble->len;
+	*adjust_size -= vble->len;
 	return (add_vble(env_vbles, vble));
 }
 
@@ -134,6 +141,7 @@ t_token_list	*tokenize(char *line)
 		return (NULL);
 	while (line[i])
 	{
+
 		while (line[i] == ' ')
 			i++;
 		state = is_metacharacter(line[i]);

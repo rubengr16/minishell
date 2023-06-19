@@ -6,32 +6,35 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/19 10:33:49 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/19 17:36:19 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
 unsigned int	copy_env_vbles(char *token, unsigned int *j,
-	unsigned int *k, t_env_vbles **env_vbles)
+	unsigned int *k, t_env_vbles ***env_vbles)
 {
 	unsigned int i;
 
-	if (!env_vbles)
+	if (!*env_vbles)
 		return (0);
 	i = 0;
-	while (env_vbles[*k]->value[i])
+	while ((*env_vbles)[*k]->value[i])
 	{
-		token[*j] = env_vbles[*k]->value[i];
+		token[*j] = (*env_vbles)[*k]->value[i];
 		(*j)++;
 		i++;
 	}
-	i = env_vbles[*k]->len;
-	free(env_vbles[*k]->value);
-	free(env_vbles[*k]);
+	i = (*env_vbles)[*k]->len;
+	free((*env_vbles)[*k]->value);
+	free((*env_vbles)[*k]);
 	(*k)++;
-	if (!env_vbles[*k])
-		free(env_vbles);
+	if (!(*env_vbles)[*k])
+	{
+		free(*env_vbles);
+		*env_vbles = NULL;
+	}
 	return (i);
 }
 
@@ -45,6 +48,7 @@ unsigned int	copy_env_vbles(char *token, unsigned int *j,
 t_token	*new_token(char *str, unsigned int size, t_env_vbles **env_vbles)
 {
 	t_token			*new_token;
+	unsigned short	single_quotes;
 	unsigned int	i;
 	unsigned int	j;
 	unsigned int	k;
@@ -58,13 +62,16 @@ t_token	*new_token(char *str, unsigned int size, t_env_vbles **env_vbles)
 	new_token->token = malloc(sizeof(char) * (size + 1));
 	if (!new_token->token)
 		return (NULL);
+	single_quotes = 0;
 	while (str[i] && j < size)
 	{
-		if (str[i] == '$')
-			i = i + copy_env_vbles(new_token->token, &j, &k, env_vbles) + 1;
-		else if (str[i] != '\'' && str[i] != '\"' )
+		if (str[i] == '$' && !single_quotes)
+			i = i + copy_env_vbles(new_token->token, &j, &k, &env_vbles) + 1;
+		else if (str[i] != '\'' && str[i] != '\"')
 			new_token->token[j++] = str[i++];
-		else
+		else if (str[i] == '\'')
+			single_quotes = !single_quotes;
+		if (str[i] == '\'' || str[i] == '\"')
 			i++;
 	}
 	new_token->token[j] = '\0';
