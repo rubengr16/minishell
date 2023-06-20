@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:10:35 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/20 02:20:37 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/20 09:52:26 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ t_token_list	*tokenize(char *line);
 void			delete_list(t_token_list *list);
 int				add_to_list(t_token_list *list, t_token *token);
 t_token_list	*create_list(void);
+unsigned int	is_metachar(char c);
 
 #endif
