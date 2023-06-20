@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/19 17:36:19 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/20 02:16:34 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_token	*new_token(char *str, unsigned int size, t_env_vbles **env_vbles)
 			i = i + copy_env_vbles(new_token->token, &j, &k, &env_vbles) + 1;
 		else if (str[i] != '\'' && str[i] != '\"')
 			new_token->token[j++] = str[i++];
-		else if (str[i] == '\'')
+		if (str[i] == '\'')
 			single_quotes = !single_quotes;
 		if (str[i] == '\'' || str[i] == '\"')
 			i++;

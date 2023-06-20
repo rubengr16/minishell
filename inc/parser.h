@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:10:35 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/19 17:29:58 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/20 02:20:37 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ enum	e_state
 	SPACE_CHAR = ' ',
 	SINGLE_QUOTES = '\'',
 	DOUBLE_QUOTES = '\"',
-	METACHARACTER
+	METACHAR
 };
 
 /* ******************************* TOKEN LIST ******************************* */
