@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/21 22:52:46 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:58:26 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	manage_quotes(enum e_state *state, unsigned int *i, unsigned int *adjust_si
 		*state = DOUBLE_QUOTES;
 }
 
-t_token	*get_token(char *line, unsigned int *i, enum e_state original_state)
+t_token	*get_token(char **line, unsigned int *i, enum e_state original_state)
 {
 	enum e_state	state;
 	unsigned int	start;
@@ -58,16 +58,16 @@ t_token	*get_token(char *line, unsigned int *i, enum e_state original_state)
 			if (!expand(line, i,  state))
 				return (NULL);
 		}
-		else if ((state == NORMAL && (line[*i] == '\'' || line[*i] =='\"'))
-			|| (state == SINGLE_QUOTES && line[*i] == (char)SINGLE_QUOTES)
-			|| (state == DOUBLE_QUOTES && line[*i] == (char)DOUBLE_QUOTES))
-			manage_quotes(&state, i, &adjust_size, line[*i]);
+		else if ((state == NORMAL && ((*line)[*i] == '\'' || (*line)[*i] =='\"'))
+			|| (state == SINGLE_QUOTES && (*line)[*i] == (char)SINGLE_QUOTES)
+			|| (state == DOUBLE_QUOTES && (*line)[*i] == (char)DOUBLE_QUOTES))
+			manage_quotes(&state, i, &adjust_size, (*line)[*i]);
 		else
 			(*i)++;
 	}
 	if (state != NORMAL)
 		return (NULL);
-	return (new_token(&line[start], *i - start - adjust_size, original_state));
+	return (new_token(&((*line)[start]), *i - start - adjust_size, original_state));
 }
 
 t_token_list	*tokenize(char **line)
