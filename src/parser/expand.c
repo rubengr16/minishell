@@ -37,12 +37,13 @@ static int	vble_cpy(char **line, char *vble, unsigned int *i,
 	ft_strlcpy(&aux[*i], vble, ft_strlen(vble) + 1);
 	ft_strlcpy(&aux[*i + ft_strlen(vble)], &((*line)[*i + 1 + name_len]),
 		ft_strlen(&((*line)[*i + 1 + name_len])) + 1);
-	free(line);
+	free(*line);
+	//write(2, "Hola\n", 5);
 	*line = aux;
 	*i = *i + ft_strlen(vble);
 	return (1);
 }
-
+//echo'$SHLVL'="$SHLVL"=$SHLVL>
 int	expand(char **line, unsigned int *i, enum e_state state)
 {
 	char			*aux;

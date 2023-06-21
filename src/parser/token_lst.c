@@ -19,10 +19,14 @@
  * 							!NULL	Token allocation is correct
  * 							
  */
-t_token	*new_token(char *str, unsigned int size)
+t_token	*new_token(char *str, unsigned int size, enum e_state state)
 {
 	t_token			*new_token;
+	unsigned int	i;
+	unsigned int	j;
 
+	i = 0;
+	j = 0;
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
@@ -32,7 +36,24 @@ t_token	*new_token(char *str, unsigned int size)
 		free(new_token);
 		return (NULL);
 	}
-	ft_strlcpy(new_token->token, str, size + 1);
+	while (str[i] && j < size)
+	{
+		if ((str[i] != '\'' && str[i] != '\"')
+			|| (state == SINGLE_QUOTES && str[i] == '\"')
+			|| (state == DOUBLE_QUOTES && str[i] == '\''))
+			new_token->token[j++] = str[i++];
+		else if (str[i] == '\'' || str[i] == '\"')
+		{
+			if ((str[i] == (char)SINGLE_QUOTES && state == SINGLE_QUOTES) || (str[i] == (char)DOUBLE_QUOTES && state == DOUBLE_QUOTES))
+				state = NORMAL;
+			else if (str[i] == (char)SINGLE_QUOTES && state == NORMAL)
+				state = SINGLE_QUOTES;
+			else if (str[i] == (char)SINGLE_QUOTES && state == NORMAL)
+				state = DOUBLE_QUOTES;
+			i++;
+		}
+	}
+	new_token->token[j] = '\0';
 	new_token->next = NULL;
 	return (new_token);
 }
