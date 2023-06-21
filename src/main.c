@@ -9,7 +9,7 @@ int	main(/*int argc, char **argv, char **env*/)
 	t_token_list	*list;
 
 	line = readline("minishell> ");
-	list = tokenize(line);
+	list = tokenize(&line);
 	print_list(list);
 	delete_list(list);
 }

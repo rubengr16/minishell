@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:10:35 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/21 20:31:12 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:44:03 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_env_vbles
 /* ***************************** FUNC DECLARATION ************************** */
 t_token			*new_token(char *str, unsigned int size);
 void			print_list(t_token_list *list);
-t_token_list	*tokenize(char *line);
+t_token_list	*tokenize(char **line);
 void			delete_list(t_token_list *list);
 int				add_to_list(t_token_list *list, t_token *token);
 t_token_list	*create_list(void);

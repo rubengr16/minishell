@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/21 20:40:41 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:48:17 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,30 +38,32 @@ void	manage_quotes(enum e_state *state, unsigned int *i, char c)
 		*state = DOUBLE_QUOTES;
 }
 
-t_token	*get_token(char *line, unsigned int *i, enum e_state state)
+t_token	*get_token(char **line, unsigned int *i, enum e_state state)
 {
 	unsigned int	start;
 
 	start = *i;
 	if (state != NORMAL)
 		start = ++(*i);
-	while (line[*i] && (state != NORMAL || (get_state(line[*i]) != SPACE_CHAR
-		&& get_state(line[*i]) != METACHAR)))
+	while ((*line)[*i] && (state != NORMAL || (get_state((*line)[*i]) != SPACE_CHAR
+		&& get_state((*line)[*i]) != METACHAR)))
 	{
-		if (line[*i] == '$' && state != SINGLE_QUOTES
-			&& !expand(&line, i,  state))
+		if ((*line)[*i] == '$' && state != SINGLE_QUOTES)
+		{
+			if (!expand(line, i,  state))
 				return (NULL);
-		else if (state == NORMAL && (line[*i] == '\'' || line[*i] =='\"'))
-			manage_quotes(&state, i, line[*i]);
+		}	
+		else if (state == NORMAL && ((*line)[*i] == '\'' || (*line)[*i] =='\"'))
+			manage_quotes(&state, i, (*line)[*i]);
 		else
 			(*i)++;
 	}
 	if (state != NORMAL)
 		return (NULL);
-	return (new_token(&line[start], (unsigned int)(*i - start)));
+	return (new_token(&((*line)[start]), (unsigned int)(*i - start)));
 }
 
-t_token_list	*tokenize(char *line)
+t_token_list	*tokenize(char **line)
 {
 	t_token_list	*list;
 	t_token			*token;
@@ -72,15 +74,15 @@ t_token_list	*tokenize(char *line)
 	list = create_list();
 	if (!list)
 		return (NULL);
-	while (line[i])
+	while ((*line)[i])
 	{
-		while (line[i] == ' ')
+		while ((*line)[i] == ' ')
 			i++;
-		state = get_state(line[i]);
+		state = get_state((*line)[i]);
 		if (state != METACHAR)
 			token = get_token(line, &i, state);
 		else
-			token = new_token(&line[i++], 1);
+			token = new_token(&((*line)[i++]), 1);
 		if (!add_to_list(list, token))
 		{
 			delete_list(list);
