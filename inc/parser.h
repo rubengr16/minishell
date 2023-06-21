@@ -47,7 +47,7 @@ typedef struct s_env_vbles
 }	t_env_vbles;
 
 /* ***************************** FUNC DECLARATION ************************** */
-t_token			*new_token(char *str, unsigned int size);
+t_token			*new_token(char *str, unsigned int size, enum e_state state);
 void			print_list(t_token_list *list);
 t_token_list	*tokenize(char **line);
 void			delete_list(t_token_list *list);

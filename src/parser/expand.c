@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/21 22:49:00 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:54:40 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static int	vble_cpy(char **line, char *vble, unsigned int *i,
 	return (1);
 }
 
+//echo'$SHLVL'="$SHLVL"=$SHLVL> FAILING
 int	expand(char **line, unsigned int *i, enum e_state state)
 {
 	char			*aux;

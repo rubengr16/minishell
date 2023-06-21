@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/21 22:48:17 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/21 22:52:46 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ unsigned int	get_state(char c)
 		return (NORMAL);
 }
 
-void	manage_quotes(enum e_state *state, unsigned int *i, char c)
+void	manage_quotes(enum e_state *state, unsigned int *i, unsigned int *adjust_size, char c)
 {
 	(*i)++;
+	(*adjust_size)++;
 	if (*state != NORMAL)
 		*state = NORMAL;
 	else if (c == (char)SINGLE_QUOTES)
@@ -38,11 +39,15 @@ void	manage_quotes(enum e_state *state, unsigned int *i, char c)
 		*state = DOUBLE_QUOTES;
 }
 
-t_token	*get_token(char **line, unsigned int *i, enum e_state state)
+t_token	*get_token(char *line, unsigned int *i, enum e_state original_state)
 {
+	enum e_state	state;
 	unsigned int	start;
+	unsigned int	adjust_size;
 
+	state = original_state;
 	start = *i;
+	adjust_size = 0;
 	if (state != NORMAL)
 		start = ++(*i);
 	while ((*line)[*i] && (state != NORMAL || (get_state((*line)[*i]) != SPACE_CHAR
@@ -52,15 +57,17 @@ t_token	*get_token(char **line, unsigned int *i, enum e_state state)
 		{
 			if (!expand(line, i,  state))
 				return (NULL);
-		}	
-		else if (state == NORMAL && ((*line)[*i] == '\'' || (*line)[*i] =='\"'))
-			manage_quotes(&state, i, (*line)[*i]);
+		}
+		else if ((state == NORMAL && (line[*i] == '\'' || line[*i] =='\"'))
+			|| (state == SINGLE_QUOTES && line[*i] == (char)SINGLE_QUOTES)
+			|| (state == DOUBLE_QUOTES && line[*i] == (char)DOUBLE_QUOTES))
+			manage_quotes(&state, i, &adjust_size, line[*i]);
 		else
 			(*i)++;
 	}
 	if (state != NORMAL)
 		return (NULL);
-	return (new_token(&((*line)[start]), (unsigned int)(*i - start)));
+	return (new_token(&line[start], *i - start - adjust_size, original_state));
 }
 
 t_token_list	*tokenize(char **line)
@@ -82,7 +89,7 @@ t_token_list	*tokenize(char **line)
 		if (state != METACHAR)
 			token = get_token(line, &i, state);
 		else
-			token = new_token(&((*line)[i++]), 1);
+			token = new_token(&((*line)[i++]), 1, state);
 		if (!add_to_list(list, token))
 		{
 			delete_list(list);
