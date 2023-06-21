@@ -6,14 +6,14 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/20 23:50:09 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:40:41 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 #include <unistd.h>
 
-unsigned int	is_metachar(char c)
+unsigned int	get_state(char c)
 {
 	if (c == '<' || c == '>' || c == '|')
 		return (METACHAR);
@@ -27,9 +27,9 @@ unsigned int	is_metachar(char c)
 		return (NORMAL);
 }
 
-void	manage_quotes(enum e_state *state, int *adjust_size, char c)
+void	manage_quotes(enum e_state *state, unsigned int *i, char c)
 {
-	(*adjust_size)++;
+	(*i)++;
 	if (*state != NORMAL)
 		*state = NORMAL;
 	else if (c == (char)SINGLE_QUOTES)
@@ -41,29 +41,24 @@ void	manage_quotes(enum e_state *state, int *adjust_size, char c)
 t_token	*get_token(char *line, unsigned int *i, enum e_state state)
 {
 	unsigned int	start;
-	int				adjust_size;
-	t_env_vbles		**env_vbles;
 
 	start = *i;
-	adjust_size = 0;
 	if (state != NORMAL)
 		start = ++(*i);
-	env_vbles = NULL;
-	while (line[*i] && (state != NORMAL || 
-		(is_metachar(line[*i]) != SPACE_CHAR
-		&& is_metachar(line[*i]) != METACHAR)))
+	while (line[*i] && (state != NORMAL || (get_state(line[*i]) != SPACE_CHAR
+		&& get_state(line[*i]) != METACHAR)))
 	{
-		if (line[*i] == '$' && state != SINGLE_QUOTES)
-			if (!expand(line, i, &adjust_size, &env_vbles, state))
+		if (line[*i] == '$' && state != SINGLE_QUOTES
+			&& !expand(&line, i,  state))
 				return (NULL);
-		if (line[*i] == '\'' || line[*i] =='\"')
-			manage_quotes(&state, &adjust_size, line[*i]);
-		(*i)++;
+		else if (state == NORMAL && (line[*i] == '\'' || line[*i] =='\"'))
+			manage_quotes(&state, i, line[*i]);
+		else
+			(*i)++;
 	}
 	if (state != NORMAL)
 		return (NULL);
-	return (new_token(&line[start], (unsigned int)(*i - start - adjust_size),
-		env_vbles));
+	return (new_token(&line[start], (unsigned int)(*i - start)));
 }
 
 t_token_list	*tokenize(char *line)
@@ -81,11 +76,11 @@ t_token_list	*tokenize(char *line)
 	{
 		while (line[i] == ' ')
 			i++;
-		state = is_metachar(line[i]);
+		state = get_state(line[i]);
 		if (state != METACHAR)
 			token = get_token(line, &i, state);
 		else
-			token = new_token(&line[i++], 1, NULL);
+			token = new_token(&line[i++], 1);
 		if (!add_to_list(list, token))
 		{
 			delete_list(list);

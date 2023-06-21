@@ -6,37 +6,11 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/20 02:16:34 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/21 20:30:26 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-unsigned int	copy_env_vbles(char *token, unsigned int *j,
-	unsigned int *k, t_env_vbles ***env_vbles)
-{
-	unsigned int i;
-
-	if (!*env_vbles)
-		return (0);
-	i = 0;
-	while ((*env_vbles)[*k]->value[i])
-	{
-		token[*j] = (*env_vbles)[*k]->value[i];
-		(*j)++;
-		i++;
-	}
-	i = (*env_vbles)[*k]->len;
-	free((*env_vbles)[*k]->value);
-	free((*env_vbles)[*k]);
-	(*k)++;
-	if (!(*env_vbles)[*k])
-	{
-		free(*env_vbles);
-		*env_vbles = NULL;
-	}
-	return (i);
-}
 
 /**
  * Creates a new token from str with the given size
@@ -45,36 +19,20 @@ unsigned int	copy_env_vbles(char *token, unsigned int *j,
  * 							!NULL	Token allocation is correct
  * 							
  */
-t_token	*new_token(char *str, unsigned int size, t_env_vbles **env_vbles)
+t_token	*new_token(char *str, unsigned int size)
 {
 	t_token			*new_token;
-	unsigned short	single_quotes;
-	unsigned int	i;
-	unsigned int	j;
-	unsigned int	k;
 
-	i = 0;
-	j = 0;
-	k = 0;
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
 	new_token->token = malloc(sizeof(char) * (size + 1));
 	if (!new_token->token)
-		return (NULL);
-	single_quotes = 0;
-	while (str[i] && j < size)
 	{
-		if (str[i] == '$' && !single_quotes)
-			i = i + copy_env_vbles(new_token->token, &j, &k, &env_vbles) + 1;
-		else if (str[i] != '\'' && str[i] != '\"')
-			new_token->token[j++] = str[i++];
-		if (str[i] == '\'')
-			single_quotes = !single_quotes;
-		if (str[i] == '\'' || str[i] == '\"')
-			i++;
+		free(new_token);
+		return (NULL);
 	}
-	new_token->token[j] = '\0';
+	ft_strlcpy(new_token->token, str, size + 1);
 	new_token->next = NULL;
 	return (new_token);
 }
