@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/21 22:58:26 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/22 00:55:21 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ unsigned int	get_state(char c)
 		return (NORMAL);
 }
 
-void	manage_quotes(enum e_state *state, unsigned int *i, unsigned int *adjust_size, char c)
+void	manage_quotes(enum e_state *state, unsigned int *i,
+	unsigned int *adjust_size, char c)
 {
 	(*i)++;
 	(*adjust_size)++;
