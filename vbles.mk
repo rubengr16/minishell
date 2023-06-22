@@ -6,7 +6,7 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/06/21 20:32:44 by rgallego         ###   ########.fr        #
+#    Updated: 2023/06/23 01:01:32 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ CC		=			gcc
 
 RM		=			-rm -f
 
-CFLAGS	=			-Wall -Werror -Wextra -MD
+CFLAGS	=			-Wall -Werror -Wextra -MD -fsanitize=address -g3
 
 LDFLAGS	=			$(LIBFTNAME)
 

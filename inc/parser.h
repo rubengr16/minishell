@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:10:35 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/21 22:44:03 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/23 00:50:44 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ enum	e_state
 typedef struct s_token
 {
 	char			*token;
+	enum e_state	context;
 	struct s_token	*next;
 }	t_token;
 
@@ -39,12 +40,6 @@ typedef struct s_token_list
 	t_token	*start;
 	t_token	*end;
 }	t_token_list;
-
-typedef struct s_env_vbles
-{
-	char			*value;
-	unsigned int	len;
-}	t_env_vbles;
 
 /* ***************************** FUNC DECLARATION ************************** */
 t_token			*new_token(char *str, unsigned int size, enum e_state state);

@@ -3,6 +3,11 @@
 #include <readline/history.h>
 #include "parser.h"
 
+void discover_leaks()
+{
+	system("leaks minishell");
+}
+
 int	main(/*int argc, char **argv, char **env*/)
 {
 	char	*line;
@@ -12,4 +17,5 @@ int	main(/*int argc, char **argv, char **env*/)
 	list = tokenize(&line);
 	print_list(list);
 	delete_list(list);
+	atexit(discover_leaks);
 }
