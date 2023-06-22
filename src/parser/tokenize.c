@@ -6,47 +6,19 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/22 00:55:21 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/23 01:57:37 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-#include <unistd.h>
 
-unsigned int	get_state(char c)
+static t_token	*get_token(char **line, unsigned int *i, enum e_state state)
 {
-	if (c == '<' || c == '>' || c == '|')
-		return (METACHAR);
-	else if (c == '\'')
-		return (SINGLE_QUOTES);
-	else if (c == '\"')
-		return (DOUBLE_QUOTES);
-	else if (c == ' ')
-		return (SPACE_CHAR);
-	else
-		return (NORMAL);
-}
-
-void	manage_quotes(enum e_state *state, unsigned int *i,
-	unsigned int *adjust_size, char c)
-{
-	(*i)++;
-	(*adjust_size)++;
-	if (*state != NORMAL)
-		*state = NORMAL;
-	else if (c == (char)SINGLE_QUOTES)
-		*state = SINGLE_QUOTES;
-	else if (c == (char)DOUBLE_QUOTES)
-		*state = DOUBLE_QUOTES;
-}
-
-t_token	*get_token(char **line, unsigned int *i, enum e_state original_state)
-{
-	enum e_state	state;
+	enum e_state	original_state;
 	unsigned int	start;
 	unsigned int	adjust_size;
 
-	state = original_state;
+	original_state = state;
 	start = *i;
 	adjust_size = 0;
 	if (state != NORMAL)
@@ -68,9 +40,22 @@ t_token	*get_token(char **line, unsigned int *i, enum e_state original_state)
 	}
 	if (state != NORMAL)
 		return (NULL);
-	return (new_token(&((*line)[start]), *i - start - adjust_size, original_state));
+	return (new_token(&(*line)[start], *i - start - adjust_size, original_state));
 }
 
+static t_token	*get_metachar(char *line, unsigned int *i, enum e_state state)
+{
+	
+	(*i)++;
+	printf("char=%c, char2=%u\n", *line, *i);
+	printf("line=%s\n", line);
+	if (*line == '|' || (*line == '<' && line[*i] != '<')
+		|| (*line == '>' && line[*i] != '>'))
+		return new_token(line, 1, state);
+	(*i)++;
+	return new_token(line, 2, state);
+}
+echo"$SHLVL"=$SHLVL='$SHLVL' ><"|"
 t_token_list	*tokenize(char **line)
 {
 	t_token_list	*list;
@@ -90,7 +75,7 @@ t_token_list	*tokenize(char **line)
 		if (state != METACHAR)
 			token = get_token(line, &i, state);
 		else
-			token = new_token(&((*line)[i++]), 1, state);
+			token = get_metachar(*line, &i, state);
 		if (!add_to_list(list, token))
 		{
 			delete_list(list);

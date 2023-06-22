@@ -6,7 +6,7 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/06/23 01:01:32 by rgallego         ###   ########.fr        #
+#    Updated: 2023/06/23 01:39:39 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,10 @@ INC_DIR	=			inc/
 MINISHELL	=		main.c
 
 PARSER		=		$(addprefix $(PARSER_DIR), \
+					utils.c \
 					token_lst.c \
-					tokenize.c \
 					expand.c \
+					tokenize.c \
 					)
 
 SRCS	= 			$(addprefix $(SRC_DIR), \

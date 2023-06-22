@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:10:35 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/23 00:50:44 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/23 01:38:54 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,19 @@ typedef struct s_token_list
 }	t_token_list;
 
 /* ***************************** FUNC DECLARATION ************************** */
+/* ---------------------------------- UTILS -------------------------------- */
+unsigned int	get_state(char c);
+void			manage_quotes(enum e_state *state, unsigned int *i,
+	unsigned int *adjust_size, char c);
+/* -------------------------------- TOKEN_LST ------------------------------ */
 t_token			*new_token(char *str, unsigned int size, enum e_state state);
 void			print_list(t_token_list *list);
-t_token_list	*tokenize(char **line);
 void			delete_list(t_token_list *list);
 int				add_to_list(t_token_list *list, t_token *token);
 t_token_list	*create_list(void);
-unsigned int	get_state(char c);
+/* --------------------------------- EXPAND -------------------------------- */
 int				expand(char **line, unsigned int *i, enum e_state state);
+/* -------------------------------- TOKENIZE ------------------------------- */
+t_token_list	*tokenize(char **line);
 
 #endif
