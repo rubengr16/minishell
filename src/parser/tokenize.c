@@ -6,11 +6,35 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/23 17:53:56 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:50:36 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+static void	manage_quotes(enum e_state *state, unsigned int *i,
+	unsigned int *adjust_size, char c)
+{
+	(*i)++;
+	(*adjust_size)++;
+	if (*state != NORMAL)
+		*state = NORMAL;
+	else if (c == (char)SINGLE_QUOTE)
+		*state = SINGLE_QUOTE;
+	else if (c == (char)DOUBLE_QUOTE)
+		*state = DOUBLE_QUOTE;
+}
+
+static t_token	*get_metachar(char *line, unsigned int *i, enum e_state state)
+{
+	unsigned int	adjust_size;
+
+	adjust_size = 1;
+	if ((*line == '<' && line[1] == '<') || (*line == '>' && line[1] == '>'))
+		adjust_size = 2;
+	*i += adjust_size;
+	return (new_token(line, adjust_size, state));
+}
 
 static t_token	*get_token(char **line, unsigned int *i, enum e_state state)
 {
@@ -23,35 +47,22 @@ static t_token	*get_token(char **line, unsigned int *i, enum e_state state)
 	adjust_size = 0;
 	if (state != NORMAL)
 		start = ++(*i);
-	while ((*line)[*i] && (state != NORMAL || (get_state((*line)[*i]) != SPACE_CHAR
-		&& get_state((*line)[*i]) != METACHAR)))
+	while (is_end_of_token((*line)[*i], state))
 	{
-		if ((*line)[*i] == '$' && state != SINGLE_QUOTES)
+		if ((*line)[*i] == '$' && state != SINGLE_QUOTE)
 		{
-			if (!expand(line, i,  state))
+			if (!expand(line, i, state))
 				return (NULL);
 		}
-		else if ((state == NORMAL && ((*line)[*i] == '\'' || (*line)[*i] =='\"'))
-			|| (state == SINGLE_QUOTES && (*line)[*i] == (char)SINGLE_QUOTES)
-			|| (state == DOUBLE_QUOTES && (*line)[*i] == (char)DOUBLE_QUOTES))
+		else if (is_true_quote((*line)[*i], state))
 			manage_quotes(&state, i, &adjust_size, (*line)[*i]);
 		else
 			(*i)++;
 	}
 	if (state != NORMAL)
 		return (NULL);
-	return (new_token(&(*line)[start], *i - start - adjust_size, original_state));
-}
-
-static t_token	*get_metachar(char *line, unsigned int *i, enum e_state state)
-{
-	unsigned int adjust_size;
-
-	adjust_size = 1;
-	if ((*line == '<' && line[1] == '<') || (*line == '>' && line[1] == '>'))
-		adjust_size = 2;
-	*i += adjust_size;
-	return new_token(line, adjust_size, state);
+	return (new_token(&(*line)[start], *i - start - adjust_size,
+		original_state));
 }
 
 t_token_list	*tokenize(char **line)

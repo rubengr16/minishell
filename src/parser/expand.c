@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/23 01:59:57 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:12:56 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,7 @@ int	expand(char **line, unsigned int *i, enum e_state state)
 
 	(*i)++;
 	name_len = 0;
-	printf("%s\n", *line);
-	while ((*line)[*i + name_len] && (*line)[*i + name_len] != ' '
-		&& (*line)[*i + name_len] != '\"' && (state == DOUBLE_QUOTES
-		|| (get_state((*line)[*i + name_len]) != METACHAR
-		&& (*line)[*i + name_len] != '\'')))
+	while (is_end_of_vble((*line)[*i + name_len], state))
 		name_len++;
 	if (!name_len)
 		return (vble_cpy(line, "$", i, 0));

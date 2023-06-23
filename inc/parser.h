@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:10:35 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/23 01:38:54 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:41:31 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ enum	e_state
 {
 	NORMAL,
 	SPACE_CHAR = ' ',
-	SINGLE_QUOTES = '\'',
-	DOUBLE_QUOTES = '\"',
+	SINGLE_QUOTE = '\'',
+	DOUBLE_QUOTE = '\"',
 	METACHAR
 };
 
@@ -44,11 +44,14 @@ typedef struct s_token_list
 /* ***************************** FUNC DECLARATION ************************** */
 /* ---------------------------------- UTILS -------------------------------- */
 unsigned int	get_state(char c);
-void			manage_quotes(enum e_state *state, unsigned int *i,
-	unsigned int *adjust_size, char c);
+int				is_end_of_token(char c, enum e_state state);
+int				is_end_of_vble(char c, enum e_state state);
+int				is_true_quote(char c, enum e_state state);
+int				is_true_char(char c, enum e_state state);
+
 /* -------------------------------- TOKEN_LST ------------------------------ */
 t_token			*new_token(char *str, unsigned int size, enum e_state state);
-void			print_list(t_token_list *list);
+void			print_list(t_token_list *list); // DELETE WHEN FINISHED
 void			delete_list(t_token_list *list);
 int				add_to_list(t_token_list *list, t_token *token);
 t_token_list	*create_list(void);

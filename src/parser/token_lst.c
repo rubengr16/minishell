@@ -6,11 +6,38 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/23 01:36:38 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/23 18:49:17 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+static void	fill_token(char *token, char *str, unsigned int size,
+	enum e_state *state)
+{
+	unsigned int	i;
+	unsigned int	j;
+
+	i = 0;
+	j = 0;
+	while (str[i] && j < size)
+	{
+		if (is_true_char(str[i], *state))
+			token[j++] = str[i++];
+		else if (str[i] == '\'' || str[i] == '\"')
+		{
+			if ((str[i] == (char)SINGLE_QUOTE && *state == SINGLE_QUOTE)
+				|| (str[i] == (char)DOUBLE_QUOTE && *state == DOUBLE_QUOTE))
+				*state = NORMAL;
+			else if (str[i] == (char)SINGLE_QUOTE && *state == NORMAL)
+				*state = SINGLE_QUOTE;
+			else if (str[i] == (char)DOUBLE_QUOTE && *state == NORMAL)
+				*state = DOUBLE_QUOTE;
+			i++;
+		}
+	}
+	token[j] = '\0';
+}
 
 /**
  * Creates a new token from str with the given size
@@ -22,11 +49,7 @@
 t_token	*new_token(char *str, unsigned int size, enum e_state state)
 {
 	t_token			*new_token;
-	unsigned int	i;
-	unsigned int	j;
 
-	i = 0;
-	j = 0;
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
 		return (NULL);
@@ -36,24 +59,7 @@ t_token	*new_token(char *str, unsigned int size, enum e_state state)
 		free(new_token);
 		return (NULL);
 	}
-	while (str[i] && j < size)
-	{
-		if ((str[i] != '\'' && str[i] != '\"')
-			|| (state == SINGLE_QUOTES && str[i] == '\"')
-			|| (state == DOUBLE_QUOTES && str[i] == '\''))
-			new_token->token[j++] = str[i++];
-		else if (str[i] == '\'' || str[i] == '\"')
-		{
-			if ((str[i] == (char)SINGLE_QUOTES && state == SINGLE_QUOTES) || (str[i] == (char)DOUBLE_QUOTES && state == DOUBLE_QUOTES))
-				state = NORMAL;
-			else if (str[i] == (char)SINGLE_QUOTES && state == NORMAL)
-				state = SINGLE_QUOTES;
-			else if (str[i] == (char)SINGLE_QUOTES && state == NORMAL)
-				state = DOUBLE_QUOTES;
-			i++;
-		}
-	}
-	new_token->token[j] = '\0';
+	fill_token(new_token->token, str, size, &state);
 	new_token->context = state;
 	new_token->next = NULL;
 	return (new_token);
