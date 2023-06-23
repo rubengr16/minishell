@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/23 01:57:37 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/23 17:53:56 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,15 @@ static t_token	*get_token(char **line, unsigned int *i, enum e_state state)
 
 static t_token	*get_metachar(char *line, unsigned int *i, enum e_state state)
 {
-	
-	(*i)++;
-	printf("char=%c, char2=%u\n", *line, *i);
-	printf("line=%s\n", line);
-	if (*line == '|' || (*line == '<' && line[*i] != '<')
-		|| (*line == '>' && line[*i] != '>'))
-		return new_token(line, 1, state);
-	(*i)++;
-	return new_token(line, 2, state);
+	unsigned int adjust_size;
+
+	adjust_size = 1;
+	if ((*line == '<' && line[1] == '<') || (*line == '>' && line[1] == '>'))
+		adjust_size = 2;
+	*i += adjust_size;
+	return new_token(line, adjust_size, state);
 }
-echo"$SHLVL"=$SHLVL='$SHLVL' ><"|"
+
 t_token_list	*tokenize(char **line)
 {
 	t_token_list	*list;
@@ -75,7 +73,7 @@ t_token_list	*tokenize(char **line)
 		if (state != METACHAR)
 			token = get_token(line, &i, state);
 		else
-			token = get_metachar(*line, &i, state);
+			token = get_metachar(&(*line)[i], &i, state);
 		if (!add_to_list(list, token))
 		{
 			delete_list(list);
