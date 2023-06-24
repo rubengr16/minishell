@@ -16,10 +16,13 @@ Install readline:
 &emsp; Choose latest libreadline<$VERSION_NUMBER> and install Readline Library:  
 &emsp; `sudo apt-get install libreadline-dev libreadline<$VERSION_NUMBER>`  
 
+## Versions  
+* v1: f/expand  
+* v2: f/lexer  
 
 ## Allowed functions
 - **char \*readline (const char \*prompt);**  
-&emsp; sdkjfhkjsdh  
+&emsp;    
 - rl_clear_history, rl_on_new_line,
 rl_replace_line, rl_redisplay, add_history,
 printf, malloc, free, write, access, open, read,
