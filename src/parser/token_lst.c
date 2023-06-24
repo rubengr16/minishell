@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/23 18:49:17 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/24 19:58:32 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ void	delete_list(t_token_list *list)
 	while (list->start)
 	{
 		aux = aux->next;
-		free(list->start->token);
+		if (!list->start->token)
+			free(list->start->token);
 		free(list->start);
 		list->start = aux;
 	}
