@@ -6,15 +6,18 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:10:35 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/24 20:00:55 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/26 21:45:33 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include <stdlib.h>
 # include "libft.h"
+# include "utils.h"
+
+# define ALLOC_ERR "allocation failed"
+# define UNCLOSED_Q_ERR "unclosed quotes found"
 
 /* ******************************* ENUM ******************************* */
 enum	e_state
@@ -52,10 +55,10 @@ int				is_true_char(char c, enum e_state state);
 t_token			*new_token(char *str, unsigned int size, enum e_state state);
 void			print_list(t_token_list *list); // DELETE WHEN FINISHED
 void			delete_list(t_token_list *list);
-int				add_to_list(t_token_list *list, t_token *token);
+t_token			*add_to_list(t_token_list *list, t_token *token);
 t_token_list	*create_list(void);
 /* --------------------------------- EXPAND -------------------------------- */
-int				expand(char **line, unsigned int *i, enum e_state state);
+char			*expand(char **line, unsigned int *i, enum e_state state);
 /* -------------------------------- TOKENIZE ------------------------------- */
 t_token_list	*tokenize(char **line);
 

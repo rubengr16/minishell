@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/23 18:12:56 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/26 21:56:59 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static size_t	ft_strlen_to(const char *s, const char *to)
 	return (len);
 }
 
-static int	vble_cpy(char **line, char *vble, unsigned int *i,
+static char	*vble_cpy(char **line, char *vble, unsigned int *i,
 	unsigned int name_len)
 {
 	char			*aux;
@@ -31,7 +31,7 @@ static int	vble_cpy(char **line, char *vble, unsigned int *i,
 	total_len = ft_strlen(*line) - (name_len + 1) + ft_strlen(vble) + 1;
 	aux = malloc(sizeof(char) * total_len);
 	if (!aux)
-		return (0);
+		return mini_error(ALLOC_ERR);
 	(*i)--;
 	ft_strlcpy(aux, *line, ft_strlen_to(*line, &(*line)[*i]) + 1);
 	ft_strlcpy(&aux[*i], vble, ft_strlen(vble) + 1);
@@ -40,10 +40,10 @@ static int	vble_cpy(char **line, char *vble, unsigned int *i,
 	free(*line);
 	*line = aux;
 	*i = *i + ft_strlen(vble);
-	return (1);
+	return (*line);
 }
 
-int	expand(char **line, unsigned int *i, enum e_state state)
+char *expand(char **line, unsigned int *i, enum e_state state)
 {
 	char			*aux;
 	char			*name;
@@ -57,7 +57,7 @@ int	expand(char **line, unsigned int *i, enum e_state state)
 		return (vble_cpy(line, "$", i, 0));
 	name = malloc(sizeof(char) * (name_len + 1));
 	if (!name)
-		return (0);
+		return mini_error(ALLOC_ERR);
 	ft_strlcpy(name, &((*line)[*i]), name_len + 1);
 	aux = getenv(name);
 	free(name);

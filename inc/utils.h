@@ -1,36 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/26 21:30:53 by rgallego         ###   ########.fr       */
+/*   Created: 2023/06/25 17:55:34 by rgallego          #+#    #+#             */
+/*   Updated: 2023/06/25 18:09:41 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "parser.h"
+#ifndef UTILS_H
+# define UTILS_H
 
-void	discover_leaks(void)
-{
-	system("leaks minishell");
-}
+# include "libft.h"
 
-/*int argc, char **argv, char **env*/
-int	main(void)
-{
-	char			*line;
-	t_token_list	*list;
+/* ***************************** FUNC DECLARATION ************************** */
+/* ---------------------------------- UTILS -------------------------------- */
+void	*mini_error(char *str);
 
-	line = readline("minishell> ");
-	list = tokenize(&line);
-	// if (!list)
-	// 	break;
-	print_list(list);
-	delete_list(list);
-	atexit(discover_leaks);
-}
+#endif

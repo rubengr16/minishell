@@ -6,13 +6,17 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/06/23 01:39:39 by rgallego         ###   ########.fr        #
+#    Updated: 2023/06/25 18:00:52 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC_DIR	=			src/
 
 PARSER_DIR		=	parser/
+
+LEXER_DIR		=	lexer/
+
+UTILS_DIR		=	utils/
 
 INC_DIR	=			inc/
 
@@ -25,9 +29,19 @@ PARSER		=		$(addprefix $(PARSER_DIR), \
 					tokenize.c \
 					)
 
+LEXER		=		$(addprefix $(LEXER_DIR), \
+					lexer.c \
+					)
+
+UTILS		=		$(addprefix $(UTILS_DIR), \
+					utils.c \
+					)
+
 SRCS	= 			$(addprefix $(SRC_DIR), \
 					$(MINISHELL) \
 					$(PARSER) \
+					$(LEXER) \
+					$(UTILS) \
 					)
 
 OBJS	=			$(SRCS:.c=.o)

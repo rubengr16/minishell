@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/24 19:58:32 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/26 22:05:32 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ t_token	*new_token(char *str, unsigned int size, enum e_state state)
 
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
-		return (NULL);
+		return mini_error(ALLOC_ERR);
 	new_token->token = malloc(sizeof(char) * (size + 1));
 	if (!new_token->token)
 	{
 		free(new_token);
-		return (NULL);
+		return mini_error(ALLOC_ERR);
 	}
 	fill_token(new_token->token, str, size, &state);
 	new_token->context = state;
@@ -72,13 +72,10 @@ t_token	*new_token(char *str, unsigned int size, enum e_state state)
  * OUTPUT:	int	:	0	Failed
  * 					1	Fullfilled
  */
-int	add_to_list(t_token_list *list, t_token *token)
+t_token	*add_to_list(t_token_list *list, t_token *token)
 {
 	if (!token)
-	{
-		write(2, "minishell: Allocation failed\n", 29);
-		return (0);
-	}
+		return (NULL);
 	if (!list->start)
 	{
 		list->start = token;
@@ -89,7 +86,7 @@ int	add_to_list(t_token_list *list, t_token *token)
 		list->end->next = token;
 		list->end = token;
 	}
-	return (1);
+	return (token);
 }
 
 /**
@@ -107,7 +104,7 @@ void	delete_list(t_token_list *list)
 	while (list->start)
 	{
 		aux = aux->next;
-		if (!list->start->token)
+		if (list->start->token)
 			free(list->start->token);
 		free(list->start);
 		list->start = aux;
@@ -116,6 +113,7 @@ void	delete_list(t_token_list *list)
 }
 
 // TODO: DELETE
+#include <stdio.h>
 void	print_list(t_token_list *list)
 {
 	t_token	*aux;
@@ -144,7 +142,7 @@ t_token_list	*create_list(void)
 
 	list = malloc(sizeof(t_token_list));
 	if (!list)
-		return (NULL);
+		return mini_error(ALLOC_ERR);
 	list->start = NULL;
 	list->end = NULL;
 	return (list);

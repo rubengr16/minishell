@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 19:54:48 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/24 20:06:19 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/26 21:53:02 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,28 +18,30 @@
 # include "parser.h"
 
 /* ******************************* ENUM ******************************* */
-enum	e_state
+enum	e_redir_type
 {
-	NORMAL,
-	SPACE_CHAR = ' ',
-	SINGLE_QUOTE = '\'',
-	DOUBLE_QUOTE = '\"',
-	METACHAR
+	R_IN,
+	R_IN_HERE_DOC,
+	R_OUT,
+	R_OUT_APPEND,
 };
 
-/* ******************************* TOKEN LIST ******************************* */
-typedef struct s_token
+/* ***************************** COMMAND LIST ****************************** */
+typedef struct s_redir
 {
-	char			*token;
-	enum e_state	context;
-	struct s_token	*next;
-}	t_token;
+	char				*file;
+	enum e_redir_type	*type;
+	struct s_redir		*next;
+}	t_redir;
 
-typedef struct s_token_list
+typedef struct s_cmd
 {
-	t_token	*start;
-	t_token	*end;
-}	t_token_list;
+	char			*cmd;
+	char			*args;
+	t_redir			*r_in;
+	t_redir			*r_out;
+	struct s_cmd	*next;
+}	t_cmd;
 
 /* ***************************** FUNC DECLARATION ************************** */
 /* ---------------------------------- UTILS -------------------------------- */
