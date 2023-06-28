@@ -14,6 +14,7 @@
 # define PARSER_H
 
 # include <stdlib.h>
+# include <stdio.h>
 # include "libft.h"
 
 /* ******************************* ENUM ******************************* */
@@ -55,8 +56,8 @@ void			delete_list(t_token_list *list);
 int				add_to_list(t_token_list *list, t_token *token);
 t_token_list	*create_list(void);
 /* --------------------------------- EXPAND -------------------------------- */
-int				expand(char **line, unsigned int *i, enum e_state state);
+int				expand(char **line, unsigned int *i, enum e_state state, char **envp);
 /* -------------------------------- TOKENIZE ------------------------------- */
-t_token_list	*tokenize(char **line);
+t_token_list	*tokenize(char **line, char **envp);
 
 #endif

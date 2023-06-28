@@ -36,7 +36,7 @@ static t_token	*get_metachar(char *line, unsigned int *i, enum e_state state)
 	return (new_token(line, adjust_size, state));
 }
 
-static t_token	*get_token(char **line, unsigned int *i, enum e_state state)
+static t_token	*get_token(char **line, unsigned int *i, enum e_state state, char **envp)
 {
 	enum e_state	original_state;
 	unsigned int	start;
@@ -51,7 +51,7 @@ static t_token	*get_token(char **line, unsigned int *i, enum e_state state)
 	{
 		if ((*line)[*i] == '$' && state != SINGLE_QUOTE)
 		{
-			if (!expand(line, i, state))
+			if (!expand(line, i, state, envp))
 				return (NULL);
 		}
 		else if (is_true_quote((*line)[*i], state))
@@ -65,7 +65,7 @@ static t_token	*get_token(char **line, unsigned int *i, enum e_state state)
 		original_state));
 }
 
-t_token_list	*tokenize(char **line)
+t_token_list	*tokenize(char **line, char **envp)
 {
 	t_token_list	*list;
 	t_token			*token;
@@ -82,7 +82,7 @@ t_token_list	*tokenize(char **line)
 			i++;
 		state = get_state((*line)[i]);
 		if (state != METACHAR)
-			token = get_token(line, &i, state);
+			token = get_token(line, &i, state, envp);
 		else
 			token = get_metachar(&(*line)[i], &i, state);
 		if (!add_to_list(list, token))

@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "parser.h"
@@ -20,14 +19,15 @@ void	discover_leaks(void)
 	system("leaks minishell");
 }
 
-/*int argc, char **argv, char **env*/
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char			*line;
 	t_token_list	*list;
 
+	(void)argc;	// Para anular los warning, no se me ocurre nada mejor
+	(void)argv;
 	line = readline("minishell> ");
-	list = tokenize(&line);
+	list = tokenize(&line, envp);
 	print_list(list);
 	delete_list(list);
 	atexit(discover_leaks);

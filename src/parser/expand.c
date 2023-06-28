@@ -12,6 +12,28 @@
 
 #include "parser.h"
 
+char	*get_env(char *name, char **envp)
+{
+	int		i;
+	size_t	length;		
+	char	*aux_name;
+
+	i = 0;
+	aux_name = ft_strjoin(name, "=");
+	length = ft_strlen(aux_name);
+	while (envp[i])
+	{
+		if (ft_strncmp(aux_name, envp[i], length) == 0)
+			break;
+		i++;
+	}
+	free(aux_name);
+	if (!envp[i])
+		return ("");
+	else
+		return (envp[i] + length);
+}
+
 static size_t	ft_strlen_to(const char *s, const char *to)
 {
 	size_t	len;
@@ -43,7 +65,7 @@ static int	vble_cpy(char **line, char *vble, unsigned int *i,
 	return (1);
 }
 
-int	expand(char **line, unsigned int *i, enum e_state state)
+int	expand(char **line, unsigned int *i, enum e_state state, char **envp)
 {
 	char			*aux;
 	char			*name;
@@ -59,7 +81,7 @@ int	expand(char **line, unsigned int *i, enum e_state state)
 	if (!name)
 		return (0);
 	ft_strlcpy(name, &((*line)[*i]), name_len + 1);
-	aux = getenv(name);
+	aux = get_env(name, envp);
 	free(name);
 	if (!aux)
 		return (vble_cpy(line, "", i, name_len));

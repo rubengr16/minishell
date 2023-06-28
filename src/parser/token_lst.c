@@ -107,7 +107,7 @@ void	delete_list(t_token_list *list)
 	while (list->start)
 	{
 		aux = aux->next;
-		if (!list->start->token)
+		if (list->start->token)
 			free(list->start->token);
 		free(list->start);
 		list->start = aux;
