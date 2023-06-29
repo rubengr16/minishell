@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 19:54:48 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/29 19:11:18 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/29 19:53:08 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_redir				*insert_to_redir_list(t_redir **list, char *file,
 void				delete_redir_list(t_redir **list);
 /* ---------------------------------- CMD ---------------------------------- */
 t_cmd				*new_cmd(void);
-t_cmd				*add_to_cmd_list(t_cmd **list, t_cmd *cmd);
+t_cmd				*add_to_cmd_list(t_cmd **list);
 void				delete_cmd_list(t_cmd **list);
 void				print_cmd_list(t_cmd *list);
 /* -------------------------------- TOKEN_LST ------------------------------ */

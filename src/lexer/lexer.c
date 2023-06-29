@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/29 19:44:41 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/29 20:25:59 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,22 @@ static t_cmd	*manage_redir(t_cmd *cmd, t_token **token,
 
 t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 {
-	enum e_token_type	type;
-	
-	if ((*token)->next)
-		type = get_token_type((*token)->next->token, (*token)->next->context);
-	else
-		type = OTHER;
-	if ((type == OTHER || type == PIPE) && cmd->cmd)
-	{
-		if (!add_to_char_double_ptr(&cmd->args, (*token)->token))
-			return (NULL);
-		return (cmd);
-	}
-	else if (type == OTHER || type == PIPE)
+	if (!cmd->cmd)
 	{
 		cmd->cmd = (*token)->token;
 		return (cmd);
 	}
+	if (!add_to_char_double_ptr(&cmd->args, (*token)->token))
+		return (NULL);
 	return (cmd);
+}
+
+t_cmd	*manage_pipe(t_cmd *cmd, t_token **token)
+{
+	*token = (*token)->next;
+	if (*token)
+		return (cmd);
+	
 }
 
 t_cmd	*lexer(t_token_list **token_list)
@@ -63,27 +61,26 @@ t_cmd	*lexer(t_token_list **token_list)
 
 	cmd_list = NULL;
 	token = (*token_list)->start;
-	cmd = new_cmd();
+	cmd = add_to_cmd_list(&cmd_list);
 	while (token && cmd)
 	{
 		type = get_token_type(token->token, token->context);
-		while (token && cmd)
+		if (type == PIPE)
+			cmd = manage_pipe(cmd, &token);
+		while (token && cmd && type != PIPE)
 		{
 			if (type == OTHER)
 				cmd = manage_other(cmd, &token);
 			if (type == R_IN || type == R_IN_HERE_DOC 
 				|| type == R_OUT || type == R_OUT_APPEND)
 				cmd = manage_redir(cmd, &token, type);
-			token = token->next;
+			if (cmd)
+				token = token->next;
 			if (token)
 				type = get_token_type(token->token, token->context);
 		}
-		if (cmd)
-			add_to_cmd_list(&cmd_list, cmd);
-		// if (cmd && !cmd->cmd)
-		// 	cmd = mini_error(UNEXPECTED_TK, "|");
-		if (cmd)
-			cmd = new_cmd();
+		if (cmd && token)
+			cmd = add_to_cmd_list(&cmd_list);
 	}
 	if (!cmd)
 	{
