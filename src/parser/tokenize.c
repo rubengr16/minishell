@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/26 21:44:05 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/29 18:59:04 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static t_token	*get_token(char **line, unsigned int *i, enum e_state state)
 			(*i)++;
 	}
 	if (state != NORMAL)
-		return mini_error(UNCLOSED_Q_ERR);
+		return (mini_error(NULL, UNCLOSED_Q_ERR));
 	return (new_token(&(*line)[start], *i - start - adjust_size,
 		original_state));
 }
@@ -73,7 +73,7 @@ t_token_list	*tokenize(char **line)
 	enum e_state	state;
 
 	i = 0;
-	list = create_list();
+	list = create_token_list();
 	if (!list)
 		return (NULL);
 	while ((*line)[i])
@@ -85,11 +85,12 @@ t_token_list	*tokenize(char **line)
 			token = get_token(line, &i, state);
 		else
 			token = get_metachar(&(*line)[i], &i, state);
-		if (!add_to_list(list, token))
+		if (!add_to_token_list(list, token))
 		{
-			delete_list(list);
+			delete_token_list(list, 1);
 			return (NULL);
 		}
 	}
+	free(*line);
 	return (list);
 }

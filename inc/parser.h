@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:10:35 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/26 21:45:33 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/29 19:06:15 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ int				is_true_char(char c, enum e_state state);
 /* -------------------------------- TOKEN_LST ------------------------------ */
 t_token			*new_token(char *str, unsigned int size, enum e_state state);
 void			print_list(t_token_list *list); // DELETE WHEN FINISHED
-void			delete_list(t_token_list *list);
-t_token			*add_to_list(t_token_list *list, t_token *token);
-t_token_list	*create_list(void);
+void			delete_token_list(t_token_list **list, int full_delete);
+t_token			*add_to_token_list(t_token_list *list, t_token *token);
+t_token_list	*create_token_list(void);
 /* --------------------------------- EXPAND -------------------------------- */
 char			*expand(char **line, unsigned int *i, enum e_state state);
 /* -------------------------------- TOKENIZE ------------------------------- */

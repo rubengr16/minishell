@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/26 22:05:32 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/29 19:06:44 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,16 @@ static void	fill_token(char *token, char *str, unsigned int size,
  */
 t_token	*new_token(char *str, unsigned int size, enum e_state state)
 {
-	t_token			*new_token;
+	t_token	*new_token;
 
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
-		return mini_error(ALLOC_ERR);
+		return (mini_error(NULL, ALLOC_ERR));
 	new_token->token = malloc(sizeof(char) * (size + 1));
 	if (!new_token->token)
 	{
 		free(new_token);
-		return mini_error(ALLOC_ERR);
+		return (mini_error(NULL, ALLOC_ERR));
 	}
 	fill_token(new_token->token, str, size, &state);
 	new_token->context = state;
@@ -72,7 +72,7 @@ t_token	*new_token(char *str, unsigned int size, enum e_state state)
  * OUTPUT:	int	:	0	Failed
  * 					1	Fullfilled
  */
-t_token	*add_to_list(t_token_list *list, t_token *token)
+t_token	*add_to_token_list(t_token_list *list, t_token *token)
 {
 	if (!token)
 		return (NULL);
@@ -94,22 +94,23 @@ t_token	*add_to_list(t_token_list *list, t_token *token)
  * INPUT:	t_token_list *list
  * OUTPUT:	void
  */
-void	delete_list(t_token_list *list)
+void	delete_token_list(t_token_list **list, int full_delete)
 {
 	t_token	*aux;
 
 	if (!list)
 		return ;
-	aux = list->start;
-	while (list->start)
+	aux = (*list)->start;
+	while ((*list)->start)
 	{
-		aux = aux->next;
-		if (list->start->token)
-			free(list->start->token);
-		free(list->start);
-		list->start = aux;
+		(*list)->start = aux->next;
+		if (full_delete || aux->context)
+			free(aux->token);
+		free(aux);
+		aux = (*list)->start;
 	}
-	free(list);
+	free(*list);
+	*list = NULL;
 }
 
 // TODO: DELETE
@@ -136,13 +137,13 @@ void	print_list(t_token_list *list)
  * INPUT:	void
  * OUTPUT:	t_token_list *
  */
-t_token_list	*create_list(void)
+t_token_list	*create_token_list(void)
 {
 	t_token_list	*list;
 
 	list = malloc(sizeof(t_token_list));
 	if (!list)
-		return mini_error(ALLOC_ERR);
+		return (mini_error(NULL, ALLOC_ERR));
 	list->start = NULL;
 	list->end = NULL;
 	return (list);

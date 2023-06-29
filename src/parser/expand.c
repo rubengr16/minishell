@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/26 21:56:59 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/28 00:37:39 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static char	*vble_cpy(char **line, char *vble, unsigned int *i,
 	total_len = ft_strlen(*line) - (name_len + 1) + ft_strlen(vble) + 1;
 	aux = malloc(sizeof(char) * total_len);
 	if (!aux)
-		return mini_error(ALLOC_ERR);
+		return (mini_error(NULL, ALLOC_ERR));
 	(*i)--;
 	ft_strlcpy(aux, *line, ft_strlen_to(*line, &(*line)[*i]) + 1);
 	ft_strlcpy(&aux[*i], vble, ft_strlen(vble) + 1);
@@ -57,7 +57,7 @@ char *expand(char **line, unsigned int *i, enum e_state state)
 		return (vble_cpy(line, "$", i, 0));
 	name = malloc(sizeof(char) * (name_len + 1));
 	if (!name)
-		return mini_error(ALLOC_ERR);
+		return (mini_error(NULL, ALLOC_ERR));
 	ft_strlcpy(name, &((*line)[*i]), name_len + 1);
 	aux = getenv(name);
 	free(name);

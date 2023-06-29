@@ -6,7 +6,7 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/06/25 18:00:52 by rgallego         ###   ########.fr        #
+#    Updated: 2023/06/26 23:44:08 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,9 @@ PARSER		=		$(addprefix $(PARSER_DIR), \
 					)
 
 LEXER		=		$(addprefix $(LEXER_DIR), \
+					utils.c \
+					redir.c \
+					cmd.c \
 					lexer.c \
 					)
 

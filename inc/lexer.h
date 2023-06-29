@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 19:54:48 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/26 21:53:02 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/29 19:11:18 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,15 @@
 # include <stdlib.h>
 # include "libft.h"
 # include "parser.h"
+# include "utils.h"
+
+# define UNEXPECTED_TK "syntax error near unexpected token: "
 
 /* ******************************* ENUM ******************************* */
-enum	e_redir_type
+enum	e_token_type
 {
+	OTHER,
+	PIPE,
 	R_IN,
 	R_IN_HERE_DOC,
 	R_OUT,
@@ -30,27 +35,35 @@ enum	e_redir_type
 typedef struct s_redir
 {
 	char				*file;
-	enum e_redir_type	*type;
+	enum e_token_type	type;
 	struct s_redir		*next;
 }	t_redir;
 
 typedef struct s_cmd
 {
 	char			*cmd;
-	char			*args;
+	char			**args;
 	t_redir			*r_in;
 	t_redir			*r_out;
 	struct s_cmd	*next;
 }	t_cmd;
 
 /* ***************************** FUNC DECLARATION ************************** */
-/* ---------------------------------- UTILS -------------------------------- */
-
+/* --------------------------------- UTILS --------------------------------- */
+char				**add_to_char_double_ptr(char ***char_double_ptr,
+						char *str);
+enum e_token_type	get_token_type(char *token, enum e_state state);
+/* --------------------------------- REDIR --------------------------------- */
+t_redir				*insert_to_redir_list(t_redir **list, char *file,
+						enum e_token_type type);
+void				delete_redir_list(t_redir **list);
+/* ---------------------------------- CMD ---------------------------------- */
+t_cmd				*new_cmd(void);
+t_cmd				*add_to_cmd_list(t_cmd **list, t_cmd *cmd);
+void				delete_cmd_list(t_cmd **list);
+void				print_cmd_list(t_cmd *list);
 /* -------------------------------- TOKEN_LST ------------------------------ */
-
 /* --------------------------------- EXPAND -------------------------------- */
-
-/* -------------------------------- TOKENIZE ------------------------------- */
-
-
+/* --------------------------------- LEXER --------------------------------- */
+t_cmd				*lexer(t_token_list **token_list);
 #endif
