@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/29 18:59:04 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/29 22:13:29 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_token_list	*tokenize(char **line)
 			token = get_metachar(&(*line)[i], &i, state);
 		if (!add_to_token_list(list, token))
 		{
-			delete_token_list(list, 1);
+			delete_token_list(&list, 1);
 			return (NULL);
 		}
 	}

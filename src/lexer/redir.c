@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 22:10:25 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/29 18:23:18 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/29 22:05:10 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static t_redir	*new_redir(char *file, enum e_token_type type)
 	return (redir);
 }
 
-t_redir	*insert_to_redir_list(t_redir **list,char *file, 
+t_redir	*insert_to_redir_list(t_redir **list, char *file,
 	enum e_token_type type)
 {
 	t_redir	*aux;

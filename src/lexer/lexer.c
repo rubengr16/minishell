@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/29 21:10:51 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/29 22:12:13 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static t_cmd	*manage_redir(t_cmd *cmd, t_token **token,
 	enum e_token_type type)
 {
 	t_redir	**chosen_redir;
-	
+
 	*token = (*token)->next;
 	if (!*token)
 		return (mini_error(UNEXPECTED_TK, "newline"));
@@ -46,14 +46,38 @@ t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 
 t_cmd	*manage_pipe(t_cmd *cmd_list, t_cmd *cmd, t_token **token)
 {
-	if (cmd_list == cmd 
+	if (cmd_list == cmd
 		&& !cmd->cmd && !cmd->args && !cmd->r_in && !cmd->r_out)
 		return (mini_error(UNEXPECTED_TK, (*token)->token));
 	*token = (*token)->next;
 	if (!*token)
-		return mini_error(UNEXPECTED_TK, "newline"); // In doubt
+		return (mini_error(UNEXPECTED_TK, "newline")); // In doubt
 	if (*token && get_token_type((*token)->token, (*token)->context) == PIPE)
 		return (mini_error(UNEXPECTED_TK, (*token)->token));
+	return (cmd);
+}
+
+t_cmd	*get_cmd(t_cmd **cmd_list, t_cmd *cmd, t_token **token)
+{
+	enum e_token_type	type;
+
+	type = get_token_type((*token)->token, (*token)->context);
+	while (*token && cmd && type != PIPE)
+	{
+		if (type == OTHER)
+			cmd = manage_other(cmd, token);
+		if (type == R_IN || type == R_IN_HERE_DOC
+			|| type == R_OUT || type == R_OUT_APPEND)
+			cmd = manage_redir(cmd, token, type);
+		if (cmd)
+			*token = (*token)->next;
+		if (*token)
+			type = get_token_type((*token)->token, (*token)->context);
+	}
+	if (type == PIPE)
+		cmd = manage_pipe(*cmd_list, cmd, token);
+	if (cmd && *token)
+		cmd = add_to_cmd_list(cmd_list);
 	return (cmd);
 }
 
@@ -62,31 +86,12 @@ t_cmd	*lexer(t_token_list **token_list)
 	t_cmd				*cmd_list;
 	t_cmd				*cmd;
 	t_token				*token;
-	enum e_token_type	type;
 
 	cmd_list = NULL;
 	token = (*token_list)->start;
 	cmd = add_to_cmd_list(&cmd_list);
 	while (token && cmd)
-	{
-		type = get_token_type(token->token, token->context);
-		while (token && cmd && type != PIPE)
-		{
-			if (type == OTHER)
-				cmd = manage_other(cmd, &token);
-			if (type == R_IN || type == R_IN_HERE_DOC 
-				|| type == R_OUT || type == R_OUT_APPEND)
-				cmd = manage_redir(cmd, &token, type);
-			if (cmd)
-				token = token->next;
-			if (token)
-				type = get_token_type(token->token, token->context);
-		}
-		if (type == PIPE)
-			cmd = manage_pipe(cmd_list, cmd, &token);
-		if (cmd && token)
-			cmd = add_to_cmd_list(&cmd_list);
-	}
+		cmd = get_cmd(&cmd_list, cmd, &token);
 	if (!cmd)
 	{
 		delete_token_list(token_list, 0);
