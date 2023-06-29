@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/30 00:20:17 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/30 00:21:15 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	discover_leaks(void)
 	system("leaks minishell");
 }
 
-char	*get_line(void)
+static char	*get_line(void)
 {
 	char	*result_line;
 	char	*line;
