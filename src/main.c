@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/29 19:10:35 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/29 21:01:47 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	main(void)
 	if (!cmd_list)
 		return (1);
 	print_cmd_list(cmd_list);
-	delete_token_list(&list, 0);
 	delete_cmd_list(&cmd_list);
 	atexit(discover_leaks);
 }

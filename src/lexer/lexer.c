@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/29 20:25:59 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/06/29 21:10:51 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,17 @@ t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 	return (cmd);
 }
 
-t_cmd	*manage_pipe(t_cmd *cmd, t_token **token)
+t_cmd	*manage_pipe(t_cmd *cmd_list, t_cmd *cmd, t_token **token)
 {
+	if (cmd_list == cmd 
+		&& !cmd->cmd && !cmd->args && !cmd->r_in && !cmd->r_out)
+		return (mini_error(UNEXPECTED_TK, (*token)->token));
 	*token = (*token)->next;
-	if (*token)
-		return (cmd);
-	
+	if (!*token)
+		return mini_error(UNEXPECTED_TK, "newline"); // In doubt
+	if (*token && get_token_type((*token)->token, (*token)->context) == PIPE)
+		return (mini_error(UNEXPECTED_TK, (*token)->token));
+	return (cmd);
 }
 
 t_cmd	*lexer(t_token_list **token_list)
@@ -65,8 +70,6 @@ t_cmd	*lexer(t_token_list **token_list)
 	while (token && cmd)
 	{
 		type = get_token_type(token->token, token->context);
-		if (type == PIPE)
-			cmd = manage_pipe(cmd, &token);
 		while (token && cmd && type != PIPE)
 		{
 			if (type == OTHER)
@@ -79,6 +82,8 @@ t_cmd	*lexer(t_token_list **token_list)
 			if (token)
 				type = get_token_type(token->token, token->context);
 		}
+		if (type == PIPE)
+			cmd = manage_pipe(cmd_list, cmd, &token);
 		if (cmd && token)
 			cmd = add_to_cmd_list(&cmd_list);
 	}
@@ -88,5 +93,6 @@ t_cmd	*lexer(t_token_list **token_list)
 		delete_cmd_list(&cmd_list);
 		return (NULL);
 	}
+	delete_token_list(token_list, 0);
 	return (cmd_list);
 }
