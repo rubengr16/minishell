@@ -10,15 +10,17 @@
 #                                                                              #
 # **************************************************************************** #
 
-SRC_DIR	=			src/
+SRC_DIR		=		src/
 
-PARSER_DIR		=	parser/
+PARSER_DIR	=		parser/
 
-LEXER_DIR		=	lexer/
+LEXER_DIR	=		lexer/
 
-UTILS_DIR		=	utils/
+ENV_DIR		=		enviroment/
 
-INC_DIR	=			inc/
+UTILS_DIR	=		utils/
+
+INC_DIR		=		inc/
 
 MINISHELL	=		main.c
 
@@ -36,14 +38,21 @@ LEXER		=		$(addprefix $(LEXER_DIR), \
 					lexer.c \
 					)
 
+ENVIROMENT	=		$(addprefix $(ENV_DIR), \
+					enviroment.c \
+					builtins.c	\
+					env_utils.c	\
+					)
+
 UTILS		=		$(addprefix $(UTILS_DIR), \
 					utils.c \
 					)
 
-SRCS	= 			$(addprefix $(SRC_DIR), \
+SRCS		= 		$(addprefix $(SRC_DIR), \
 					$(MINISHELL) \
 					$(PARSER) \
 					$(LEXER) \
+					$(ENVIROMENT) \
 					$(UTILS) \
 					)
 
