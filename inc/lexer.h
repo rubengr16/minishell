@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 19:54:48 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/29 19:53:08 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/07 19:00:01 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_cmd
 /* --------------------------------- UTILS --------------------------------- */
 char				**add_to_char_double_ptr(char ***char_double_ptr,
 						char *str);
-enum e_token_type	get_token_type(char *token, enum e_state state);
+enum e_token_type	get_token_type(char *token);
 /* --------------------------------- REDIR --------------------------------- */
 t_redir				*insert_to_redir_list(t_redir **list, char *file,
 						enum e_token_type type);

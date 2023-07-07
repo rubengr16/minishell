@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/29 19:06:44 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/07 19:01:53 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ t_token	*new_token(char *str, unsigned int size, enum e_state state)
 		return (mini_error(NULL, ALLOC_ERR));
 	}
 	fill_token(new_token->token, str, size, &state);
-	new_token->context = state;
 	new_token->next = NULL;
 	return (new_token);
 }
@@ -104,7 +103,7 @@ void	delete_token_list(t_token_list **list, int full_delete)
 	while ((*list)->start)
 	{
 		(*list)->start = aux->next;
-		if (full_delete || aux->context)
+		if (full_delete)
 			free(aux->token);
 		free(aux);
 		aux = (*list)->start;
@@ -126,7 +125,7 @@ void	print_list(t_token_list *list)
 	aux = list->start;
 	while (aux)
 	{
-		printf("Token %d: token = %s; context = %u\n", i, aux->token, aux->context);
+		printf("Token %d: token = %s\n", i, aux->token);
 		i++;
 		aux = aux->next;
 	}

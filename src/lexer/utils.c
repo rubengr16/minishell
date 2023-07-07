@@ -6,12 +6,11 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 23:43:22 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/29 00:10:38 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/07 19:01:09 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include <stdio.h>
 
 char	**add_to_char_double_ptr(char ***char_double_ptr, char *str)
 {
@@ -41,20 +40,20 @@ char	**add_to_char_double_ptr(char ***char_double_ptr, char *str)
 	return (*char_double_ptr);
 }
 
-enum e_token_type	get_token_type(char *token, enum e_state state)
+enum e_token_type	get_token_type(char *token)
 {
 	size_t	len;
 
 	len = ft_strlen(token);
-	if (state == METACHAR && !ft_strncmp("|", token, len))
+	if (!ft_strncmp("|", token, len))
 		return (PIPE);
-	if (state == METACHAR && !ft_strncmp("<", token, len))
+	if (!ft_strncmp("<", token, len))
 		return (R_IN);
-	if (state == METACHAR && !ft_strncmp("<<", token, len))
+	if (!ft_strncmp("<<", token, len))
 		return (R_IN_HERE_DOC);
-	if (state == METACHAR && !ft_strncmp(">", token, len))
+	if (!ft_strncmp(">", token, len))
 		return (R_OUT);
-	if (state == METACHAR && !ft_strncmp(">>", token, len))
+	if (!ft_strncmp(">>", token, len))
 		return (R_OUT_APPEND);
 	return (OTHER);
 }

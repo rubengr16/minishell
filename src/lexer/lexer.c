@@ -6,12 +6,11 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/29 22:12:13 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/07 19:01:00 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include <stdio.h>
 
 static t_cmd	*manage_redir(t_cmd *cmd, t_token **token,
 	enum e_token_type type)
@@ -21,7 +20,7 @@ static t_cmd	*manage_redir(t_cmd *cmd, t_token **token,
 	*token = (*token)->next;
 	if (!*token)
 		return (mini_error(UNEXPECTED_TK, "newline"));
-	if (get_token_type((*token)->token, (*token)->context) != OTHER)
+	if (get_token_type((*token)->token) != OTHER)
 		return (mini_error(UNEXPECTED_TK, (*token)->token));
 	if (type == R_IN || type == R_IN_HERE_DOC)
 		chosen_redir = &cmd->r_in;
@@ -52,7 +51,7 @@ t_cmd	*manage_pipe(t_cmd *cmd_list, t_cmd *cmd, t_token **token)
 	*token = (*token)->next;
 	if (!*token)
 		return (mini_error(UNEXPECTED_TK, "newline")); // In doubt
-	if (*token && get_token_type((*token)->token, (*token)->context) == PIPE)
+	if (*token && get_token_type((*token)->token) == PIPE)
 		return (mini_error(UNEXPECTED_TK, (*token)->token));
 	return (cmd);
 }
@@ -61,7 +60,7 @@ t_cmd	*get_cmd(t_cmd **cmd_list, t_cmd *cmd, t_token **token)
 {
 	enum e_token_type	type;
 
-	type = get_token_type((*token)->token, (*token)->context);
+	type = get_token_type((*token)->token);
 	while (*token && cmd && type != PIPE)
 	{
 		if (type == OTHER)
@@ -72,7 +71,7 @@ t_cmd	*get_cmd(t_cmd **cmd_list, t_cmd *cmd, t_token **token)
 		if (cmd)
 			*token = (*token)->next;
 		if (*token)
-			type = get_token_type((*token)->token, (*token)->context);
+			type = get_token_type((*token)->token);
 	}
 	if (type == PIPE)
 		cmd = manage_pipe(*cmd_list, cmd, token);
