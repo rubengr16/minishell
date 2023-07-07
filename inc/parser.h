@@ -13,7 +13,6 @@
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "libft.h"
 # include "utils.h"
 
 # define ALLOC_ERR "allocation failed"

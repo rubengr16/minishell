@@ -13,10 +13,7 @@
 #ifndef LEXER_H
 # define LEXER_H
 
-# include <stdlib.h>
-# include "libft.h"
 # include "parser.h"
-# include "utils.h"
 
 # define UNEXPECTED_TK "syntax error near unexpected token: "
 

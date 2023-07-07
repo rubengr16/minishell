@@ -10,11 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include "parser.h"
-#include "lexer.h"
+#include "enviroment.h"
 
 void	discover_leaks(void)
 {
@@ -49,12 +47,14 @@ static char	*get_line(void)
 }
 
 /*int argc, char **argv, char **env*/
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char			*line;
 	t_token_list	*list;
 	t_cmd			*cmd_list;
-
+	t_enviroment	*my_env = malloc(sizeof(t_enviroment));
+	if (my_env)
+		return (1);
 	line = get_line();
 	if (line && *line)
 	{
@@ -68,5 +68,5 @@ int	main(void)
 		print_cmd_list(cmd_list);
 		delete_cmd_list(&cmd_list);
 	}
-	atexit(discover_leaks);
+	
 }
