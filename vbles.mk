@@ -18,6 +18,8 @@ LEXER_DIR	=		lexer/
 
 ENV_DIR		=		enviroment/
 
+EXEC_DIR	=		executtor/
+
 UTILS_DIR	=		utils/
 
 INC_DIR		=		inc/
@@ -38,6 +40,11 @@ LEXER		=		$(addprefix $(LEXER_DIR), \
 					lexer.c \
 					)
 
+EXECUTTOR		=	$(addprefix $(EXEC_DIR), \
+					execute.c \
+					utils.c \
+					)
+
 ENVIROMENT	=		$(addprefix $(ENV_DIR), \
 					enviroment.c \
 					builtins.c	\
@@ -53,6 +60,7 @@ SRCS		= 		$(addprefix $(SRC_DIR), \
 					$(PARSER) \
 					$(LEXER) \
 					$(ENVIROMENT) \
+					$(EXECUTTOR) \
 					$(UTILS) \
 					)
 

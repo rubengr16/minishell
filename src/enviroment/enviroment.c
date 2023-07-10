@@ -1,6 +1,6 @@
 #include "enviroment.h"
 
-void	create_env_aux(t_enviroment *my_env, t_variable *var, int i)
+void	create_env_aux(t_enviroment *my_env, t_variable *new_var, int i)
 {
 	if (i == 0)
 	{
@@ -30,7 +30,7 @@ int	create_env_list(char **envp, t_enviroment *my_env)
 		mini_split(envp[i], new_var);
 		if (!new_var->name && !new_var->value)
 		{
-			free(new_var)
+			free(new_var);
 			return (1);
 		}
 		create_env_aux(my_env, new_var, i);

@@ -19,7 +19,7 @@ typedef struct s_enviroment
 
 /* ***************************** ENVIROMENT ****************************** */
 
-void	create_env_list(char **envp, t_enviroment *my_env);
+int		create_env_list(char **envp, t_enviroment *my_env);
 void	delete_env_variables(t_enviroment *my_env);
 void	mini_split(char *variable, t_variable *new_var);
 char	*get_env(t_enviroment *my_env, char *name);
