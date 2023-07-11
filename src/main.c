@@ -50,12 +50,13 @@ void	create_command(t_cmd **command)	// Auxiliar hasta que este el parser
 {
 	t_cmd	*cmd1;
 	t_cmd	*cmd2;
+//	t_cmd	*cmd3;
 
 	cmd1 = malloc(sizeof(t_cmd));
-	cmd1->cmd = ft_strdup("ls");
+	cmd1->cmd = ft_strdup("echo");
 	cmd1->args = malloc(sizeof(char *) * 3);
-	cmd1->args[0] = ft_strdup("ls");
-	cmd1->args[1] = ft_strdup("-l");
+	cmd1->args[0] = ft_strdup("echo");
+	cmd1->args[1] = ft_strdup("Funciona");
 	cmd1->args[2] = NULL;
 	cmd1->r_out = NULL;
 	cmd1->r_in = NULL;
@@ -64,12 +65,25 @@ void	create_command(t_cmd **command)	// Auxiliar hasta que este el parser
 	cmd2->cmd = ft_strdup("wc");
 	cmd2->args = malloc(sizeof(char *) * 3);
 	cmd2->args[0] = ft_strdup("wc");
-	cmd2->args[1] = ft_strdup("-l");
+	cmd2->args[1] = ft_strdup("-c");
 	cmd2->args[2] = NULL;
 	cmd2->next = NULL;
 	cmd2->r_out = NULL;
 	cmd2->r_in = NULL;
+/*
+	cmd3 = malloc(sizeof(t_cmd));
+	cmd3->cmd = ft_strdup("wc");
+	cmd3->args = malloc(sizeof(char *) * 3);
+	cmd3->args[0] = ft_strdup("wc");
+	cmd3->args[1] = ft_strdup("-l");
+	cmd3->args[2] = NULL;
+	cmd3->next = NULL;
+	cmd3->r_out = NULL;
+	cmd3->r_in = NULL;
 
+	cmd1->next = cmd2;
+	cmd2->next = cmd3;
+*/
 	cmd1->next = cmd2;
 	*command = cmd1;
 }
