@@ -6,14 +6,17 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:57:50 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/29 23:37:27 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/13 23:52:06 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-void	*mini_error(char *optional_str, char *str)
+void	*mini_error(char *optional_str, char *str, void *to_free)
 {
+	if (to_free)
+		free(to_free);
+	to_free = NULL;
 	ft_putstr_fd("minishell: ", STDOUT_FILENO);
 	ft_putstr_fd(optional_str, STDOUT_FILENO);
 	ft_putendl_fd(str, STDOUT_FILENO);

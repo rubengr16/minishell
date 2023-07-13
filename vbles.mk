@@ -6,7 +6,7 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/07/07 18:41:53 by rgallego         ###   ########.fr        #
+#    Updated: 2023/07/08 21:06:38 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ MINISHELL	=		main.c
 PARSER		=		$(addprefix $(PARSER_DIR), \
 					utils.c \
 					token_lst.c \
-					expand.c \
 					tokenize.c \
 					)
 
@@ -33,6 +32,7 @@ LEXER		=		$(addprefix $(LEXER_DIR), \
 					utils.c \
 					redir.c \
 					cmd.c \
+					expand.c \
 					lexer.c \
 					)
 

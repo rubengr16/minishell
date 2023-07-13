@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:10:35 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/07 18:47:55 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/08 21:16:37 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 # define TRANS_SINGLE_Q -1
 # define TRANS_DOUBLE_Q -2
+# define TRANS_DOLLAR -3
 
 # define ALLOC_ERR "allocation failed"
 # define UNCLOSED_Q_ERR "unclosed quotes found"
@@ -58,8 +59,6 @@ void			print_list(t_token_list *list); // DELETE WHEN FINISHED
 void			delete_token_list(t_token_list **list, int full_delete);
 t_token			*add_to_token_list(t_token_list *list, t_token *token);
 t_token_list	*create_token_list(void);
-/* --------------------------------- EXPAND -------------------------------- */
-char			*expand(char **line, unsigned int *i, enum e_state state);
 /* -------------------------------- TOKENIZE ------------------------------- */
 t_token_list	*tokenize(char **line);
 

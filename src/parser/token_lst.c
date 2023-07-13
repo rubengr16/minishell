@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/07 19:01:53 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/13 23:02:53 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ t_token	*new_token(char *str, unsigned int size, enum e_state state)
 
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
-		return (mini_error(NULL, ALLOC_ERR));
+		return (mini_error(NULL, ALLOC_ERR, NULL));
 	new_token->token = malloc(sizeof(char) * (size + 1));
 	if (!new_token->token)
 	{
 		free(new_token);
-		return (mini_error(NULL, ALLOC_ERR));
+		return (mini_error(NULL, ALLOC_ERR, NULL));
 	}
 	fill_token(new_token->token, str, size, &state);
 	new_token->next = NULL;
@@ -142,7 +142,7 @@ t_token_list	*create_token_list(void)
 
 	list = malloc(sizeof(t_token_list));
 	if (!list)
-		return (mini_error(NULL, ALLOC_ERR));
+		return (mini_error(NULL, ALLOC_ERR, NULL));
 	list->start = NULL;
 	list->end = NULL;
 	return (list);

@@ -6,12 +6,14 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 19:54:48 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/07 19:00:01 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/13 23:41:51 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
+
+#include <stdio.h>
 
 # include <stdlib.h>
 # include "libft.h"
@@ -19,6 +21,7 @@
 # include "utils.h"
 
 # define UNEXPECTED_TK "syntax error near unexpected token: "
+# define AMBIGUOUS_REDIR "ambiguous redirect"
 
 /* ******************************* ENUM ******************************* */
 enum	e_token_type
@@ -53,6 +56,7 @@ typedef struct s_cmd
 char				**add_to_char_double_ptr(char ***char_double_ptr,
 						char *str);
 enum e_token_type	get_token_type(char *token);
+char				*get_real_token(char *token, unsigned int is_redir);
 /* --------------------------------- REDIR --------------------------------- */
 t_redir				*insert_to_redir_list(t_redir **list, char *file,
 						enum e_token_type type);
@@ -64,6 +68,8 @@ void				delete_cmd_list(t_cmd **list);
 void				print_cmd_list(t_cmd *list);
 /* -------------------------------- TOKEN_LST ------------------------------ */
 /* --------------------------------- EXPAND -------------------------------- */
+char				*expand(char **line, unsigned int *i, enum e_state state,
+						unsigned int is_redir);
 /* --------------------------------- LEXER --------------------------------- */
 t_cmd				*lexer(t_token_list **token_list);
 #endif

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/07 18:47:00 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/13 23:03:02 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,11 @@ static t_token	*get_token(char **line, unsigned int *i, enum e_state state)
 	while (is_end_of_token((*line)[*i], state))
 	{
 		if ((*line)[*i] == '$' && state != SINGLE_QUOTE)
+		{
+			(*line)[*i] = TRANS_DOLLAR;
 			while (is_end_of_vble((*line)[*i], state))
 				(*i)++;
+		}
 		else 
 		{
 			if (is_true_quote((*line)[*i], state))
@@ -63,7 +66,7 @@ static t_token	*get_token(char **line, unsigned int *i, enum e_state state)
 		}
 	}
 	if (state != NORMAL)
-		return (mini_error(NULL, UNCLOSED_Q_ERR));
+		return (mini_error(NULL, UNCLOSED_Q_ERR, NULL));
 	return (new_token(&(*line)[start], *i - start, original_state));
 }
 
