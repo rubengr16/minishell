@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/13 23:41:44 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/14 00:17:50 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,7 @@ t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 	
 	real_token = get_real_token((*token)->token, 0);
 	if (!real_token)
-	{
-		printf("real_tokennnnnnnnnnnnnnnnnnnnnnnnnnn\n");
 		return (NULL);
-	}
 	(*token)->token = real_token;
 	if (!cmd->cmd)
 	{

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 23:43:22 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/14 00:13:40 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/14 00:23:45 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	*get_real_token(char *token, unsigned int is_redir)
 
 	state = NORMAL;
 	i = 0;
-	while (*token && token[i])
+	while (token && token[i])
 	{
 		if (token[i] == TRANS_DOUBLE_Q && state == NORMAL)
 			state = DOUBLE_QUOTE;

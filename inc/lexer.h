@@ -6,14 +6,12 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 19:54:48 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/13 23:41:51 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/14 00:24:30 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
-
-#include <stdio.h>
 
 # include <stdlib.h>
 # include "libft.h"
