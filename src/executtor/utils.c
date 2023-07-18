@@ -23,6 +23,8 @@ char	*verify_commands(char **path, char *cmd)
 
 	i = 0;
 	flag = 0;
+	if (cmd[0] == '.')
+		return(cmd);
 	while (path[i] && !flag)
 	{
 		aux = ft_strjoin("/", cmd);

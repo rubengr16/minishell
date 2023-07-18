@@ -3,6 +3,7 @@
 
 # include "lexer.h"
 # include <stdio.h>
+# include <signal.h>
 
 typedef struct s_variable
 {

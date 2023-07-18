@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:57:50 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/29 23:37:27 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/18 20:18:46 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	free_double_char_ptr(char **char_double_ptr)
 {
 	unsigned int	i;
 
-	i = 0;
+	i = 1;
 	while (char_double_ptr[i])
 	{
 		free(char_double_ptr[i]);

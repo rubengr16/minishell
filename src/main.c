@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/30 00:21:15 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/18 20:24:20 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,26 @@ static char	*get_line(void)
 	add_history(line);
 	return (line);
 }
+/*
+t_cmd	*cmd1;
+
+cmd1 = malloc(sizeof(t_cmd));
+cmd1->cmd = ft_strdup("cat");
+cmd1->args = malloc(sizeof(char *) * 2);
+cmd1->args[0] = ft_strdup("cat");
+cmd1->args[1] = NULL;
+cmd1->r_out = NULL;
+cmd1->r_in = files_in;
+
+t_redir *files_in = malloc(sizeof(t_redir));
+
+files_in->file = ft_strdup("EOL");
+files_in->type = R_IN_HERE_DOC;
+files_in->next = NULL;
+
+*/
 void	create_command(t_cmd **command)	// Auxiliar hasta que este el parser
 {
-	/*/home/blueflare011/Vertedero/redir_test*/
 	t_cmd	*cmd1;
 //	t_cmd	*cmd2;
 //	t_cmd	*cmd3;
@@ -58,38 +75,43 @@ void	create_command(t_cmd **command)	// Auxiliar hasta que este el parser
 	files_in->next = NULL;
 
 	cmd1 = malloc(sizeof(t_cmd));
-	cmd1->cmd = ft_strdup("cat");
+	cmd1->cmd = ft_strdup("sort");
 	cmd1->args = malloc(sizeof(char *) * 2);
-	cmd1->args[0] = ft_strdup("cat");
+	cmd1->args[0] = ft_strdup("sort");
 	cmd1->args[1] = NULL;
 	cmd1->r_out = NULL;
 	cmd1->r_in = files_in;
 /*
 	cmd2 = malloc(sizeof(t_cmd));
-	cmd2->cmd = ft_strdup("wc");
-	cmd2->args = malloc(sizeof(char *) * 3);
-	cmd2->args[0] = ft_strdup("wc");
-	cmd2->args[1] = ft_strdup("-l");
-	cmd2->args[2] = NULL;
-	cmd2->next = NULL;
+	cmd2->cmd = ft_strdup("pwd");
+	cmd2->args = malloc(sizeof(char *) * 2);
+	cmd2->args[0] = ft_strdup("pwd");
+	cmd2->args[1] = NULL;
 	cmd2->r_out = NULL;
 	cmd2->r_in = NULL;
 
 	cmd3 = malloc(sizeof(t_cmd));
-	cmd3->cmd = ft_strdup("wc");
-	cmd3->args = malloc(sizeof(char *) * 3);
-	cmd3->args[0] = ft_strdup("wc");
-	cmd3->args[1] = ft_strdup("-l");
-	cmd3->args[2] = NULL;
-	cmd3->next = NULL;
+	cmd3->cmd = ft_strdup("ls");
+	cmd3->args = malloc(sizeof(char *) * 2);
+	cmd3->args[0] = ft_strdup("ls");
+	cmd3->args[1] = NULL;
 	cmd3->r_out = NULL;
 	cmd3->r_in = NULL;
-
-	cmd1->next = cmd2;
-	cmd2->next = cmd3;
 */
 	cmd1->next = NULL;
+//	cmd2->next = NULL;
+//	cmd3->next = NULL;
 	*command = cmd1;
+}
+
+void	signalHandling(int sig)
+{
+	if (sig == SIGINT)
+		write(1, "\n", 1);
+	else if (sig == SIGQUIT)
+		write(1, "exit\n", 5);
+	else if (sig == SIGTERM)
+		write(1, "Hola\n", 5);
 }
 
 /*int argc, char **argv, char **env*/
@@ -99,30 +121,31 @@ int	main(int argc, char **argv, char **envp)
 	t_token_list	*list;
 	t_cmd			*cmd_list;
 	t_enviroment	*my_env = malloc(sizeof(t_enviroment));
+	
 	if (!my_env)
 		return (1);
-	
 	(void)argc;
 	(void)argv;
-	create_command(&cmd_list);
-	create_env_list(envp, my_env);
-	exec_main(cmd_list, my_env);
-	delete_cmd_list(&cmd_list);
-	delete_env_variables(my_env);
-	return 0;
+	signal(SIGINT, signalHandling);
+	signal(SIGQUIT, signalHandling);
 	line = get_line();
-	if (line && *line)
+	while (line)
 	{
-		list = tokenize(&line);
-		if (!list)
-			return (1);
-		print_list(list);
-		cmd_list = lexer(&list);
-		if (!cmd_list)
-			return (1);
-		print_cmd_list(cmd_list);
-
-		delete_cmd_list(&cmd_list);
+		if (line && *line)
+		{
+			list = tokenize(&line);
+			if (!list)
+				return (1);
+			cmd_list = lexer(&list);
+			if (!cmd_list)
+				return (1);
+			create_env_list(envp, my_env);
+			exec_main(cmd_list, my_env);
+			//print_cmd_list(cmd_list);
+			delete_cmd_list(&cmd_list);
+		}
+		line = get_line();
 	}
-	
+	delete_env_variables(my_env);
+	return (0);
 }

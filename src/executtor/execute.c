@@ -8,8 +8,6 @@ int	exec_builtin(t_cmd *cmd, t_enviroment *env)
 		ft_pwd();
 	else if (ft_strncmp(cmd->cmd, "export", 7) == 0)
 		ft_export(env, cmd->args);
-	else if (ft_strncmp(cmd->cmd, "cd", 3) == 0)
-		ft_cd(env, cmd->args);
 	else if (ft_strncmp(cmd->cmd, "unset", 6) == 0)
 		ft_unset(env, cmd->args);
 	else if (ft_strncmp(cmd->cmd, "env", 4) == 0)
@@ -21,8 +19,6 @@ int	exec_builtin(t_cmd *cmd, t_enviroment *env)
 
 void	exec_command(t_cmd *aux, t_pipe *m_pipe, t_enviroment *env, char **path, int i, int length)
 {
-	int	j;
-
 	if (i == 0 && aux->next){
 		dup2(m_pipe[i][1], STDOUT_FILENO);
 	}
@@ -34,17 +30,20 @@ void	exec_command(t_cmd *aux, t_pipe *m_pipe, t_enviroment *env, char **path, in
 		dup2(m_pipe[i - 1][0], STDIN_FILENO);
 		dup2(m_pipe[i][1], STDOUT_FILENO);
 	}
-	j = 0;
-	while (j < length - 1)
+	i = 0;
+	while (i < length - 1)
 	{
-		close(m_pipe[j][0]);
-		close(m_pipe[j++][1]);
+		close(m_pipe[i][0]);
+		close(m_pipe[i++][1]);
 	}
 	if (!filesManagement(aux) && !exec_builtin(aux, env))
 	{
+		//write(2, "Hola?\n", 6);
 		execve(verify_commands(path, aux->cmd), aux->args, NULL);
+		mini_fprintf(aux->cmd, "command not found");
 		exit(1);
 	}
+	exit(1);
 }
 
 void	closeNwait(t_pipe *m_pipe, pid_t *id, int length)
@@ -95,6 +94,13 @@ int	exec_main(t_cmd *command, t_enviroment *env)
 	int		i;
 
 	i = 0;
+	if (ft_strncmp(command->cmd, "exit", 5) == 0)
+		exit(0);
+	if (ft_strncmp(command->cmd, "cd", 3) == 0)
+	{
+		ft_cd(env, command->args);
+		return (0);
+	}
 	path = ft_split(get_env(env, "PATH"), ':');
 	prepare_command(command, env, path);
 	while (path[i])

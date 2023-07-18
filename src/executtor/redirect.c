@@ -1,15 +1,44 @@
 #include "executtor.h"
 
+void	mini_fprintf(char *str, char *message)
+{
+	ft_putstr_fd(str,  2);
+	write(2, ": ", 2);
+	ft_putstr_fd(message,  2);
+	write(2, "\n", 1);
+}
+
+int	tmp_exist(void)
+{
+	int	fd;
+	DIR	*tmp;
+
+	tmp = opendir("/tmp");
+	if (tmp)
+	{
+		fd = open("/tmp/HERE_DOC", O_RDWR | O_CREAT | O_TRUNC, 0644);
+		closedir(tmp);
+	}
+	else
+		fd = open("HERE_DOC", O_RDWR | O_CREAT | O_TRUNC, 0644);
+	return (fd);
+}
+
 int	here_doc(t_redir *files)
 {
 	char	*str;
-	char	*buffer;
+	int		fd;
 
+	fd = tmp_exist();
+	if (fd == -1)
+		return (fd);
+	write(2, "> ", 2);
 	str = get_next_line(STDIN_FILENO);
 	while (ft_strncmp(str, files->file, ft_strlen(files->file)) != 0)
 	{
 		ft_putstr_fd(str, fd);
 		free(str);
+		write(2, "> ", 2);
 		str = get_next_line(STDIN_FILENO);
 	}
 	free(str);
@@ -40,7 +69,7 @@ int	redirect_in(t_cmd *cmd)
 			}
 			else
 			{
-				printf("%s: Error. El fichero no existe o no tienes permisos\n", files->file);
+				mini_fprintf(files->file, "No such file or directory");
 				return (1);
 			}
 		}
@@ -58,7 +87,7 @@ int	redirect_out(t_cmd *cmd)
 	while (files)
 	{
 		if (access(files->file, F_OK) == 0 && access(files->file, W_OK) == -1){
-			printf("%s: Error. No tienes permisos para escribir en el fichero\n", files->file);
+			mini_fprintf(files->file, "Permission denied");
 			return (1);
 		}
 		unlink(files->file);

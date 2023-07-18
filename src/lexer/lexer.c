@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/29 22:12:13 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/18 19:58:23 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 	if (!cmd->cmd)
 	{
 		cmd->cmd = (*token)->token;
+		if (!add_to_char_double_ptr(&cmd->args, (*token)->token))
+			return (NULL);
 		return (cmd);
 	}
 	if (!add_to_char_double_ptr(&cmd->args, (*token)->token))
