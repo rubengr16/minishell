@@ -20,12 +20,16 @@ all: $(NAME)
 $(LIBFTNAME):
 	$(MAKE) -C $(LIBFT)
 
-$(NAME): $(OBJS) $(LIBFTNAME)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFTNAME) $(addprefix -l, $(LIB_ALL)) -o $@
+$(GNLNAME):
+	$(MAKE) -C $(GNL)
+
+$(NAME): $(OBJS) $(LDFLAGS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFTNAME) $(GNLNAME) $(addprefix -l, $(LIB_ALL)) -o $@
 
 clean:
 	$(RM) $(OBJS) $(DPNDS)
 	$(MAKE) -C $(LIBFT) fclean
+	$(MAKE) -C $(GNL) fclean
 
 fclean: clean
 	$(RM) $(NAME)

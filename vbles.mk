@@ -43,6 +43,7 @@ LEXER		=		$(addprefix $(LEXER_DIR), \
 EXECUTTOR		=	$(addprefix $(EXEC_DIR), \
 					execute.c \
 					utils.c \
+					redirect.c \
 					)
 
 ENVIROMENT	=		$(addprefix $(ENV_DIR), \
@@ -74,13 +75,15 @@ RM		=			-rm -f
 
 CFLAGS	=			-Wall -Werror -Wextra -MD -fsanitize=address -g3
 
-LDFLAGS	=			$(LIBFTNAME)
+LDFLAGS	=			$(LIBFTNAME) \
+					$(GNLNAME)
 
 NAME	=			minishell
 
 INC_ALL	=			\
 					$(INC_DIR) \
-					$(LIBFT)$(INC_DIR)
+					$(LIBFT)$(INC_DIR) \
+					$(GNL)$(INC_DIR)
 
 LIB_ALL = 			\
 					readline
@@ -88,3 +91,7 @@ LIB_ALL = 			\
 LIBFT	=			libft/
 
 LIBFTNAME	=		$(LIBFT)libft.a
+
+GNL		=			get_next_line/
+
+GNLNAME	=			$(GNL)get_next_line.a
