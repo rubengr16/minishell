@@ -91,7 +91,6 @@ int	redirect_out(t_cmd *cmd)
 			mini_fprintf(redir->file, "Permission denied");
 			return (1);
 		}
-		// unlink(redir->file);
 		if (redir->type == R_OUT_APPEND)
 			fd_out = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else
