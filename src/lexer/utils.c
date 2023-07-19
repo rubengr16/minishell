@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 23:43:22 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/14 00:23:45 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/19 10:41:26 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**add_to_char_double_ptr(char ***char_double_ptr, char *str)
 			i++;
 	aux = malloc(sizeof(char *) * (i + 2));
 	if (!aux)
-		return (mini_error(NULL, ALLOC_ERR, NULL));
+		return (mini_error(NULL, ALLOC_ERR, str));
 	i = 0;
 	if (*char_double_ptr)
 	{
@@ -58,67 +58,17 @@ enum e_token_type	get_token_type(char *token)
 	return (OTHER);
 }
 
-static unsigned int	cnt_quotes(char *line)
+void	ft_strrepl(char *str, char old_char, char new_char)
 {
-	unsigned int	quotes_cnt;
-	unsigned int	i;
-	
-	quotes_cnt = 0;
+	int	i;
+
 	i = 0;
-	while (line[i])
+	if (!str)
+		return ;
+	while (str[i])
 	{
-		if (line[i] == TRANS_SINGLE_Q || line[i] == TRANS_DOUBLE_Q)
-			quotes_cnt++;
+		if (str[i] == old_char)
+			str[i] = new_char;
 		i++;
 	}
-	return (quotes_cnt);
-}
-
-static char	*delete_quotes_trans(char **token)
-{
-	char			*aux;
-	unsigned int	i;
-	unsigned int	j;
-
-
-	aux = malloc(sizeof(char) * (ft_strlen(*token) - cnt_quotes(*token) + 1));
-	if (!aux)
-		return (mini_error(NULL, ALLOC_ERR, NULL));
-	i = 0;
-	j = 0;
-	while ((*token)[i])
-	{
-		if ((*token)[i] != TRANS_SINGLE_Q && (*token)[i] != TRANS_DOUBLE_Q)
-			aux[j++] = (*token)[i++];
-		else
-			i++;
-	}
-	aux[i] = '\0';
-	return (aux);
-}
-
-char	*get_real_token(char *token, unsigned int is_redir)
-{
-	char			*aux;
-	enum e_state	state;
-	unsigned int	i;
-
-	state = NORMAL;
-	i = 0;
-	while (token && token[i])
-	{
-		if (token[i] == TRANS_DOUBLE_Q && state == NORMAL)
-			state = DOUBLE_QUOTE;
-		else if (token[i] == TRANS_DOUBLE_Q && state == DOUBLE_QUOTE)
-			state = NORMAL;
-		else if (token[i] == TRANS_DOLLAR)
-			token = expand(&token, &i, state, is_redir);
-		i++;
-	}
-	if (!token)
-		return (NULL);
-	aux = delete_quotes_trans(&token);
-	free(token);
-	token = aux;
-	return (token);
 }

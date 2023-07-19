@@ -6,7 +6,7 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/07/08 21:06:38 by rgallego         ###   ########.fr        #
+#    Updated: 2023/07/18 17:20:34 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ LEXER		=		$(addprefix $(LEXER_DIR), \
 					redir.c \
 					cmd.c \
 					expand.c \
+					real_token.c \
 					lexer.c \
 					)
 
