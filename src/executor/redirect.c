@@ -1,4 +1,4 @@
-#include "executtor.h"
+#include "executor.h"
 
 void	mini_fprintf(char *str, char *message)
 {

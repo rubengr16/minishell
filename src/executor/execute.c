@@ -1,4 +1,4 @@
-#include "executtor.h"
+#include "executor.h"
 
 int	exec_builtin(t_cmd *cmd, t_enviroment *env)
 {

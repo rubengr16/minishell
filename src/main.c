@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/18 20:24:20 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/07/19 16:57:24 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <readline/readline.h>
 #include <readline/history.h>
-#include "executtor.h"
+#include "executor.h"
+#include "parser.h"
+#include "lexer.h"
+#include "minishell.h"
+
 
 void	discover_leaks(void)
 {
@@ -141,7 +145,7 @@ int	main(int argc, char **argv, char **envp)
 				return (1);
 			create_env_list(envp, my_env);
 			exec_main(cmd_list, my_env);
-			//print_cmd_list(cmd_list);
+			print_cmd_list(cmd_list);
 			delete_cmd_list(&cmd_list);
 		}
 		line = get_line();

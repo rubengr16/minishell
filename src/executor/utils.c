@@ -1,4 +1,4 @@
-#include "executtor.h"
+#include "executor.h"
 
 int	count_commands(t_cmd **cmd)
 {

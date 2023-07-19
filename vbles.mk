@@ -6,7 +6,7 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/06/26 23:44:08 by rgallego         ###   ########.fr        #
+#    Updated: 2023/07/19 16:56:17 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LEXER_DIR	=		lexer/
 
 ENV_DIR		=		enviroment/
 
-EXEC_DIR	=		executtor/
+EXEC_DIR	=		executor/
 
 UTILS_DIR	=		utils/
 
@@ -29,7 +29,6 @@ MINISHELL	=		main.c
 PARSER		=		$(addprefix $(PARSER_DIR), \
 					utils.c \
 					token_lst.c \
-					expand.c \
 					tokenize.c \
 					)
 
@@ -37,10 +36,12 @@ LEXER		=		$(addprefix $(LEXER_DIR), \
 					utils.c \
 					redir.c \
 					cmd.c \
+					expand.c \
+					real_token.c \
 					lexer.c \
 					)
 
-EXECUTTOR		=	$(addprefix $(EXEC_DIR), \
+EXECUTOR		=	$(addprefix $(EXEC_DIR), \
 					execute.c \
 					utils.c \
 					redirect.c \
@@ -61,7 +62,7 @@ SRCS		= 		$(addprefix $(SRC_DIR), \
 					$(PARSER) \
 					$(LEXER) \
 					$(ENVIROMENT) \
-					$(EXECUTTOR) \
+					$(EXECUTOR) \
 					$(UTILS) \
 					)
 
@@ -73,7 +74,7 @@ CC		=			gcc
 
 RM		=			-rm -f
 
-CFLAGS	=			-Wall -Werror -Wextra -MD -fsanitize=address -g3
+CFLAGS	=			-Wall -Werror -Wextra -MD
 
 LDFLAGS	=			$(LIBFTNAME) \
 					$(GNLNAME)

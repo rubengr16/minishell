@@ -1,5 +1,5 @@
-#ifndef EXECUTTOR_H
-# define EXECUTTOR_H
+#ifndef EXECUTOR_H
+# define EXECUTOR_H
 
 # include <sys/wait.h>
 # include <errno.h>
