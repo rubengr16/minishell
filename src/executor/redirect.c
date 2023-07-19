@@ -47,15 +47,15 @@ int	here_doc(t_redir *files)
 
 int	redirect_in(t_cmd *cmd)
 {
-	t_redir	*files;
+	t_redir	*redir;
 	int		fd_in;
 
-	files = cmd->r_in;
-	while (files)
+	redir = cmd->r_in;
+	while (redir)
 	{
-		if (files->type == R_IN_HERE_DOC)
+		if (redir->type == R_IN_HERE_DOC)
 		{
-			fd_in = here_doc(files);
+			fd_in = here_doc(redir);
 			dup2(fd_in, STDIN_FILENO);
 			close(fd_in);
 		}
@@ -65,44 +65,45 @@ int	redirect_in(t_cmd *cmd)
 			{
 				fd_in = open(cmd->r_in->file, O_RDONLY);
 				dup2(fd_in, STDIN_FILENO);
-				close(fd_in);
+				// close(fd_in);
 			}
 			else
 			{
-				mini_fprintf(files->file, "No such file or directory");
+				mini_fprintf(redir->file, "No such file or directory");
 				return (1);
 			}
 		}
-		files = files->next;
+		redir = redir->next;
 	}
 	return (0);
 }
 
 int	redirect_out(t_cmd *cmd)
 {
-	t_redir	*files;
+	t_redir	*redir;
 	int		fd_out;
 
-	files = cmd->r_out;
-	while (files)
+	redir = cmd->r_out;
+	while (redir)
 	{
-		if (access(files->file, F_OK) == 0 && access(files->file, W_OK) == -1){
-			mini_fprintf(files->file, "Permission denied");
+		if (access(redir->file, F_OK | W_OK))
+		{
+			mini_fprintf(redir->file, "Permission denied");
 			return (1);
 		}
-		unlink(files->file);
-		if (files->type == R_OUT_APPEND)
-			fd_out = open(files->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		// unlink(redir->file);
+		if (redir->type == R_OUT_APPEND)
+			fd_out = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else
-			fd_out = open(files->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+			fd_out = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		dup2(fd_out, STDOUT_FILENO);
-		close(fd_out);
-		files = files->next;
+		// close(fd_out);
+		redir = redir->next;
 	}
 	return (0);
 }
 
-int	filesManagement(t_cmd *cmd)
+int	files_management(t_cmd *cmd)
 {
 	int	result;
 

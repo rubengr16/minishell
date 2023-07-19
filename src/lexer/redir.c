@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 22:10:25 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/19 16:47:09 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/19 23:18:06 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_redir	*new_redir(char *file, enum e_token_type type)
 	redir->next = NULL;
 	return (redir);
 }
-
+#include <stdio.h>
 t_redir	*insert_to_redir_list(t_redir **list, char *file,
 	enum e_token_type type)
 {
@@ -32,6 +32,7 @@ t_redir	*insert_to_redir_list(t_redir **list, char *file,
 	t_redir	*redir;
 
 	redir = new_redir(file, type);
+	printf("redir = %s", redir->file);
 	if (!redir)
 		return (NULL);
 	if (!*list)

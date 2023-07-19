@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/19 20:23:50 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/19 23:10:35 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,15 +140,17 @@ int	main(int argc, char **argv, char **envp)
 			list = tokenize(&line);
 			if (!list)
 				return (1);
+			print_list(list);
 			cmd_list = lexer(&list);
+			print_cmd_list(cmd_list);
 			if (!cmd_list)
 				return (1);
 			create_env_list(envp, my_env);
 			exec_main(cmd_list, my_env);
-			// print_cmd_list(cmd_list);
 			delete_cmd_list(&cmd_list);
 		}
 		line = get_line();
+		printf("line = %s\n", line);
 	}
 	delete_env_variables(my_env);
 	return (0);

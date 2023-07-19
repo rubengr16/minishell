@@ -6,16 +6,16 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/19 20:22:44 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/19 23:16:52 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-
+#include <stdio.h>
 static t_cmd	*manage_redir(t_cmd *cmd, t_token **token,
 	enum e_token_type type)
 {
-	t_redir	**chosen_redir;
+	t_redir	*chosen_redir;
 	char	*real_token;
 
 	*token = (*token)->next;
@@ -24,15 +24,16 @@ static t_cmd	*manage_redir(t_cmd *cmd, t_token **token,
 	if (get_token_type((*token)->token) != OTHER)
 		return (mini_error(UNEXPECTED_TK, (*token)->token, NULL));
 	if (type == R_IN || type == R_IN_HERE_DOC)
-		chosen_redir = &cmd->r_in;
+		chosen_redir = cmd->r_in;
 	else
-		chosen_redir = &cmd->r_out;
+		chosen_redir = cmd->r_out;
 	real_token = get_real_token((*token)->token, 1);
 	if (!real_token)
 		return (NULL);
 	(*token)->token = real_token;
 	if (!insert_to_redir_list(chosen_redir, (*token)->token, type))
 		return (NULL);
+	printf("real_token = %s", (chosen_redir)->file);
 	return (cmd);
 }
 

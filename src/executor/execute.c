@@ -17,83 +17,111 @@ int	exec_builtin(t_cmd *cmd, t_enviroment *env)
 	return (1);
 }
 
-void	exec_command(t_cmd *aux, t_pipe *m_pipe, t_enviroment *env, char **path, int i, int length)
+int	exec_cmd(t_cmd *aux, t_pipe *pipe, t_enviroment *env, int i, int length)
 {
-	if (i == 0 && aux->next){
-		dup2(m_pipe[i][1], STDOUT_FILENO);
-	}
-	else if (i == length - 1 && length != 1){
-		dup2(m_pipe[i - 1][0], STDIN_FILENO);
-	}
-	else if (length != 1)
+	char **path;
+
+	path = ft_split(get_env(env, "PATH"), ':');
+	if (i == 0 && aux->next)
 	{
-		dup2(m_pipe[i - 1][0], STDIN_FILENO);
-		dup2(m_pipe[i][1], STDOUT_FILENO);
+		dup2(pipe[i][PIPE_WR], STDOUT_FILENO);
+		close(pipe[i][PIPE_WR]);
 	}
-	i = 0;
-	while (i < length - 1)
+	else if (i < length - 1 && 1 < length)
 	{
-		close(m_pipe[i][0]);
-		close(m_pipe[i++][1]);
+		dup2(pipe[i - 1][PIPE_RD], STDIN_FILENO);
+		close(pipe[i - 1][PIPE_RD]);
+		dup2(pipe[i][PIPE_WR], STDOUT_FILENO);
+		close(pipe[i][PIPE_WR]);
 	}
-	if (!filesManagement(aux) && !exec_builtin(aux, env))
+	else if (1 < length)
+	{
+		dup2(pipe[i - 1][PIPE_RD], STDIN_FILENO);
+		close(pipe[i - 1][PIPE_RD]);
+	}
+	if (!files_management(aux) && !exec_builtin(aux, env))
 	{
 		//write(2, "Hola?\n", 6);
 		execve(verify_commands(path, aux->cmd), aux->args, NULL);
 		mini_fprintf(aux->cmd, "command not found");
 		exit(1);
 	}
+	while (path[i])
+		free(path[i++]);
+	free(path);
 	exit(1);
 }
 
-void	closeNwait(t_pipe *m_pipe, pid_t *id, int length)
+void	closeNwait(t_pipe *pipe, pid_t *id, int length)
 {
 	int	i;
 
 	i = 0;
 	while (i < length - 1)
 	{
-		close(m_pipe[i][0]);
-		close(m_pipe[i++][1]);
+		close(pipe[i][0]);
+		close(pipe[i++][1]);
 	}
 	i = 0;
 	while (i < length)
 		waitpid(id[i++], NULL, 0);
 }
 
-void	prepare_command(t_cmd *command, t_enviroment *env, char **path)
+void	prepare_command(t_cmd *command, t_enviroment *env)
 {
 	t_cmd	*aux;
+	t_pipe	*pipes;
+	pid_t	*ids;
+	int		state;
 	int		i;
-	t_pipe	*m_pipe;
-	pid_t	*id;
 
-	id = malloc(sizeof(pid_t) * count_commands(&command));
-	m_pipe = malloc(sizeof(t_pipe) * count_commands(&command) - 1);
+	ids = malloc(sizeof(pid_t) * count_cmds(command));
+	pipes = malloc(sizeof(t_pipe) * count_cmds(command) - 1);
 	aux = command;
 	i = 0;
-	while (i < count_commands(&command) - 1)
-		pipe(m_pipe[i++]);
-	i = 0;
-	while (aux)
+	state = 0;
+	while (aux && 0 <= state)
 	{
-		id[i] = fork();
-		if (!id[i])
-			exec_command(aux, m_pipe, env, path, i, count_commands(&command));
+		if (i < (count_cmds(command) - 1))
+			pipe(pipes[i]);
+		ids[i] = fork();
+		if (!ids[i])
+			state = exec_cmd(aux, pipes, env, i, count_cmds(command));
 		aux = aux->next;
 		i++;
 	}
-	closeNwait(m_pipe, id, count_commands(&command));
-	free(id);
-	free(m_pipe);
+	closeNwait(pipes, ids, count_cmds(command));
+	free(ids);
+	free(pipes);
 }
+
+/*
+ * if there are 2 or more cmds, manages the files openings either if there
+ * is here_doc or not.
+ * INPUT:	t_cmd *cmd
+ * OUTPUT:	void
+ */
+// static void	files_mngment(t_cmd *cmd)
+// {
+// 	t_redir	*aux;
+
+// 	aux = cmd->r_in;
+// 	while (aux)
+// 		if (aux->type == R_IN_HERE_DOC)
+// 			read_from_stdin(pipex, fin);
+// 	pipex->fdin = open(fin, O_RDONLY);
+// 	if (pipex->limiter)
+// 		pipex->fdout = open(fout, O_WRONLY | O_CREAT | O_APPEND, 0644);
+// 	else
+// 		pipex->fdout = open(fout, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+// 	if (pipex->fdin < 0)
+// 		error_msg(*pipex, fin, ERR_SYS);
+// 	if (pipex->fdout < 0)
+// 		error_msg(*pipex, fout, ERR_SYS);
+// }
 
 int	exec_main(t_cmd *command, t_enviroment *env)
 {
-	char	**path;
-	int		i;
-
-	i = 0;
 	if (ft_strncmp(command->cmd, "exit", 5) == 0)
 		exit(0);
 	if (ft_strncmp(command->cmd, "cd", 3) == 0)
@@ -101,10 +129,6 @@ int	exec_main(t_cmd *command, t_enviroment *env)
 		ft_cd(env, command->args);
 		return (0);
 	}
-	path = ft_split(get_env(env, "PATH"), ':');
-	prepare_command(command, env, path);
-	while (path[i])
-		free(path[i++]);
-	free(path);
+	prepare_command(command, env);
 	return (0);
 }
