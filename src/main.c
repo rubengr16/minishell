@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/19 16:57:24 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/19 20:23:50 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ int	main(int argc, char **argv, char **envp)
 				return (1);
 			create_env_list(envp, my_env);
 			exec_main(cmd_list, my_env);
-			print_cmd_list(cmd_list);
+			// print_cmd_list(cmd_list);
 			delete_cmd_list(&cmd_list);
 		}
 		line = get_line();
