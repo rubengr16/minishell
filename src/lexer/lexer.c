@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/19 11:20:51 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/19 16:38:52 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,10 @@ t_cmd	*lexer(t_token_list **token_list)
 		cmd = get_cmd(&cmd_list, cmd, &token);
 	if (!cmd)
 	{
-		delete_token_list(token_list, 0);
+		delete_token_list(token_list);
 		delete_cmd_list(&cmd_list);
 		return (NULL);
 	}
-	delete_token_list(token_list, 0);
+	delete_token_list(token_list);
 	return (cmd_list);
 }

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/13 23:02:53 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/19 16:35:47 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,33 +87,34 @@ t_token	*add_to_token_list(t_token_list *list, t_token *token)
 	}
 	return (token);
 }
-
+#include <stdio.h>
 /**
  * Deletes a list
  * INPUT:	t_token_list *list
  * OUTPUT:	void
  */
-void	delete_token_list(t_token_list **list, int full_delete)
+void	delete_token_list(t_token_list **list)
 {
 	t_token	*aux;
 
 	if (!list)
 		return ;
 	aux = (*list)->start;
+	printf("%s\n", aux->token);
 	while ((*list)->start)
 	{
 		(*list)->start = aux->next;
-		if (full_delete)
+		if (aux->token)
 			free(aux->token);
 		free(aux);
 		aux = (*list)->start;
+		printf("ME JODES\n");
 	}
 	free(*list);
 	*list = NULL;
 }
 
 // TODO: DELETE
-#include <stdio.h>
 void	print_list(t_token_list *list)
 {
 	t_token	*aux;
