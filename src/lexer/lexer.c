@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/19 23:36:46 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/20 23:23:19 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,9 @@ t_cmd	*get_cmd(t_cmd **cmd_list, t_cmd *cmd, t_token **token)
 
 t_cmd	*lexer(t_token_list **token_list)
 {
-	t_cmd				*cmd_list;
-	t_cmd				*cmd;
-	t_token				*token;
+	t_cmd	*cmd_list;
+	t_cmd	*cmd;
+	t_token	*token;
 
 	cmd_list = NULL;
 	token = (*token_list)->start;

@@ -27,7 +27,7 @@ int	exec_cmd(t_cmd *aux, t_pipe *pipe, t_enviroment *env, int i, int length)
 		dup2(pipe[i][PIPE_WR], STDOUT_FILENO);
 		close(pipe[i][PIPE_WR]);
 	}
-	else if (i < length - 1 && 1 < length)
+	else if (i < (length - 1) && 1 < length)
 	{
 		dup2(pipe[i - 1][PIPE_RD], STDIN_FILENO);
 		close(pipe[i - 1][PIPE_RD]);
@@ -41,7 +41,6 @@ int	exec_cmd(t_cmd *aux, t_pipe *pipe, t_enviroment *env, int i, int length)
 	}
 	if (!files_management(aux) && !exec_builtin(aux, env))
 	{
-		//write(2, "Hola?\n", 6);
 		execve(verify_commands(path, aux->cmd), aux->args, NULL);
 		mini_fprintf(aux->cmd, "command not found");
 		exit(1);
@@ -50,21 +49,6 @@ int	exec_cmd(t_cmd *aux, t_pipe *pipe, t_enviroment *env, int i, int length)
 		free(path[i++]);
 	free(path);
 	exit(1);
-}
-
-void	closeNwait(t_pipe *pipe, pid_t *id, int length)
-{
-	int	i;
-
-	i = 0;
-	while (i < length - 1)
-	{
-		close(pipe[i][0]);
-		close(pipe[i++][1]);
-	}
-	i = 0;
-	while (i < length)
-		waitpid(id[i++], NULL, 0);
 }
 
 void	prepare_command(t_cmd *command, t_enviroment *env)
@@ -87,10 +71,21 @@ void	prepare_command(t_cmd *command, t_enviroment *env)
 		ids[i] = fork();
 		if (!ids[i])
 			state = exec_cmd(aux, pipes, env, i, count_cmds(command));
+		if (i < (count_cmds(command) - 1))
+		{
+			if (i)
+				close(pipes[i - 1][PIPE_RD]);
+			close(pipes[i][PIPE_WR]);
+		}
 		aux = aux->next;
 		i++;
 	}
-	closeNwait(pipes, ids, count_cmds(command));
+	i = count_cmds(command);
+	while (i--)
+	{
+		wait(NULL);
+	}
+	printf("hola\n");
 	free(ids);
 	free(pipes);
 }

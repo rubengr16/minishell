@@ -61,17 +61,14 @@ int	redirect_in(t_cmd *cmd)
 		}
 		else
 		{
-			if (access(cmd->r_in->file, R_OK) == 0)
-			{
-				fd_in = open(cmd->r_in->file, O_RDONLY);
-				dup2(fd_in, STDIN_FILENO);
-				// close(fd_in);
-			}
-			else
+			fd_in = open(cmd->r_in->file, O_RDONLY);
+			if (fd_in < 0)
 			{
 				mini_fprintf(redir->file, "No such file or directory");
 				return (1);
 			}
+			dup2(fd_in, STDIN_FILENO);
+			close(fd_in);
 		}
 		redir = redir->next;
 	}
@@ -86,17 +83,17 @@ int	redirect_out(t_cmd *cmd)
 	redir = cmd->r_out;
 	while (redir)
 	{
-		if (access(redir->file, F_OK | W_OK))
-		{
-			mini_fprintf(redir->file, "Permission denied");
-			return (1);
-		}
 		if (redir->type == R_OUT_APPEND)
 			fd_out = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else
 			fd_out = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (fd_out < 0)
+		{
+			mini_fprintf(redir->file, "Permission denied");
+			return (1);
+		}
 		dup2(fd_out, STDOUT_FILENO);
-		// close(fd_out);
+		close(fd_out);
 		redir = redir->next;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/19 23:39:23 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/21 00:04:24 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ void	signalHandling(int sig)
 		write(1, "Hola\n", 5);
 }
 
-/*int argc, char **argv, char **env*/
 int	main(int argc, char **argv, char **envp)
 {
 	char			*line;
@@ -150,7 +149,6 @@ int	main(int argc, char **argv, char **envp)
 			delete_cmd_list(&cmd_list);
 		}
 		line = get_line();
-		printf("line = %s\n", line);
 	}
 	delete_env_variables(my_env);
 	return (0);
