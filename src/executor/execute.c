@@ -24,11 +24,13 @@ int	exec_cmd(t_cmd *aux, t_pipe *pipe, t_enviroment *env, int i, int length)
 	path = ft_split(get_env(env, "PATH"), ':');
 	if (i == 0 && aux->next)
 	{
+		close(pipe[i][PIPE_RD]);
 		dup2(pipe[i][PIPE_WR], STDOUT_FILENO);
 		close(pipe[i][PIPE_WR]);
 	}
 	else if (i < (length - 1) && 1 < length)
 	{
+		close(pipe[i][PIPE_RD]);
 		dup2(pipe[i - 1][PIPE_RD], STDIN_FILENO);
 		close(pipe[i - 1][PIPE_RD]);
 		dup2(pipe[i][PIPE_WR], STDOUT_FILENO);
@@ -71,21 +73,16 @@ void	prepare_command(t_cmd *command, t_enviroment *env)
 		ids[i] = fork();
 		if (!ids[i])
 			state = exec_cmd(aux, pipes, env, i, count_cmds(command));
+		if (i && (count_cmds(command) - 1))
+			close(pipes[i - 1][PIPE_RD]);
 		if (i < (count_cmds(command) - 1))
-		{
-			if (i)
-				close(pipes[i - 1][PIPE_RD]);
 			close(pipes[i][PIPE_WR]);
-		}
 		aux = aux->next;
 		i++;
 	}
-	i = count_cmds(command);
-	while (i--)
-	{
+	int length = count_cmds(command);
+	while (length--)
 		wait(NULL);
-	}
-	printf("hola\n");
 	free(ids);
 	free(pipes);
 }
