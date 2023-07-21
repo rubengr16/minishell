@@ -30,7 +30,7 @@ char	*verify_commands(char **path, char *cmd)
 	{
 		aux = ft_strjoin("/", cmd);
 		commnd = ft_strjoin(path[i], aux);
-		if (access(commnd,F_OK | X_OK) == 0)
+		if (!access(commnd,F_OK | X_OK))
 			flag++;
 		else
 			free(commnd);

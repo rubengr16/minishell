@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 19:54:48 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/19 23:17:54 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/21 17:27:36 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LEXER_H
 
 # include "parser.h"
+# include "utils.h"
 
 # define TRANS_VBLE_SPACE -4
 
@@ -51,8 +52,7 @@ typedef struct s_cmd
 
 /* ***************************** FUNC DECLARATION ************************** */
 /* --------------------------------- UTILS --------------------------------- */
-char				**add_to_char_double_ptr(char ***char_double_ptr,
-						char *str);
+
 enum e_token_type	get_token_type(char *token);
 void				ft_strrepl(char *str, char old_char, char new_char);
 /* --------------------------------- REDIR --------------------------------- */

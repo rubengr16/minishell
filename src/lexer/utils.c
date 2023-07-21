@@ -6,39 +6,11 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 23:43:22 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/19 16:47:19 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/21 17:24:06 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-
-char	**add_to_char_double_ptr(char ***char_double_ptr, char *str)
-{
-	unsigned int	i;
-	char			**aux;
-
-	i = 0;
-	if (*char_double_ptr)
-		while ((*char_double_ptr)[i])
-			i++;
-	aux = malloc(sizeof(char *) * (i + 2));
-	if (!aux)
-		return (mini_error(NULL, ALLOC_ERR, str));
-	i = 0;
-	if (*char_double_ptr)
-	{
-		while ((*char_double_ptr)[i])
-		{
-			aux[i] = (*char_double_ptr)[i];
-			i++;
-		}
-	}
-	aux[i] = str;
-	aux[i + 1] = NULL;
-	free(*char_double_ptr);
-	*char_double_ptr = aux;
-	return (*char_double_ptr);
-}
 
 enum e_token_type	get_token_type(char *token)
 {

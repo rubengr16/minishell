@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:10:35 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/19 15:56:26 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/21 17:26:33 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 # define TRANS_DOUBLE_Q -2
 # define TRANS_DOLLAR -3
 
-# define ALLOC_ERR "allocation failed"
 # define UNCLOSED_Q_ERR "unclosed quotes found"
 
 /* ******************************* ENUM ******************************* */

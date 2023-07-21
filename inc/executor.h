@@ -12,7 +12,7 @@
 # define PIPE_RD 0
 # define PIPE_WR 1
 
-int		exec_main(t_cmd *command, t_enviroment *env);
+int		exec_main(t_cmd *command, char **env);
 char	*verify_commands(char **path, char *cmd);
 int		count_cmds(t_cmd *cmd);
 int		files_management(t_cmd *cmd);

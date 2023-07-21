@@ -19,7 +19,7 @@ int	here_doc(t_redir *files)
 	write(2, "> ", 2);
 	str = ft_strdup("");
 	aux = get_next_line(STDIN_FILENO);
-	while (ft_strncmp(aux, files->file, ft_strlen(files->file)) != 0)
+	while (ft_strncmp(aux, files->file, ft_strlen(files->file)))
 	{
 		str = ft_strjoin(str, aux);
 		free(aux);

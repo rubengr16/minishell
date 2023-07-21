@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/21 00:04:24 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/21 17:26:37 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,15 +123,14 @@ int	main(int argc, char **argv, char **envp)
 	char			*line;
 	t_token_list	*list;
 	t_cmd			*cmd_list;
-	t_enviroment	*my_env = malloc(sizeof(t_enviroment));
-	
-	if (!my_env)
-		return (1);
+	char			**my_env;
+
 	(void)argc;
 	(void)argv;
 	signal(SIGINT, signalHandling);
 	signal(SIGQUIT, signalHandling);
 	line = get_line();
+	create_env_list(envp, my_env);
 	while (line)
 	{
 		if (line && *line)
@@ -144,7 +143,6 @@ int	main(int argc, char **argv, char **envp)
 			// print_cmd_list(cmd_list);
 			if (!cmd_list)
 				return (1);
-			create_env_list(envp, my_env);
 			exec_main(cmd_list, my_env);
 			delete_cmd_list(&cmd_list);
 		}

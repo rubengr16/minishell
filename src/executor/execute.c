@@ -1,6 +1,6 @@
 #include "executor.h"
 
-int	exec_builtin(t_cmd *cmd, t_enviroment *env)
+int	exec_builtin(t_cmd *cmd, char **env)
 {
 	if (ft_strncmp(cmd->cmd, "echo", 5) == 0)
 		ft_echo(cmd->args);
@@ -17,11 +17,11 @@ int	exec_builtin(t_cmd *cmd, t_enviroment *env)
 	return (1);
 }
 
-int	exec_cmd(t_cmd *aux, t_pipe *pipe, t_enviroment *env, int i, int length)
+int	exec_cmd(t_cmd *aux, t_pipe *pipe, char **my_envp, int i, int length)
 {
 	char **path;
 
-	path = ft_split(get_env(env, "PATH"), ':');
+	path = ft_split(get_env(my_envp, "PATH"), ':');
 	if (i == 0 && aux->next)
 	{
 		close(pipe[i][PIPE_RD]);
@@ -41,9 +41,9 @@ int	exec_cmd(t_cmd *aux, t_pipe *pipe, t_enviroment *env, int i, int length)
 		dup2(pipe[i - 1][PIPE_RD], STDIN_FILENO);
 		close(pipe[i - 1][PIPE_RD]);
 	}
-	if (!files_management(aux) && !exec_builtin(aux, env))
+	if (!files_management(aux) && !exec_builtin(aux, my_envp))
 	{
-		execve(verify_commands(path, aux->cmd), aux->args, NULL);
+		execve(verify_commands(path, aux->cmd), aux->args, my_envp);
 		mini_fprintf(aux->cmd, "command not found");
 		exit(1);
 	}
@@ -53,7 +53,7 @@ int	exec_cmd(t_cmd *aux, t_pipe *pipe, t_enviroment *env, int i, int length)
 	exit(1);
 }
 
-void	prepare_command(t_cmd *command, t_enviroment *env)
+void	prepare_command(t_cmd *command, char **env)
 {
 	t_cmd	*aux;
 	t_pipe	*pipes;
@@ -112,7 +112,7 @@ void	prepare_command(t_cmd *command, t_enviroment *env)
 // 		error_msg(*pipex, fout, ERR_SYS);
 // }
 
-int	exec_main(t_cmd *command, t_enviroment *env)
+int	exec_main(t_cmd *command, char **env)
 {
 	if (ft_strncmp(command->cmd, "exit", 5) == 0)
 		exit(0);

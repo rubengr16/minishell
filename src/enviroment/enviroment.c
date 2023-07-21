@@ -1,88 +1,73 @@
 #include "enviroment.h"
 
-void	create_env_aux(t_enviroment *my_env, t_variable *new_var, int i)
+char	**create_my_env(char **envp)
 {
-	if (i == 0)
-	{
-		my_env->head = new_var;
-		my_env->tail = new_var;
-	}
-	else
-	{
-		my_env->tail->next = new_var;
-		my_env->tail = new_var;
-	}
-	my_env->tail->next = NULL;
-
-}
-
-int	create_env_list(char **envp, t_enviroment *my_env)
-{
-	t_variable	*new_var;
-	int			i;
+	char			**my_envp;
+	unsigned int	i;
 
 	i = 0;
-	while (envp[i])
+	if (envp)
+		while (envp[i])
+			i++;
+	my_envp = malloc(sizeof(char *) * (i + 1));
+	if (!my_envp)
+		mini_error(NULL, ALLOC_ERR, NULL);
+	while (my_envp && envp[i])
 	{
-		new_var = malloc(sizeof(t_variable));
-		if (!new_var)
-			return (1);
-		mini_split(envp[i], new_var);
-		if (!new_var->name && !new_var->value)
-		{
-			free(new_var);
-			return (1);
-		}
-		create_env_aux(my_env, new_var, i);
+		my_envp[i] = ft_strdup(envp[i]);
+		if (!my_envp[i])
+			delete_env_vbles(&my_envp);
 		i++;
 	}
-	return (0);
+	if (my_envp)
+		my_envp[i] = NULL;
+	return (my_envp);
 }
 
-void	delete_env_variables(t_enviroment *my_env)
+void	delete_env_vbles(char ***my_envp)
 {
-	t_variable	*aux;
+	unsigned int	i;
 
-	if (!my_env)
+	if (!*my_envp)
 		return ;
-	aux = my_env->head;
-	while (my_env->head)
+	i = 0;
+	while ((*my_envp)[i])
 	{
-		my_env->head = aux->next;
-		if (aux->name)
-			free(aux->name);
-		if (aux->value)
-			free(aux->value);
-		free(aux);
-		aux = my_env->head;
+		free((*my_envp)[i]);
+		i++;
 	}
-	free(my_env);
+	free(*my_envp);
+	*my_envp = NULL;
 }
 
-char	*get_env(t_enviroment *my_env, char *name)
+char	*get_env(char **my_envp, char *name)
 {
-	t_variable	*aux;
+	char			*vble;
+	unsigned int	i;
 
-	aux = my_env->head;
-	while (aux)
-	{
-		if (ft_strncmp(aux->name, name, (ft_strlen(name) + 1)) == 0)
-			break;
-		aux = aux->next;
-	}
-	if (!aux)
+	if (!my_envp)
 		return (NULL);
-	return(aux->value);
+	i = 0;
+	vble = NULL;
+	while (!vble && my_envp[i])
+	{
+		if (ft_strncmp(my_envp[i], name, (ft_strlen(name) + 1)) == '=')
+			vble = ft_strchr(my_envp[i], '=') + 1;
+		i++;
+	}
+	return(vble);
 }
 
-void	ft_env(t_enviroment *my_env)
+void	ft_env(char **my_envp)
 {
-	t_variable	*aux;
+	unsigned int	i;
 
-	aux = my_env->head;
-	while (aux)
+	if (!my_envp)
+		return ;
+	i = 0;
+	while (my_envp[i])
 	{
-		printf("%s=%s\n", aux->name, aux->value);
-		aux = aux->next;
+		ft_putendl_fd(my_envp[i], STDOUT_FILENO);
+		i++;
 	}
 }
