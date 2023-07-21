@@ -8,41 +8,28 @@ void	mini_fprintf(char *str, char *message)
 	write(2, "\n", 1);
 }
 
-int	tmp_exist(void)
-{
-	int	fd;
-	DIR	*tmp;
-
-	tmp = opendir("/tmp");
-	if (tmp)
-	{
-		fd = open("/tmp/HERE_DOC", O_RDWR | O_CREAT | O_TRUNC, 0644);
-		closedir(tmp);
-	}
-	else
-		fd = open("HERE_DOC", O_RDWR | O_CREAT | O_TRUNC, 0644);
-	return (fd);
-}
-
 int	here_doc(t_redir *files)
 {
+	int		here_pipe[2];
 	char	*str;
-	int		fd;
+	char	*aux;
 
-	fd = tmp_exist();
-	if (fd == -1)
-		return (fd);
+	if (pipe(here_pipe) == -1)
+		return (-1);
 	write(2, "> ", 2);
-	str = get_next_line(STDIN_FILENO);
-	while (ft_strncmp(str, files->file, ft_strlen(files->file)) != 0)
+	str = ft_strdup("");
+	aux = get_next_line(STDIN_FILENO);
+	while (ft_strncmp(aux, files->file, ft_strlen(files->file)) != 0)
 	{
-		ft_putstr_fd(str, fd);
-		free(str);
+		str = ft_strjoin(str, aux);
+		free(aux);
 		write(2, "> ", 2);
-		str = get_next_line(STDIN_FILENO);
+		aux = get_next_line(STDIN_FILENO);
 	}
-	free(str);
-	return (fd);
+	free(aux);
+	write(here_pipe[PIPE_WR], str, ft_strlen(str));
+	close(here_pipe[PIPE_WR]);
+	return (here_pipe[PIPE_RD]);
 }
 
 int	redirect_in(t_cmd *cmd)

@@ -24,7 +24,7 @@ char	*verify_commands(char **path, char *cmd)
 
 	i = 0;
 	flag = 0;
-	if (cmd[0] == '.')
+	if (access(cmd, X_OK) == 0)
 		return(cmd);
 	while (path[i] && !flag)
 	{

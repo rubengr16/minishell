@@ -11,8 +11,10 @@ void	ft_echo(char **args)
 	i = new_line + 1;
 	while (args[i])
 	{
-		printf("%s ", args[i]);
+		printf("%s", args[i]);
 		i++;
+		if (args[i])
+			write(1, " ", 1);
 	}
 	if (!new_line)
 		printf("\n");
