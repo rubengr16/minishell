@@ -6,7 +6,7 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/07/19 16:56:17 by rgallego         ###   ########.fr        #
+#    Updated: 2023/07/23 20:42:54 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ PARSER_DIR	=		parser/
 LEXER_DIR	=		lexer/
 
 ENV_DIR		=		enviroment/
+
+BUILTINS_DIR	=	builtins/
 
 EXEC_DIR	=		executor/
 
@@ -49,8 +51,14 @@ EXECUTOR		=	$(addprefix $(EXEC_DIR), \
 
 ENVIROMENT	=		$(addprefix $(ENV_DIR), \
 					enviroment.c \
-					builtins.c	\
-					env_utils.c	\
+					)
+
+BUILTINS	=	$(addprefix $(BUILTINS_DIR), \
+					ft_cd.c \
+					ft_echo.c \
+					ft_export.c \
+					ft_pwd.c \
+					ft_unset.c \
 					)
 
 UTILS		=		$(addprefix $(UTILS_DIR), \
@@ -62,6 +70,7 @@ SRCS		= 		$(addprefix $(SRC_DIR), \
 					$(PARSER) \
 					$(LEXER) \
 					$(ENVIROMENT) \
+					$(BUILTINS) \
 					$(EXECUTOR) \
 					$(UTILS) \
 					)

@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enviroment.h                                       :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/23 20:20:09 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/23 20:28:25 by rgallego         ###   ########.fr       */
+/*   Created: 2023/07/23 20:26:53 by rgallego          #+#    #+#             */
+/*   Updated: 2023/07/23 20:38:21 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENVIROMENT_H
-# define ENVIROMENT_H
+#include "builtins.h"
 
-# include "lexer.h"
-# include "utils.h"
-# include <stdio.h>
-# include <signal.h>
+void	ft_echo(char **args)
+{
+	int	new_line;
+	int	i;
 
-/* ***************************** ENVIROMENT ****************************** */
-char	**create_my_env(char **envp);
-void	delete_env_vbles(char ***my_envp);
-int		get_pos_vble(char **my_envp, char *name);
-char	*get_env(char **my_envp, char *name);
-
-#endif
+	new_line = 0;
+	if (!ft_strncmp(args[1], "-n\0", 3))
+		new_line = 1;
+	i = new_line + 1;
+	while (args[i])
+	{
+		printf("%s", args[i]);
+		i++;
+		if (args[i])
+			write(1, " ", 1);
+	}
+	if (!new_line)
+		printf("\n");
+}

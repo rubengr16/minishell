@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/23 20:40:07 by rgallego          #+#    #+#             */
+/*   Updated: 2023/07/23 20:40:27 by rgallego         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
@@ -6,6 +18,7 @@
 # include <errno.h>
 # include <dirent.h>
 # include "enviroment.h"
+# include "builtins.h"
 # include "lexer.h"
 
 /***************************** PIPE MANAGEMENT ****************************** */

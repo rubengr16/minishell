@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enviroment.h                                       :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/23 20:20:09 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/23 20:28:25 by rgallego         ###   ########.fr       */
+/*   Created: 2023/07/23 20:34:37 by rgallego          #+#    #+#             */
+/*   Updated: 2023/07/23 20:38:23 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENVIROMENT_H
-# define ENVIROMENT_H
+# include "builtins.h"
 
-# include "lexer.h"
-# include "utils.h"
-# include <stdio.h>
-# include <signal.h>
+void	ft_pwd(void)
+{
+	char	*dir;
 
-/* ***************************** ENVIROMENT ****************************** */
-char	**create_my_env(char **envp);
-void	delete_env_vbles(char ***my_envp);
-int		get_pos_vble(char **my_envp, char *name);
-char	*get_env(char **my_envp, char *name);
-
-#endif
+	dir = getcwd(NULL, 0);
+	printf("%s\n", dir);
+	free(dir);
+}

@@ -1,27 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enviroment.h                                       :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/23 20:20:09 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/23 20:28:25 by rgallego         ###   ########.fr       */
+/*   Created: 2023/07/23 20:35:44 by rgallego          #+#    #+#             */
+/*   Updated: 2023/07/23 20:38:24 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENVIROMENT_H
-# define ENVIROMENT_H
+#include "builtins.h"
 
-# include "lexer.h"
-# include "utils.h"
-# include <stdio.h>
-# include <signal.h>
+void	ft_unset(char ***my_envp, char **args)
+{
+	char			**aux;
+	unsigned int	i;
+	unsigned int	j;
 
-/* ***************************** ENVIROMENT ****************************** */
-char	**create_my_env(char **envp);
-void	delete_env_vbles(char ***my_envp);
-int		get_pos_vble(char **my_envp, char *name);
-char	*get_env(char **my_envp, char *name);
+	if (!*my_envp && len_char_double_ptr(args) <= 1)
+		return ;
+	i = 1;
+	aux = *my_envp;
+	while (aux && args[i])
+	{
+		j = 0;
+		while ((*my_envp)[j] 
+			&& (ft_strncmp((*my_envp)[j], args[i], ft_strlen(args[i])) == '='))
+			j++;
+		if ((*my_envp)[j])
+		{
 
-#endif
+		}
+		i++;
+	}
+}
