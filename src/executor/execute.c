@@ -6,34 +6,35 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/23 20:39:55 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 00:16:33 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int	exec_builtin(t_cmd *cmd, char **env)
+int	exec_builtin(t_cmd *cmd, char ***my_envp)
 {
 	if (ft_strncmp(cmd->cmd, "echo", 5) == 0)
 		ft_echo(cmd->args);
 	else if (ft_strncmp(cmd->cmd, "pwd", 4) == 0)
 		ft_pwd();
 	else if (ft_strncmp(cmd->cmd, "export", 7) == 0)
-		ft_export(&env, cmd->args); // modificar llamadas anteriores para que lo pasen por puntero
+		ft_export(my_envp, cmd->args);
 	else if (ft_strncmp(cmd->cmd, "unset", 6) == 0)
-		ft_unset(&env, cmd->args); // modificar llamadas anteriores para que lo pasen por puntero
+		ft_unset(my_envp, cmd->args);
 	else if (ft_strncmp(cmd->cmd, "env", 4) == 0)
-		ft_env(env);
+		ft_env(*my_envp);
 	else
 		return (0);
 	return (1);
 }
 
-int	exec_cmd(t_cmd *aux, t_pipe *pipe, char **my_envp, int i, int length)
+static int	exec_cmd(t_cmd *aux, t_pipe *pipe, char ***my_envp, int i,
+	int length)
 {
 	char **path;
 
-	path = ft_split(get_env(my_envp, "PATH"), ':');
+	path = ft_split(get_env(*my_envp, "PATH"), ':');
 	if (i == 0 && aux->next)
 	{
 		close(pipe[i][PIPE_RD]);
@@ -55,7 +56,7 @@ int	exec_cmd(t_cmd *aux, t_pipe *pipe, char **my_envp, int i, int length)
 	}
 	if (!files_management(aux) && !exec_builtin(aux, my_envp))
 	{
-		execve(verify_commands(path, aux->cmd), aux->args, my_envp);
+		execve(verify_commands(path, aux->cmd), aux->args, *my_envp);
 		mini_fprintf(aux->cmd, "command not found");
 		exit(1);
 	}
@@ -65,7 +66,7 @@ int	exec_cmd(t_cmd *aux, t_pipe *pipe, char **my_envp, int i, int length)
 	exit(1);
 }
 
-void	prepare_command(t_cmd *command, char **env)
+static void	prepare_command(t_cmd *command, char ***my_envp)
 {
 	t_cmd	*aux;
 	t_pipe	*pipes;
@@ -84,7 +85,7 @@ void	prepare_command(t_cmd *command, char **env)
 			pipe(pipes[i]);
 		ids[i] = fork();
 		if (!ids[i])
-			state = exec_cmd(aux, pipes, env, i, count_cmds(command));
+			state = exec_cmd(aux, pipes, my_envp, i, count_cmds(command));
 		if (i && (count_cmds(command) - 1))
 			close(pipes[i - 1][PIPE_RD]);
 		if (i < (count_cmds(command) - 1))
@@ -124,15 +125,15 @@ void	prepare_command(t_cmd *command, char **env)
 // 		error_msg(*pipex, fout, ERR_SYS);
 // }
 
-int	exec_main(t_cmd *command, char **env)
+int	exec_main(t_cmd *command, char ***my_envp)
 {
 	if (ft_strncmp(command->cmd, "exit", 5) == 0)
 		exit(0);
 	if (ft_strncmp(command->cmd, "cd", 3) == 0)
 	{
-		ft_cd(env, command->args);
+		ft_cd(*my_envp, command->args);
 		return (0);
 	}
-	prepare_command(command, env);
+	prepare_command(command, my_envp);
 	return (0);
 }

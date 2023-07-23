@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:07 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/23 20:40:27 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/23 23:16:43 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define PIPE_RD 0
 # define PIPE_WR 1
 
-int		exec_main(t_cmd *command, char **env);
+int		exec_main(t_cmd *command, char ***env);
 char	*verify_commands(char **path, char *cmd);
 int		count_cmds(t_cmd *cmd);
 int		files_management(t_cmd *cmd);
