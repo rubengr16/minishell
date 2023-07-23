@@ -6,24 +6,31 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 00:16:33 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 00:49:44 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int	exec_builtin(t_cmd *cmd, char ***my_envp)
+static int	exec_builtin(t_cmd *cmd, char ***my_envp)
 {
-	if (ft_strncmp(cmd->cmd, "echo", 5) == 0)
+	if (!ft_strncmp(cmd->cmd, "echo", 5))
 		ft_echo(cmd->args);
-	else if (ft_strncmp(cmd->cmd, "pwd", 4) == 0)
+	else if (!ft_strncmp(cmd->cmd, "pwd", 4))
 		ft_pwd();
-	else if (ft_strncmp(cmd->cmd, "export", 7) == 0)
+	else if (!ft_strncmp(cmd->cmd, "export", 7))
 		ft_export(my_envp, cmd->args);
-	else if (ft_strncmp(cmd->cmd, "unset", 6) == 0)
+	else if (!ft_strncmp(cmd->cmd, "unset", 6))
+	{
+		printf("UNSETTTTTTTT\n");
 		ft_unset(my_envp, cmd->args);
-	else if (ft_strncmp(cmd->cmd, "env", 4) == 0)
+	}
+	else if (!ft_strncmp(cmd->cmd, "env", 4))
 		ft_env(*my_envp);
+	else if (!ft_strncmp(cmd->cmd, "exit", 5))
+		exit(0);
+	else if (!ft_strncmp(cmd->cmd, "cd", 3))
+		ft_cd(*my_envp, cmd->args);
 	else
 		return (0);
 	return (1);
@@ -54,7 +61,7 @@ static int	exec_cmd(t_cmd *aux, t_pipe *pipe, char ***my_envp, int i,
 		dup2(pipe[i - 1][PIPE_RD], STDIN_FILENO);
 		close(pipe[i - 1][PIPE_RD]);
 	}
-	if (!files_management(aux) && !exec_builtin(aux, my_envp))
+	if (!files_management(aux))
 	{
 		execve(verify_commands(path, aux->cmd), aux->args, *my_envp);
 		mini_fprintf(aux->cmd, "command not found");
@@ -70,11 +77,9 @@ static void	prepare_command(t_cmd *command, char ***my_envp)
 {
 	t_cmd	*aux;
 	t_pipe	*pipes;
-	pid_t	*ids;
 	int		state;
 	int		i;
 
-	ids = malloc(sizeof(pid_t) * count_cmds(command));
 	pipes = malloc(sizeof(t_pipe) * count_cmds(command) - 1);
 	aux = command;
 	i = 0;
@@ -83,8 +88,7 @@ static void	prepare_command(t_cmd *command, char ***my_envp)
 	{
 		if (i < (count_cmds(command) - 1))
 			pipe(pipes[i]);
-		ids[i] = fork();
-		if (!ids[i])
+		if (!exec_builtin(aux, my_envp) && !fork())
 			state = exec_cmd(aux, pipes, my_envp, i, count_cmds(command));
 		if (i && (count_cmds(command) - 1))
 			close(pipes[i - 1][PIPE_RD]);
@@ -93,47 +97,14 @@ static void	prepare_command(t_cmd *command, char ***my_envp)
 		aux = aux->next;
 		i++;
 	}
-	int length = count_cmds(command);
+	int length = count_cmds(command) - count_builtins(command);
 	while (length--)
 		wait(NULL);
-	free(ids);
 	free(pipes);
 }
 
-/*
- * if there are 2 or more cmds, manages the files openings either if there
- * is here_doc or not.
- * INPUT:	t_cmd *cmd
- * OUTPUT:	void
- */
-// static void	files_mngment(t_cmd *cmd)
-// {
-// 	t_redir	*aux;
-
-// 	aux = cmd->r_in;
-// 	while (aux)
-// 		if (aux->type == R_IN_HERE_DOC)
-// 			read_from_stdin(pipex, fin);
-// 	pipex->fdin = open(fin, O_RDONLY);
-// 	if (pipex->limiter)
-// 		pipex->fdout = open(fout, O_WRONLY | O_CREAT | O_APPEND, 0644);
-// 	else
-// 		pipex->fdout = open(fout, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-// 	if (pipex->fdin < 0)
-// 		error_msg(*pipex, fin, ERR_SYS);
-// 	if (pipex->fdout < 0)
-// 		error_msg(*pipex, fout, ERR_SYS);
-// }
-
 int	exec_main(t_cmd *command, char ***my_envp)
 {
-	if (ft_strncmp(command->cmd, "exit", 5) == 0)
-		exit(0);
-	if (ft_strncmp(command->cmd, "cd", 3) == 0)
-	{
-		ft_cd(*my_envp, command->args);
-		return (0);
-	}
 	prepare_command(command, my_envp);
 	return (0);
 }

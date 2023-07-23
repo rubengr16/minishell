@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:59 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/23 20:40:00 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 00:38:38 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	mini_fprintf(char *str, char *message)
 	write(2, "\n", 1);
 }
 
-int	here_doc(t_redir *files)
+static int	here_doc(t_redir *files)
 {
 	int		here_pipe[2];
 	char	*str;
@@ -44,7 +44,7 @@ int	here_doc(t_redir *files)
 	return (here_pipe[PIPE_RD]);
 }
 
-int	redirect_in(t_cmd *cmd)
+static int	redirect_in(t_cmd *cmd)
 {
 	t_redir	*redir;
 	int		fd_in;
@@ -74,7 +74,7 @@ int	redirect_in(t_cmd *cmd)
 	return (0);
 }
 
-int	redirect_out(t_cmd *cmd)
+static int	redirect_out(t_cmd *cmd)
 {
 	t_redir	*redir;
 	int		fd_out;

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/23 23:16:26 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 01:03:57 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 #include "lexer.h"
 #include "minishell.h"
 
+
+char **my_envp;
 
 void	discover_leaks(void)
 {
