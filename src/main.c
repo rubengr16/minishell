@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/21 17:26:37 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/22 09:42:56 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGINT, signalHandling);
 	signal(SIGQUIT, signalHandling);
 	line = get_line();
-	create_env_list(envp, my_env);
+	my_env = create_my_env(envp);
 	while (line)
 	{
 		if (line && *line)
@@ -148,6 +148,6 @@ int	main(int argc, char **argv, char **envp)
 		}
 		line = get_line();
 	}
-	delete_env_variables(my_env);
+	delete_env_vbles(&my_env);
 	return (0);
 }

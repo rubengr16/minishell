@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 17:18:57 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/19 16:42:33 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/22 10:01:16 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*delete_quotes_trans(char **token)
 
 	aux = malloc(sizeof(char) * (ft_strlen(*token) - cnt_quotes(*token) + 1));
 	if (!aux)
-		return (mini_error(NULL, ALLOC_ERR, NULL));
+		return (mini_error(NULL, NULL, ALLOC_ERR, NULL));
 	i = 0;
 	j = 0;
 	while ((*token)[i])

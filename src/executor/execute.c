@@ -7,9 +7,9 @@ int	exec_builtin(t_cmd *cmd, char **env)
 	else if (ft_strncmp(cmd->cmd, "pwd", 4) == 0)
 		ft_pwd();
 	else if (ft_strncmp(cmd->cmd, "export", 7) == 0)
-		ft_export(env, cmd->args);
+		ft_export(&env, cmd->args); // modificar llamadas anteriores para que lo pasen por puntero
 	else if (ft_strncmp(cmd->cmd, "unset", 6) == 0)
-		ft_unset(env, cmd->args);
+		ft_unset(&env, cmd->args); // modificar llamadas anteriores para que lo pasen por puntero
 	else if (ft_strncmp(cmd->cmd, "env", 4) == 0)
 		ft_env(env);
 	else

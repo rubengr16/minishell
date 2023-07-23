@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/20 23:23:19 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/22 10:01:10 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static t_cmd	*manage_redir(t_cmd *cmd, t_token **token,
 
 	*token = (*token)->next;
 	if (!*token)
-		return (mini_error(UNEXPECTED_TK, "newline", NULL));
+		return (mini_error(UNEXPECTED_TK, NULL, "newline", NULL));
 	if (get_token_type((*token)->token) != OTHER)
-		return (mini_error(UNEXPECTED_TK, (*token)->token, NULL));
+		return (mini_error(UNEXPECTED_TK, NULL, (*token)->token, NULL));
 	if (type == R_IN || type == R_IN_HERE_DOC)
 		chosen_redir = &cmd->r_in;
 	else
@@ -46,7 +46,7 @@ t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 		return (NULL);
 	splitted_token = ft_split(real_token, TRANS_VBLE_SPACE);
 	if (!splitted_token && ft_strlen(real_token))
-		return (mini_error(NULL, SPLIT_ERR, real_token));
+		return (mini_error(NULL, NULL, SPLIT_ERR, real_token));
 	free(real_token);
 	i = 0;
 	if (!cmd->cmd)
@@ -67,10 +67,10 @@ t_cmd	*manage_pipe(t_cmd *cmd_list, t_cmd *cmd, t_token **token)
 {
 	if (cmd_list == cmd
 		&& !cmd->cmd && !cmd->args && !cmd->r_in && !cmd->r_out)
-		return (mini_error(UNEXPECTED_TK, (*token)->token, NULL));
+		return (mini_error(UNEXPECTED_TK, NULL, (*token)->token, NULL));
 	*token = (*token)->next;
 	if (*token && get_token_type((*token)->token) == PIPE)
-		return (mini_error(UNEXPECTED_TK, (*token)->token, NULL));
+		return (mini_error(UNEXPECTED_TK,  NULL, (*token)->token, NULL));
 	return (cmd);
 }
 

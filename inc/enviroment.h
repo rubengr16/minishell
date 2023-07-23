@@ -10,8 +10,8 @@
 
 char	**create_my_env(char **envp);
 void	delete_env_vbles(char ***my_envp);
+int		get_pos_vble(char **my_envp, char *name);
 char	*get_env(char **my_envp, char *name);
-// void	mini_split(char *variable, t_variable *new_var);
 
 /* ***************************** BUILTINS ****************************** */
 

@@ -34,25 +34,24 @@ void	ft_cd(char **my_envp, char **args)
 	char	*complete_path;
 	int		free_flag;
 
-	if (!args[1])
+	if (len_char_double_ptr(args) == 1)
 	{
-		if (chdir(get_env(my_envp, "HOME")))
-			write(2, "cd: HOME not set\n", 17);	// Puede estar modificado la variable HOME y mostrar el error de no se encuentra directorio
+		complete_path = get_env(my_envp, "HOME");
+		if (!complete_path)
+			return (void)mini_error("cd", NULL, "HOME not set", NULL);
+		if (chdir(complete_path))
+			return (void)mini_error("cd", complete_path, "No such file or directory", NULL);
 	}
-	else if (args[2])
-		write(2, "cd: too many arguments\n", 23);
-	else{
+	else if (len_char_double_ptr(args) == 1)
+	{
 		complete_path = cd_aux(my_envp, args, &free_flag);
 		if (chdir(complete_path))
 			printf("cd: %s: No such file or directory\n", args[1]);
 		if (free_flag)
 			free(complete_path);
 	}
-}
-
-char **ft_delete_vble(unsigned int skip_pos)
-{
-
+	else
+		write(2, "cd: too many arguments\n", 23);
 }
 
 void	ft_unset(char ***my_envp, char **args)
@@ -82,7 +81,7 @@ void	ft_unset(char ***my_envp, char **args)
 void	ft_export(char ***my_envp, char **args)
 {
 	char	**aux;
-	char	vble_cpy;
+	char	*vble_cpy;
 	int		i;
 
 	if (len_char_double_ptr(args) <= 1)

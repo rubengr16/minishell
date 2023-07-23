@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 22:10:25 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/14 00:24:53 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/22 10:00:13 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_cmd	*new_cmd(void)
 
 	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
-		return (mini_error(NULL, ALLOC_ERR, NULL));
+		return (mini_error(NULL, NULL, ALLOC_ERR, NULL));
 	new_cmd->cmd = NULL;
 	new_cmd->args = NULL;
 	new_cmd->r_in = NULL;

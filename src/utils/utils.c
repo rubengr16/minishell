@@ -6,20 +6,25 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:57:50 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/21 17:26:20 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/23 19:02:38 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-void	*mini_error(char *optional_str, char *str, void *to_free)
+void	*mini_error(char *opt_str1, char *opt_str2, char *str, void *to_free)
 {
 	if (to_free)
 		free(to_free);
 	to_free = NULL;
-	ft_putstr_fd("minishell: ", STDOUT_FILENO);
-	ft_putstr_fd(optional_str, STDOUT_FILENO);
-	ft_putendl_fd(str, STDOUT_FILENO);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(opt_str1, STDERR_FILENO);
+	if (opt_str1)
+		ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(opt_str2, STDERR_FILENO);
+	if (opt_str2)
+		ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putendl_fd(str, STDERR_FILENO);
 	return (NULL);
 }
 
@@ -34,7 +39,7 @@ char	**add_to_char_double_ptr(char ***char_double_ptr, char *str)
 			i++;
 	aux = malloc(sizeof(char *) * (i + 2));
 	if (!aux)
-		return (mini_error(NULL, ALLOC_ERR, str));
+		return (mini_error(NULL, NULL, ALLOC_ERR, str));
 	i = 0;
 	if (*char_double_ptr)
 	{

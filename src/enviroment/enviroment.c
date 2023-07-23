@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   enviroment.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/22 18:11:30 by rgallego          #+#    #+#             */
+/*   Updated: 2023/07/23 19:45:17 by rgallego         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "enviroment.h"
 
 char	**create_my_env(char **envp)
@@ -11,7 +23,8 @@ char	**create_my_env(char **envp)
 			i++;
 	my_envp = malloc(sizeof(char *) * (i + 1));
 	if (!my_envp)
-		mini_error(NULL, ALLOC_ERR, NULL);
+		mini_error(NULL, NULL, ALLOC_ERR, NULL);
+	i = 0;
 	while (my_envp && envp[i])
 	{
 		my_envp[i] = ft_strdup(envp[i]);
@@ -40,22 +53,34 @@ void	delete_env_vbles(char ***my_envp)
 	*my_envp = NULL;
 }
 
-char	*get_env(char **my_envp, char *name)
+ int	get_pos_vble(char **my_envp, char *name)
 {
-	char			*vble;
 	unsigned int	i;
+	int	pos;
 
 	if (!my_envp)
-		return (NULL);
+		return (-1);
 	i = 0;
-	vble = NULL;
-	while (!vble && my_envp[i])
+	pos = -1;
+	while (pos < 0 && my_envp[i])
 	{
 		if (ft_strncmp(my_envp[i], name, (ft_strlen(name) + 1)) == '=')
-			vble = ft_strchr(my_envp[i], '=') + 1;
+			pos = i;
 		i++;
 	}
-	return(vble);
+	if (!my_envp[i])
+		return (-1);
+	return (pos);
+}
+
+char	*get_env(char **my_envp, char *name)
+{
+	int				pos;
+
+	pos = get_pos_vble(my_envp, name);
+	if (pos < 0)
+		return (NULL);
+	return (ft_strchr(my_envp[pos], '=') + 1);
 }
 
 void	ft_env(char **my_envp)
