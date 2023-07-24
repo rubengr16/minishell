@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:19:41 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 09:47:32 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 12:24:07 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "enviroment.h"
 # include "global.h"
 # include "utils.h"
+
+# define EXPORT_ERR -2
 
 /* ***************************** BUILTINS ****************************** */
 void	ft_echo(char **args);							// 3 Done it

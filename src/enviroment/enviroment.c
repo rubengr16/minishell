@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 18:11:30 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 09:40:30 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 12:15:11 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	delete_env_vbles(void)
 	{
 		if (ft_strncmp(g_sigenv.envp[i], name, (ft_strlen(name) + 1)) == '=')
 			pos = i;
-		i++;
+		else
+			i++;
 	}
 	if (!g_sigenv.envp[i])
 		return (-1);
