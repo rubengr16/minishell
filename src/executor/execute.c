@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 09:51:05 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 10:20:27 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 static int	exec_builtin(t_cmd *cmd)
 {
+	if (!cmd->cmd)
+		return 0;
 	if (!ft_strncmp(cmd->cmd, "echo", 5))
 		ft_echo(cmd->args);
 	else if (!ft_strncmp(cmd->cmd, "pwd", 4))
@@ -58,7 +60,7 @@ static int	exec_cmd(t_cmd *aux, t_pipe *pipe, int i,
 		dup2(pipe[i - 1][PIPE_RD], STDIN_FILENO);
 		close(pipe[i - 1][PIPE_RD]);
 	}
-	if (!files_management(aux))
+	if (!files_management(aux) && aux->cmd)
 	{
 		execve(verify_commands(path, aux->cmd), aux->args, g_sigenv.envp);
 		mini_fprintf(aux->cmd, "command not found");
@@ -94,8 +96,8 @@ static void	prepare_command(t_cmd *command)
 		aux = aux->next;
 		i++;
 	}
-	int length = count_cmds(command) - count_builtins(command);
-	while (length--)
+	i = count_cmds(command) - count_builtins(command);
+	while (i--)
 		wait(NULL);
 	free(pipes);
 }

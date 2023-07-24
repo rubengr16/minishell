@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:26:53 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/23 20:38:21 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 10:00:39 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_echo(char **args)
 	int	i;
 
 	new_line = 0;
-	if (!ft_strncmp(args[1], "-n\0", 3))
+	if (2 <= len_char_double_ptr(args) && !ft_strncmp(args[1], "-n\0", 3))
 		new_line = 1;
 	i = new_line + 1;
 	while (args[i])

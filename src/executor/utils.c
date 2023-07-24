@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:03 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 00:49:08 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 10:20:03 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int	count_cmds(t_cmd *cmd_list)
 
 int	is_builtin(char *cmd)
 {
-	return (!ft_strncmp(cmd, "echo", 5) || !ft_strncmp(cmd, "pwd", 4)
+	return (cmd && (!ft_strncmp(cmd, "echo", 5) || !ft_strncmp(cmd, "pwd", 4)
 		|| !ft_strncmp(cmd, "export", 7) || !ft_strncmp(cmd, "unset", 6)
 		|| !ft_strncmp(cmd, "env", 4) || (!ft_strncmp(cmd, "exit", 5)
-		|| !ft_strncmp(cmd, "cd", 3)));
+		|| !ft_strncmp(cmd, "cd", 3))));
 }
 
 int	count_builtins(t_cmd *cmd_list)
@@ -63,7 +63,7 @@ char	*verify_commands(char **path, char *cmd)
 
 	i = 0;
 	flag = 0;
-	if (access(cmd, X_OK) == 0)
+	if (!access(cmd, X_OK))
 		return(cmd);
 	while (path[i] && !flag)
 	{
@@ -77,6 +77,7 @@ char	*verify_commands(char **path, char *cmd)
 	}
 	if (!flag)
 		commnd = NULL;
-	free(aux);
+	if (aux)
+		free(aux);
 	return (commnd);
 }
