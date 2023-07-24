@@ -6,13 +6,13 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 10:20:27 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 12:46:14 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static int	exec_builtin(t_cmd *cmd)
+static int exec_builtin(t_cmd *cmd)
 {
 	if (!cmd->cmd)
 		return 0;
@@ -35,8 +35,8 @@ static int	exec_builtin(t_cmd *cmd)
 	return (1);
 }
 
-static int	exec_cmd(t_cmd *aux, t_pipe *pipe, int i,
-	int length)
+static int exec_cmd(t_cmd *aux, t_pipe *pipe, int i,
+					int length)
 {
 	char **path;
 
@@ -72,12 +72,12 @@ static int	exec_cmd(t_cmd *aux, t_pipe *pipe, int i,
 	exit(1);
 }
 
-static void	prepare_command(t_cmd *command)
+static void prepare_command(t_cmd *command)
 {
-	t_cmd	*aux;
-	t_pipe	*pipes;
-	int		state;
-	int		i;
+	t_cmd *aux;
+	t_pipe *pipes;
+	int state;
+	int i;
 
 	pipes = malloc(sizeof(t_pipe) * count_cmds(command) - 1);
 	aux = command;
@@ -102,7 +102,7 @@ static void	prepare_command(t_cmd *command)
 	free(pipes);
 }
 
-int	exec_main(t_cmd *command)
+int exec_main(t_cmd *command)
 {
 	prepare_command(command);
 	return (0);

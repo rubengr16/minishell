@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:34:37 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/23 20:38:23 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 12:58:37 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,5 @@
 
 void	ft_pwd(void)
 {
-	char	*dir;
-
-	dir = getcwd(NULL, 0);
-	printf("%s\n", dir);
-	free(dir);
+	printf("%s\n", get_env("PWD"));
 }
