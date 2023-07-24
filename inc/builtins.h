@@ -21,7 +21,7 @@
 
 /* ***************************** BUILTINS ****************************** */
 void	ft_echo(char **args);							// 3 Done it
-void	ft_cd(char **args);		// 3 Done it
+int 	ft_cd(char **args);		// 3 Done it
 void	ft_pwd(void);									// 3 Done it
 void	ft_export(char **args);	// 2 Checking
 void	ft_unset(char **args);	// 3 Done it
