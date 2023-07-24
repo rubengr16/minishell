@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 18:11:30 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 12:15:11 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 14:43:03 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,10 @@ char	*get_env(char *name)
 {
 	int				pos;
 
+	if (!name)
+		return (NULL);
+	if (!ft_strncmp(name, "?", 2))
+		return (g_sigenv.last_status);
 	pos = get_pos_vble(name);
 	if (pos < 0)
 		return (NULL);

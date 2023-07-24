@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 14:22:42 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 15:03:10 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,38 +76,59 @@ static int exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 	exit(1);
 }
 
-static void prepare_command(t_cmd *command)
+static void	wait_status_change(t_cmd *cmd, pid_t last_id)
 {
-	t_cmd *aux;
-	t_pipe *pipes;
-	int state;
-	int i;
+	pid_t	id;
+	int		state;
+	int		i;
 
-	pipes = malloc(sizeof(t_pipe) * count_cmds(command) - 1);
-	aux = command;
-	i = 0;
-	state = 0;
-	while (aux && 0 <= state)
+	i = count_cmds(cmd);
+	while (i)
 	{
-		if (i < (count_cmds(command) - 1))
+		id = wait(&state);
+		if (id == last_id)
+		{
+			printf("state = %d", state);
+			free(g_sigenv.last_status);
+			g_sigenv.last_status = ft_itoa(state);
+		}
+		i--;
+	}
+}
+
+static void	prepare_command(t_cmd *cmd)
+{
+	t_cmd	*aux;
+	t_pipe	*pipes;
+	pid_t	id;
+	int		i;
+
+	pipes = malloc(sizeof(t_pipe) * count_cmds(cmd) - 1);
+	aux = cmd;
+	i = 0;
+	while (aux)
+	{
+		if (i < (count_cmds(cmd) - 1))
 			pipe(pipes[i]);
-		if (!(!i && !aux->next && !exec_builtin(aux)) && !fork())
-			state = exec_cmd(aux, pipes, i, count_cmds(command));
-		if (i && (count_cmds(command) - 1))
+		if ((!i && !aux->next && !exec_builtin(aux)) || i)
+		{
+			id = fork();
+			if (!id)
+				exec_cmd(aux, pipes, i, count_cmds(cmd));
+		}
+		if (i && (count_cmds(cmd) - 1))
 			close(pipes[i - 1][PIPE_RD]);
-		if (i < (count_cmds(command) - 1))
+		if (i < (count_cmds(cmd) - 1))
 			close(pipes[i][PIPE_WR]);
 		aux = aux->next;
 		i++;
 	}
-	i = count_cmds(command);
-	while (i--)
-		wait(NULL);
+	wait_status_change(cmd, id);
 	free(pipes);
 }
 
-int exec_main(t_cmd *command)
+int exec_main(t_cmd *cmd)
 {
-	prepare_command(command);
+	prepare_command(cmd);
 	return (0);
 }

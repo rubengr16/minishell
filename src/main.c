@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 09:45:34 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 15:03:55 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, signalHandling);
 	line = get_line();
 	create_my_env(envp);
+	g_sigenv.last_status = ft_strdup("0");
 	while (line)
 	{
 		if (line && *line)
