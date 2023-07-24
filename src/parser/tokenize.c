@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/22 10:01:52 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:25:05 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	translate_quotes(char *line, unsigned int i)
 	return (TRANS_DOUBLE_Q);
 }
 
-static void	manage_quotes(char *line, enum e_state *state, unsigned int *i)
+void	manage_quotes(char *line, enum e_state *state, unsigned int *i)
 {
 	if (*state != NORMAL)
 		*state = NORMAL;

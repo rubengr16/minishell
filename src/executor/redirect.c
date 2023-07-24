@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:59 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 00:38:38 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 23:22:15 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,50 @@ void	mini_fprintf(char *str, char *message)
 	write(2, "\n", 1);
 }
 
+static char	*here_doc_expand_aux(char **line, unsigned int name_len,
+	unsigned int *i)
+{
+	char	*name;
+	char	*vble;
+
+	if (!name_len)
+		return (vble_cpy(line, "$", i, 0));
+	name = malloc(sizeof(char) * (name_len + 1));
+	if (!name)
+		*line = mini_error(NULL, NULL, ALLOC_ERR, *line);
+	ft_strlcpy(name, &((*line)[*i]), name_len + 1);
+	vble = get_env(name);
+	free(name);
+	if (!vble)
+		return (vble_cpy(line, "", i, name_len));
+	return (vble_cpy(line, vble, i, name_len));
+}
+
+static char	*here_doc_expand(char **line)
+{
+	unsigned int	name_len;
+	unsigned int	i;
+
+	if (!*line)
+		return (NULL);
+	i = 0;
+	while (*line && (*line)[i])
+	{
+		if ((*line)[i] == '$')
+		{
+			i++;
+			name_len = 0;
+			while ((*line)[i + name_len] && (*line)[i + name_len] != '\''
+				&& (*line)[i + name_len] != '\"' && (*line)[i + name_len] != '\n'
+				&& (*line)[i + name_len] != ' ')
+				name_len++;
+			*line = here_doc_expand_aux(line, name_len, &i);
+		}
+		i++;
+	}
+	return (*line);
+}
+
 static int	here_doc(t_redir *files)
 {
 	int		here_pipe[2];
@@ -31,8 +75,9 @@ static int	here_doc(t_redir *files)
 	write(2, "> ", 2);
 	str = ft_strdup("");
 	aux = get_next_line(STDIN_FILENO);
-	while (ft_strncmp(aux, files->file, ft_strlen(files->file)))
+	while (ft_strncmp(aux, files->file, ft_strlen(files->file) + 1) != '\n')
 	{
+		aux = here_doc_expand(&aux);
 		str = ft_strjoin(str, aux);
 		free(aux);
 		write(2, "> ", 2);

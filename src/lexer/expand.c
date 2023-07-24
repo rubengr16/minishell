@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 12:16:26 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 23:22:25 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static size_t	ft_strlen_to(const char *s, const char *to)
 	return (len);
 }
 
-static char	*vble_cpy(char **line, char *vble, unsigned int *i,
+char	*vble_cpy(char **line, char *vble, unsigned int *i,
 	unsigned int name_len)
 {
 	char			*aux;

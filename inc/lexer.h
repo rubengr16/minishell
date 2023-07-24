@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 19:54:48 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 09:45:10 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:50:16 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ t_cmd				*add_to_cmd_list(t_cmd **list);
 void				delete_cmd_list(t_cmd **list);
 void				print_cmd_list(t_cmd *list);
 /* --------------------------------- EXPAND -------------------------------- */
+char				*vble_cpy(char **line, char *vble, unsigned int *i,
+						unsigned int name_len);
 char				*expand(char **line, unsigned int *i, enum e_state state,
 						unsigned int is_redir);
 /* ------------------------------- REAL_TOKEN ------------------------------ */

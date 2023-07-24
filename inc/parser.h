@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:10:35 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/21 17:26:33 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:56:36 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void			delete_token_list(t_token_list **list);
 t_token			*add_to_token_list(t_token_list *list, t_token *token);
 t_token_list	*create_token_list(void);
 /* -------------------------------- TOKENIZE ------------------------------- */
+void			manage_quotes(char *line, enum e_state *state,
+					unsigned int *i);
 t_token_list	*tokenize(char **line);
 
 #endif
