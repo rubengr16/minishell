@@ -6,11 +6,34 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 12:46:14 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 14:22:42 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
+static void piping(t_cmd *cmd, t_pipe *pipes, int i, int length)
+{
+	if (i == 0 && cmd->next)
+	{
+		close(pipes[i][PIPE_RD]);
+		dup2(pipes[i][PIPE_WR], STDOUT_FILENO);
+		close(pipes[i][PIPE_WR]);
+	}
+	else if (i < (length - 1) && 1 < length)
+	{
+		close(pipes[i][PIPE_RD]);
+		dup2(pipes[i - 1][PIPE_RD], STDIN_FILENO);
+		close(pipes[i - 1][PIPE_RD]);
+		dup2(pipes[i][PIPE_WR], STDOUT_FILENO);
+		close(pipes[i][PIPE_WR]);
+	}
+	else if (1 < length)
+	{
+		dup2(pipes[i - 1][PIPE_RD], STDIN_FILENO);
+		close(pipes[i - 1][PIPE_RD]);
+	}
+}
 
 static int exec_builtin(t_cmd *cmd)
 {
@@ -35,35 +58,16 @@ static int exec_builtin(t_cmd *cmd)
 	return (1);
 }
 
-static int exec_cmd(t_cmd *aux, t_pipe *pipe, int i,
-					int length)
+static int exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 {
 	char **path;
 
 	path = ft_split(get_env("PATH"), ':');
-	if (i == 0 && aux->next)
+	piping(cmd, pipes, i, length);
+	if (!exec_builtin(cmd) && !files_management(cmd) && cmd->cmd)
 	{
-		close(pipe[i][PIPE_RD]);
-		dup2(pipe[i][PIPE_WR], STDOUT_FILENO);
-		close(pipe[i][PIPE_WR]);
-	}
-	else if (i < (length - 1) && 1 < length)
-	{
-		close(pipe[i][PIPE_RD]);
-		dup2(pipe[i - 1][PIPE_RD], STDIN_FILENO);
-		close(pipe[i - 1][PIPE_RD]);
-		dup2(pipe[i][PIPE_WR], STDOUT_FILENO);
-		close(pipe[i][PIPE_WR]);
-	}
-	else if (1 < length)
-	{
-		dup2(pipe[i - 1][PIPE_RD], STDIN_FILENO);
-		close(pipe[i - 1][PIPE_RD]);
-	}
-	if (!files_management(aux) && aux->cmd)
-	{
-		execve(verify_commands(path, aux->cmd), aux->args, g_sigenv.envp);
-		mini_fprintf(aux->cmd, "command not found");
+		execve(verify_commands(path, cmd->cmd), cmd->args, g_sigenv.envp);
+		mini_fprintf(cmd->cmd, "command not found");
 		exit(1);
 	}
 	while (path[i])
@@ -87,7 +91,7 @@ static void prepare_command(t_cmd *command)
 	{
 		if (i < (count_cmds(command) - 1))
 			pipe(pipes[i]);
-		if (!exec_builtin(aux) && !fork())
+		if (!(!i && !aux->next && !exec_builtin(aux)) && !fork())
 			state = exec_cmd(aux, pipes, i, count_cmds(command));
 		if (i && (count_cmds(command) - 1))
 			close(pipes[i - 1][PIPE_RD]);
@@ -96,7 +100,7 @@ static void prepare_command(t_cmd *command)
 		aux = aux->next;
 		i++;
 	}
-	i = count_cmds(command) - count_builtins(command);
+	i = count_cmds(command);
 	while (i--)
 		wait(NULL);
 	free(pipes);
