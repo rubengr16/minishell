@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:07 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 00:39:04 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 09:45:50 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ typedef	int t_pipe [2];
 # define PIPE_WR 1
 
 /********************************* EXECUTOR ********************************* */
-int		exec_main(t_cmd *command, char ***env);
+int		exec_main(t_cmd *command);
 
 /********************************* REDIRECT ********************************* */
 void	mini_fprintf(char *str, char *message);

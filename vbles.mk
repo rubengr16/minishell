@@ -6,7 +6,7 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/07/23 20:42:54 by rgallego         ###   ########.fr        #
+#    Updated: 2023/07/24 09:42:34 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ ENVIROMENT	=		$(addprefix $(ENV_DIR), \
 BUILTINS	=	$(addprefix $(BUILTINS_DIR), \
 					ft_cd.c \
 					ft_echo.c \
+					ft_env.c \
 					ft_export.c \
 					ft_pwd.c \
 					ft_unset.c \

@@ -6,11 +6,10 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/22 10:00:29 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 09:45:19 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
 #include "lexer.h"
 
 static size_t	ft_strlen_to(const char *s, const char *to)
@@ -66,7 +65,7 @@ char	*expand(char **line, unsigned int *i, enum e_state state,
 	if (!name)
 		return (mini_error(NULL, NULL, ALLOC_ERR, *line));
 	ft_strlcpy(name, &((*line)[*i]), name_len + 1);
-	vble = getenv(name);
+	vble = get_env(name);
 	free(name);
 	if (!vble)
 		return (vble_cpy(line, "", i, name_len));

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 19:54:48 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/21 17:27:36 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 09:45:10 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LEXER_H
 
 # include "parser.h"
+# include "enviroment.h"
 # include "utils.h"
 
 # define TRANS_VBLE_SPACE -4

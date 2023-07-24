@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enviroment.h                                       :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/23 20:20:09 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 09:40:21 by rgallego         ###   ########.fr       */
+/*   Created: 2023/07/24 09:40:49 by rgallego          #+#    #+#             */
+/*   Updated: 2023/07/24 09:41:55 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENVIROMENT_H
-# define ENVIROMENT_H
+#include "builtins.h"
 
-# include <stdio.h>
-# include <signal.h>
-# include "global.h"
-# include "lexer.h"
-# include "utils.h"
+void	ft_env(void)
+{
+	unsigned int	i;
 
-/* ***************************** ENVIROMENT ****************************** */
-char	**create_my_env(char **envp);
-void	delete_env_vbles(void);
-int		get_pos_vble(char *name);
-char	*get_env(char *name);
-
-#endif
+	if (!g_sigenv.envp)
+		return ;
+	i = 0;
+	while (g_sigenv.envp[i])
+	{
+		ft_putendl_fd(g_sigenv.envp[i], STDOUT_FILENO);
+		i++;
+	}
+}

@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   enviroment.h                                       :+:      :+:    :+:   */
+/*   global.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/23 20:20:09 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 09:40:21 by rgallego         ###   ########.fr       */
+/*   Created: 2023/07/24 08:59:54 by rgallego          #+#    #+#             */
+/*   Updated: 2023/07/24 09:37:45 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENVIROMENT_H
-# define ENVIROMENT_H
+#ifndef GLOBAL_H
+# define GLOBAL_H
 
-# include <stdio.h>
-# include <signal.h>
-# include "global.h"
-# include "lexer.h"
-# include "utils.h"
+typedef struct s_global
+{
+	char	**envp;
+}	t_global;
 
-/* ***************************** ENVIROMENT ****************************** */
-char	**create_my_env(char **envp);
-void	delete_env_vbles(void);
-int		get_pos_vble(char *name);
-char	*get_env(char *name);
+extern t_global g_sigenv;
 
 #endif

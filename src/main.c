@@ -6,19 +6,19 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 01:03:57 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/24 09:45:34 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <readline/readline.h>
 #include <readline/history.h>
-#include "executor.h"
+#include "minishell.h"
+#include "global.h"
 #include "parser.h"
 #include "lexer.h"
-#include "minishell.h"
+#include "executor.h"
 
-
-char **my_envp;
+t_global g_sigenv;
 
 void	discover_leaks(void)
 {
@@ -125,14 +125,13 @@ int	main(int argc, char **argv, char **envp)
 	char			*line;
 	t_token_list	*list;
 	t_cmd			*cmd_list;
-	char			**my_env;
 
 	(void)argc;
 	(void)argv;
 	signal(SIGINT, signalHandling);
 	signal(SIGQUIT, signalHandling);
 	line = get_line();
-	my_env = create_my_env(envp);
+	create_my_env(envp);
 	while (line)
 	{
 		if (line && *line)
@@ -145,11 +144,11 @@ int	main(int argc, char **argv, char **envp)
 			// print_cmd_list(cmd_list);
 			if (!cmd_list)
 				return (1);
-			exec_main(cmd_list, &my_env);
+			exec_main(cmd_list);
 			delete_cmd_list(&cmd_list);
 		}
 		line = get_line();
 	}
-	delete_env_vbles(&my_env);
+	delete_env_vbles();
 	return (0);
 }
