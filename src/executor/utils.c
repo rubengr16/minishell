@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:03 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 10:20:03 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/25 22:17:59 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,10 @@ int	is_builtin(char *cmd)
 		|| !ft_strncmp(cmd, "cd", 3))));
 }
 
-int	count_builtins(t_cmd *cmd_list)
+int	is_builtin_on_parent(char	*cmd)
 {
-	t_cmd	*aux;
-	int		builtin_cnt;
-	int		i;
-
-	i = 0;
-	builtin_cnt = 0;
-	aux = cmd_list;
-	while (aux)
-	{
-		if (is_builtin(aux->cmd))
-			builtin_cnt++;
-		i++;
-		aux = aux->next;
-	}
-	return (builtin_cnt);
+	return (cmd && (!ft_strncmp(cmd, "export", 7) || !ft_strncmp(cmd, "cd", 3)
+		|| !ft_strncmp(cmd, "unset", 6) || (!ft_strncmp(cmd, "exit", 5))));
 }
 
 char	*verify_commands(char **path, char *cmd)

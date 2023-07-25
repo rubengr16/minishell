@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:59 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 23:22:15 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/25 22:14:37 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static int	here_doc(t_redir *files)
 	return (here_pipe[PIPE_RD]);
 }
 
-static int	redirect_in(t_cmd *cmd)
+static int	redirect_in(t_cmd *cmd, int need_dup2)
 {
 	t_redir	*redir;
 	int		fd_in;
@@ -98,11 +98,7 @@ static int	redirect_in(t_cmd *cmd)
 	while (redir)
 	{
 		if (redir->type == R_IN_HERE_DOC)
-		{
 			fd_in = here_doc(redir);
-			dup2(fd_in, STDIN_FILENO);
-			close(fd_in);
-		}
 		else
 		{
 			fd_in = open(cmd->r_in->file, O_RDONLY);
@@ -111,15 +107,16 @@ static int	redirect_in(t_cmd *cmd)
 				mini_fprintf(redir->file, "No such file or directory");
 				return (1);
 			}
-			dup2(fd_in, STDIN_FILENO);
-			close(fd_in);
 		}
+		if (need_dup2)
+			dup2(fd_in, STDIN_FILENO);
+		close(fd_in);
 		redir = redir->next;
 	}
 	return (0);
 }
 
-static int	redirect_out(t_cmd *cmd)
+static int	redirect_out(t_cmd *cmd, int need_dup2)
 {
 	t_redir	*redir;
 	int		fd_out;
@@ -136,21 +133,22 @@ static int	redirect_out(t_cmd *cmd)
 			mini_fprintf(redir->file, "Permission denied");
 			return (1);
 		}
-		dup2(fd_out, STDOUT_FILENO);
+		if (need_dup2)
+			dup2(fd_out, STDOUT_FILENO);
 		close(fd_out);
 		redir = redir->next;
 	}
 	return (0);
 }
 
-int	files_management(t_cmd *cmd)
+int	files_management(t_cmd *cmd, int need_dup2)
 {
 	int	result;
 
 	result = 0;
 	if (cmd->r_in)
-		result = redirect_in(cmd);
+		result = redirect_in(cmd, need_dup2);
 	if (cmd->r_out)
-		result = redirect_out(cmd);
+		result = redirect_out(cmd, need_dup2);
 	return (result);
 }

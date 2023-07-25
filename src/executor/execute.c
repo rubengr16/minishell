@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 17:01:15 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/25 22:15:22 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 
 	path = ft_split(get_env("PATH"), ':');
 	piping(cmd, pipes, i, length);
-	if (!exec_builtin(cmd) && !files_management(cmd) && cmd->cmd)
+	if (!files_management(cmd, 1) && !exec_builtin(cmd) && cmd->cmd)
 	{
 		execve(verify_commands(path, cmd->cmd), cmd->args, g_sigenv.envp);
 		mini_fprintf(cmd->cmd, "command not found");
@@ -88,7 +88,6 @@ static void	wait_status_change(t_cmd *cmd, pid_t last_id)
 		id = wait(&state);
 		if (id == last_id)
 		{
-			// printf("state = %d", state);
 			free(g_sigenv.last_status);
 			g_sigenv.last_status = ft_itoa(state);
 		}
@@ -110,12 +109,9 @@ static void	prepare_command(t_cmd *cmd)
 	{
 		if (i < (count_cmds(cmd) - 1))
 			pipe(pipes[i]);
-		if ((!i && !aux->next && !exec_builtin(aux)) || i)
-		{
-			id = fork();
-			if (!id)
-				exec_cmd(aux, pipes, i, count_cmds(cmd));
-		}
+		id = fork();
+		if (!id)
+			exec_cmd(aux, pipes, i, count_cmds(cmd));
 		if (i && (count_cmds(cmd) - 1))
 			close(pipes[i - 1][PIPE_RD]);
 		if (i < (count_cmds(cmd) - 1))
@@ -129,6 +125,10 @@ static void	prepare_command(t_cmd *cmd)
 
 int exec_main(t_cmd *cmd)
 {
-	prepare_command(cmd);
+	if (!cmd->next && is_builtin_on_parent(cmd->cmd) 
+		&&(!files_management(cmd, 0)))
+		exec_builtin(cmd);
+	else
+		prepare_command(cmd);
 	return (0);
 }
