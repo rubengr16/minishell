@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 17:18:57 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/22 10:01:16 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/25 23:26:48 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,10 @@ static char	*delete_quotes_trans(char **token)
 	while ((*token)[i])
 	{
 		if ((*token)[i] != TRANS_SINGLE_Q && (*token)[i] != TRANS_DOUBLE_Q)
-			aux[j++] = (*token)[i++];
-		else
-			i++;
+			aux[j++] = (*token)[i];
+		i++;
 	}
-	aux[i] = '\0';
+	aux[j] = '\0';
 	free(*token);
 	return (aux);
 }
