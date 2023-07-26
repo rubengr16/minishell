@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/25 22:15:22 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/26 16:00:09 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 
 	path = ft_split(get_env("PATH"), ':');
 	piping(cmd, pipes, i, length);
-	if (!files_management(cmd, 1) && !exec_builtin(cmd) && cmd->cmd)
+	if (!files_management(cmd, 0) && !exec_builtin(cmd) && cmd->cmd)
 	{
 		execve(verify_commands(path, cmd->cmd), cmd->args, g_sigenv.envp);
 		mini_fprintf(cmd->cmd, "command not found");
@@ -126,7 +126,7 @@ static void	prepare_command(t_cmd *cmd)
 int exec_main(t_cmd *cmd)
 {
 	if (!cmd->next && is_builtin_on_parent(cmd->cmd) 
-		&&(!files_management(cmd, 0)))
+		&&(!files_management(cmd, 1)))
 		exec_builtin(cmd);
 	else
 		prepare_command(cmd);

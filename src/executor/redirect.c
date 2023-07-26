@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:59 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/25 22:14:37 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/26 16:14:51 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static int	here_doc(t_redir *files)
 	return (here_pipe[PIPE_RD]);
 }
 
-static int	redirect_in(t_cmd *cmd, int need_dup2)
+static int	redirect_in(t_cmd *cmd, int close_all)
 {
 	t_redir	*redir;
 	int		fd_in;
@@ -103,12 +103,9 @@ static int	redirect_in(t_cmd *cmd, int need_dup2)
 		{
 			fd_in = open(cmd->r_in->file, O_RDONLY);
 			if (fd_in < 0)
-			{
-				mini_fprintf(redir->file, "No such file or directory");
-				return (1);
-			}
+				perror(redir->file);
 		}
-		if (need_dup2)
+		if (close_all)
 			dup2(fd_in, STDIN_FILENO);
 		close(fd_in);
 		redir = redir->next;
@@ -116,7 +113,7 @@ static int	redirect_in(t_cmd *cmd, int need_dup2)
 	return (0);
 }
 
-static int	redirect_out(t_cmd *cmd, int need_dup2)
+static int	redirect_out(t_cmd *cmd, int close_all)
 {
 	t_redir	*redir;
 	int		fd_out;
@@ -129,11 +126,8 @@ static int	redirect_out(t_cmd *cmd, int need_dup2)
 		else
 			fd_out = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd_out < 0)
-		{
-			mini_fprintf(redir->file, "Permission denied");
-			return (1);
-		}
-		if (need_dup2)
+			perror(redir->file);
+		if (close_all)
 			dup2(fd_out, STDOUT_FILENO);
 		close(fd_out);
 		redir = redir->next;
@@ -141,14 +135,18 @@ static int	redirect_out(t_cmd *cmd, int need_dup2)
 	return (0);
 }
 
-int	files_management(t_cmd *cmd, int need_dup2)
+int	files_management(t_cmd *cmd, int close_all)
 {
-	int	result;
+	t_cmd	*aux;
+	int		result;
 
-	result = 0;
-	if (cmd->r_in)
-		result = redirect_in(cmd, need_dup2);
-	if (cmd->r_out)
-		result = redirect_out(cmd, need_dup2);
-	return (result);
+	aux = cmd;
+	while (cmd && cmd->fd_in && cmd->fd_out)
+	{
+		if (cmd->r_in)
+			redirect_in(cmd, close_all);
+		if (cmd->r_out)
+			redirect_out(cmd, close_all);
+		aux = aux->next;
+	}
 }

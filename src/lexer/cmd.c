@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 22:10:25 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/22 10:00:13 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/26 16:01:19 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ t_cmd	*new_cmd(void)
 	new_cmd->cmd = NULL;
 	new_cmd->args = NULL;
 	new_cmd->r_in = NULL;
+	new_cmd->fd_in = STDIN_FILENO;
 	new_cmd->r_out = NULL;
+	new_cmd->fd_out = STDOUT_FILENO;
 	new_cmd->next = NULL;
 	return (new_cmd);
 }

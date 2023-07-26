@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:19:41 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/25 22:18:16 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/26 16:18:04 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define EXPORT_ERR -2
 
 /* ******************************** BUILTINS ******************************** */
-void	ft_echo(char **args);							// 3 Done it
+void	ft_echo(char **args);							// juanizado
 int 	ft_cd(char **args);		// 3 Done it
 void	ft_pwd(void);									// 3 Done it
 void	ft_export(char **args);	// 2 Checking
