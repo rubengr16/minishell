@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:03 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/27 16:51:43 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/27 19:02:00 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,30 +43,43 @@ int	is_builtin_on_parent(t_cmd	*cmd)
 		|| !ft_strncmp(cmd->cmd, "exit", 5)));
 }
 
+static char	*ft_strjoinsep(char const *s1, char const *s2, char *c)
+{
+	int		len;
+	char	*s;
+
+	if (!s1 || !s2)
+		return (NULL);
+	len = ft_strlen(s1) + ft_strlen(s2) + 2;
+	s = malloc(sizeof(char) * (len));
+	if (!s)
+		return (NULL);
+	(void)ft_strlcpy(s, s1, len);
+	(void)ft_strlcat(s, c, len);
+	(void)ft_strlcat(s, s2, len);
+	return (s);
+}
+
 char	*verify_commands(char **path, char *cmd)
 {
-	char	*commnd;
+	char	*command;
 	int		i;
-	int		flag;
-	char	*aux;
 
 	i = 0;
-	flag = 0;
 	if (!access(cmd, X_OK))
 		return(cmd);
-	while (path[i] && !flag)
+	command = ft_strjoinsep(path[i], cmd, "/");
+	while (path[i] && access(command, F_OK | X_OK))
 	{
-		aux = ft_strjoin("/", cmd);
-		commnd = ft_strjoin(path[i], aux);
-		if (!access(commnd,F_OK | X_OK))
-			flag++;
-		else
-			free(commnd);
 		i++;
+		free(command);
+		command = ft_strjoinsep(path[i], cmd, "/");
 	}
-	if (!flag)
-		commnd = NULL;
-	if (aux)
-		free(aux);
-	return (commnd);
+	if (!path[i] || !path)
+	{
+		perror(cmd);
+		return (NULL);
+	}
+	free(cmd);
+	return (command);
 }

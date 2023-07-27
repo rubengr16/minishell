@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:59 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/27 16:53:53 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/27 19:37:43 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int	files_management(t_cmd *cmd, int close_all)
 	cmd_aux = cmd;
 	while (cmd_aux && 0 <= cmd_aux->fd_in && 0 <= cmd_aux->fd_out)
 	{
-		redir_aux = cmd->redir;
+		redir_aux = cmd_aux->redir;
 		while (redir_aux && 0 <= cmd_aux->fd_in && 0 <= cmd_aux->fd_out)
 		{
 			if (redir_aux->type == R_IN || redir_aux->type == R_IN_HERE_DOC)

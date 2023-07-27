@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/27 16:51:59 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/27 20:54:06 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int exec_builtin(t_cmd *cmd)
 	return (1);
 }
 
-static int exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
+static void exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 {
 	char **path;
 
@@ -67,14 +67,15 @@ static int exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 	dup2_and_close(cmd);
 	if (!exec_builtin(cmd) && cmd->cmd)
 	{
-		execve(verify_commands(path, cmd->cmd), cmd->args, g_sigenv.envp);
-		mini_fprintf(cmd->cmd, "command not found");
-		exit(1);
+		cmd->cmd = verify_commands(path, cmd->cmd);
+		if (cmd->cmd)
+			execve(cmd->cmd, cmd->args, g_sigenv.envp);
+		else
+			mini_fprintf(cmd->cmd, "command not found");
 	}
 	while (path[i])
 		free(path[i++]);
 	free(path);
-	exit(1);
 }
 
 static void	wait_status_change(t_cmd *cmd, pid_t last_id)
@@ -124,17 +125,20 @@ static void	prepare_command(t_cmd *cmd)
 	free(pipes);
 }
 
-int exec_main(t_cmd *cmd)
+int	exec_main(t_cmd **cmd)
 {
 	int	builtin_on_parent;
 
-	builtin_on_parent = is_builtin_on_parent(cmd);
-	if (!files_management(cmd, builtin_on_parent))
+	builtin_on_parent = is_builtin_on_parent(*cmd);
+	if (!files_management(*cmd, builtin_on_parent))
 	{
 		if (builtin_on_parent)
-			exec_builtin(cmd);
+			exec_builtin(*cmd);
 		else
-			prepare_command(cmd);
+			prepare_command(*cmd);
 	}
+	delete_cmd_list(cmd);
+	if (builtin_on_parent && !ft_strncmp((*cmd)->cmd, "exit", 5))
+		return (1);
 	return (0);
 }

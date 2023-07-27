@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/22 10:01:45 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/27 18:17:56 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	delete_token_list(t_token_list **list)
 {
 	t_token	*aux;
 
-	if (!list)
+	if (!list || !*list)
 		return ;
 	aux = (*list)->start;
 	while ((*list)->start)

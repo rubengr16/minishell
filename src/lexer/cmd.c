@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 22:10:25 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/27 16:20:06 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/27 18:17:01 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	delete_cmd_list(t_cmd **list)
 {
 	t_cmd	*aux;
 
-	if (!*list)
+	if (!list || !*list)
 		return ;
 	aux = *list;
 	while (aux)
