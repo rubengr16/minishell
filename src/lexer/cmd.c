@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 22:10:25 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/26 16:01:19 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:20:06 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,8 @@ t_cmd	*new_cmd(void)
 		return (mini_error(NULL, NULL, ALLOC_ERR, NULL));
 	new_cmd->cmd = NULL;
 	new_cmd->args = NULL;
-	new_cmd->r_in = NULL;
+	new_cmd->redir = NULL;
 	new_cmd->fd_in = STDIN_FILENO;
-	new_cmd->r_out = NULL;
 	new_cmd->fd_out = STDOUT_FILENO;
 	new_cmd->next = NULL;
 	return (new_cmd);
@@ -64,10 +63,8 @@ void	delete_cmd_list(t_cmd **list)
 			free(aux->cmd);
 		if (aux->args)
 			free_double_char_ptr(aux->args);
-		if (aux->r_in)
-			delete_redir_list(&aux->r_in);
-		if (aux->r_out)
-			delete_redir_list(&aux->r_out);
+		if (aux->redir)
+			delete_redir_list(&aux->redir);
 		free(aux);
 		aux = *list;
 	}
@@ -96,22 +93,10 @@ void	print_cmd_list(t_cmd *list)
 			i++;
 		}
 		printf("------------------------------\n");
-		redir_aux = aux->r_in;
+		redir_aux = aux->redir;
 		if (redir_aux)
 		{
-			printf("- redir_in: = (file: %s, type: %d)\n", redir_aux->file, redir_aux->type);
-			redir_aux = redir_aux->next;
-			while (redir_aux)
-			{
-				printf("         (file: %s, type: %d)\n", redir_aux->file, redir_aux->type);
-				redir_aux = redir_aux->next;
-			}
-		}
-		printf("------------------------------\n");
-		redir_aux = aux->r_out;
-		if (redir_aux)
-		{
-			printf("- redir_out: = (file: %s, type: %d)\n", redir_aux->file, redir_aux->type);
+			printf("- redir: = (file: %s, type: %d)\n", redir_aux->file, redir_aux->type);
 			redir_aux = redir_aux->next;
 			while (redir_aux)
 			{

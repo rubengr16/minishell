@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/25 23:27:05 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:39:32 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static t_cmd	*manage_redir(t_cmd *cmd, t_token **token,
 	enum e_token_type type)
 {
-	t_redir	**chosen_redir;
 	char	*real_token;
 
 	*token = (*token)->next;
@@ -23,14 +22,10 @@ static t_cmd	*manage_redir(t_cmd *cmd, t_token **token,
 		return (mini_error(UNEXPECTED_TK, NULL, "newline", NULL));
 	if (get_token_type((*token)->token) != OTHER)
 		return (mini_error(UNEXPECTED_TK, NULL, (*token)->token, NULL));
-	if (type == R_IN || type == R_IN_HERE_DOC)
-		chosen_redir = &cmd->r_in;
-	else
-		chosen_redir = &cmd->r_out;
 	real_token = get_real_token((*token)->token, 1);
 	if (!real_token)
 		return (NULL);
-	if (!insert_to_redir_list(chosen_redir, real_token, type))
+	if (!insert_to_redir_list(&cmd->redir, real_token, type))
 		return (NULL);
 	return (cmd);
 }
@@ -65,8 +60,7 @@ t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 
 t_cmd	*manage_pipe(t_cmd *cmd_list, t_cmd *cmd, t_token **token)
 {
-	if (cmd_list == cmd
-		&& !cmd->cmd && !cmd->args && !cmd->r_in && !cmd->r_out)
+	if (cmd_list == cmd && !cmd->cmd && !cmd->args && !cmd->redir)
 		return (mini_error(UNEXPECTED_TK, NULL, (*token)->token, NULL));
 	*token = (*token)->next;
 	if (*token && get_token_type((*token)->token) == PIPE)

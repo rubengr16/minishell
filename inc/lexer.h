@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 19:54:48 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/26 15:58:13 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:18:36 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,8 @@ typedef struct s_cmd
 {
 	char			*cmd;
 	char			**args;
-	t_redir			*r_in;
+	t_redir			*redir;
 	int				fd_in;
-	t_redir			*r_out;
 	int				fd_out;
 	struct s_cmd	*next;
 }	t_cmd;
