@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:59 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/26 16:14:51 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:16:18 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,20 @@ void	mini_fprintf(char *str, char *message)
 	write(2, ": ", 2);
 	ft_putstr_fd(message,  2);
 	write(2, "\n", 1);
+}
+
+void	dup2_and_close(t_cmd *cmd)
+{
+	if (cmd->fd_in != STDIN_FILENO)
+	{
+		dup2(cmd->fd_in, STDIN_FILENO);
+		close(cmd->fd_in);
+	}
+	if (cmd->fd_out != STDOUT_FILENO)
+	{
+		dup2(cmd->fd_out, STDOUT_FILENO);
+		close(cmd->fd_out);
+	}
 }
 
 static char	*here_doc_expand_aux(char **line, unsigned int name_len,
@@ -89,64 +103,67 @@ static int	here_doc(t_redir *files)
 	return (here_pipe[PIPE_RD]);
 }
 
-static int	redirect_in(t_cmd *cmd, int close_all)
+static void	redirect_in(t_cmd *cmd, int close_all)
 {
 	t_redir	*redir;
-	int		fd_in;
 
 	redir = cmd->r_in;
-	while (redir)
+	while (redir && 0 <= cmd->fd_in)
 	{
 		if (redir->type == R_IN_HERE_DOC)
-			fd_in = here_doc(redir);
+			cmd->fd_in = here_doc(redir);
 		else
 		{
-			fd_in = open(cmd->r_in->file, O_RDONLY);
-			if (fd_in < 0)
+			cmd->fd_in = open(cmd->r_in->file, O_RDONLY, 0222);
+			if (cmd->fd_in < 0)
 				perror(redir->file);
+			else
+			{
+				redir = redir->next;
+				if (redir || close_all)
+					close(cmd->fd_in);
+			}
 		}
-		if (close_all)
-			dup2(fd_in, STDIN_FILENO);
-		close(fd_in);
-		redir = redir->next;
 	}
-	return (0);
 }
 
-static int	redirect_out(t_cmd *cmd, int close_all)
+static void	redirect_out(t_cmd *cmd, int close_all)
 {
 	t_redir	*redir;
-	int		fd_out;
 
 	redir = cmd->r_out;
-	while (redir)
+	while (redir && 0 <= cmd->fd_out)
 	{
 		if (redir->type == R_OUT_APPEND)
-			fd_out = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+			cmd->fd_out = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		else
-			fd_out = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (fd_out < 0)
+			cmd->fd_out = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		if (cmd->fd_out < 0)
 			perror(redir->file);
-		if (close_all)
-			dup2(fd_out, STDOUT_FILENO);
-		close(fd_out);
-		redir = redir->next;
+		else
+		{
+			redir = redir->next;
+			if (redir || close_all)
+				close(cmd->fd_out);
+		}
 	}
-	return (0);
 }
 
 int	files_management(t_cmd *cmd, int close_all)
 {
 	t_cmd	*aux;
-	int		result;
 
 	aux = cmd;
-	while (cmd && cmd->fd_in && cmd->fd_out)
+	while (aux && 0 <= aux->fd_in && 0 <= aux->fd_out)
 	{
-		if (cmd->r_in)
+		if (aux->r_in)
 			redirect_in(cmd, close_all);
-		if (cmd->r_out)
+		if (aux->r_out)
 			redirect_out(cmd, close_all);
-		aux = aux->next;
+		if (0 <= aux->fd_in && 0 <= aux->fd_out)
+			aux = aux->next;
 	}
+	if (aux)
+		return (1);
+	return (0);
 }

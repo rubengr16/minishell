@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/26 16:00:09 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:16:14 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ static int exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 
 	path = ft_split(get_env("PATH"), ':');
 	piping(cmd, pipes, i, length);
-	if (!files_management(cmd, 0) && !exec_builtin(cmd) && cmd->cmd)
+	dup2_and_close(cmd);
+	if (!exec_builtin(cmd) && cmd->cmd)
 	{
 		execve(verify_commands(path, cmd->cmd), cmd->args, g_sigenv.envp);
 		mini_fprintf(cmd->cmd, "command not found");
@@ -125,10 +126,15 @@ static void	prepare_command(t_cmd *cmd)
 
 int exec_main(t_cmd *cmd)
 {
-	if (!cmd->next && is_builtin_on_parent(cmd->cmd) 
-		&&(!files_management(cmd, 1)))
-		exec_builtin(cmd);
-	else
-		prepare_command(cmd);
+	int	builtin_on_parent;
+
+	builtin_on_parent = is_builtin_on_parent(cmd);
+	if (!files_management(cmd, builtin_on_parent))
+	{
+		if (builtin_on_parent)
+			exec_builtin(cmd);
+		else
+			prepare_command(cmd);
+	}
 	return (0);
 }
