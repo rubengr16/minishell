@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/27 20:54:06 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/28 10:36:29 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,22 +60,15 @@ static int exec_builtin(t_cmd *cmd)
 
 static void exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 {
-	char **path;
-
-	path = ft_split(get_env("PATH"), ':');
 	piping(cmd, pipes, i, length);
 	dup2_and_close(cmd);
 	if (!exec_builtin(cmd) && cmd->cmd)
 	{
-		cmd->cmd = verify_commands(path, cmd->cmd);
+		cmd->cmd = verify_commands(ft_split(get_env("PATH"), ':'), cmd->cmd);
 		if (cmd->cmd)
 			execve(cmd->cmd, cmd->args, g_sigenv.envp);
-		else
-			mini_fprintf(cmd->cmd, "command not found");
 	}
-	while (path[i])
-		free(path[i++]);
-	free(path);
+	exit(1);
 }
 
 static void	wait_status_change(t_cmd *cmd, pid_t last_id)
@@ -138,7 +131,7 @@ int	exec_main(t_cmd **cmd)
 			prepare_command(*cmd);
 	}
 	delete_cmd_list(cmd);
-	if (builtin_on_parent && !ft_strncmp((*cmd)->cmd, "exit", 5))
-		return (1);
+	// if (builtin_on_parent && !ft_strncmp((*cmd)->cmd, "exit", 5))
+	// 	return (1);
 	return (0);
 }
