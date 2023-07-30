@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:07 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/27 18:22:51 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/30 14:49:06 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		exec_main(t_cmd **command);
 /********************************* REDIRECT ********************************* */
 void	mini_fprintf(char *str, char *message);
 void	dup2_and_close(t_cmd *cmd);
-int		files_management(t_cmd *cmd, int need_dup2);
+void	files_management(t_cmd *cmd, int need_dup2);
 
 /*********************************** UTILS ********************************** */
 int		count_cmds(t_cmd *cmd);

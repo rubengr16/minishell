@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/28 10:36:29 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/30 14:52:07 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 {
 	piping(cmd, pipes, i, length);
 	dup2_and_close(cmd);
-	if (!exec_builtin(cmd) && cmd->cmd)
+	if ((cmd->fd_in || cmd->fd_out) && !exec_builtin(cmd) && cmd->cmd)
 	{
 		cmd->cmd = verify_commands(ft_split(get_env("PATH"), ':'), cmd->cmd);
 		if (cmd->cmd)
@@ -123,13 +123,11 @@ int	exec_main(t_cmd **cmd)
 	int	builtin_on_parent;
 
 	builtin_on_parent = is_builtin_on_parent(*cmd);
-	if (!files_management(*cmd, builtin_on_parent))
-	{
-		if (builtin_on_parent)
-			exec_builtin(*cmd);
-		else
-			prepare_command(*cmd);
-	}
+	files_management(*cmd, builtin_on_parent);
+	if (builtin_on_parent && ((*cmd)->fd_in || (*cmd)->fd_out))
+		exec_builtin(*cmd);
+	else
+		prepare_command(*cmd);
 	delete_cmd_list(cmd);
 	// if (builtin_on_parent && !ft_strncmp((*cmd)->cmd, "exit", 5))
 	// 	return (1);
