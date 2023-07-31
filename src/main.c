@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/27 20:54:16 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/31 10:24:32 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,10 @@ int	main(int argc, char **argv, char **envp)
 		if (list)
 		{
 			cmd_list = lexer(&list);
-			if (cmd_list && !exec_main(&cmd_list))
-				line = get_line();
-			else
-				line = NULL;
+			if (cmd_list)
+				exec_main(&cmd_list);
 		}
-		else
-			line = NULL;
+		line = get_line();
 	}
 	delete_env_vbles();
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:03 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/28 10:30:06 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/31 08:57:13 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	is_builtin(char *cmd)
 
 int	is_builtin_on_parent(t_cmd	*cmd)
 {
-	// printf("bool = %d", !ft_strncmp(cmd->cmd, "exit", 5));
 	return (cmd->cmd && !cmd->next && (!ft_strncmp(cmd->cmd, "export", 7)
 		|| !ft_strncmp(cmd->cmd, "cd", 3) || !ft_strncmp(cmd->cmd, "unset", 6)
 		|| !ft_strncmp(cmd->cmd, "exit", 5)));
