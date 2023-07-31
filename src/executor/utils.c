@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:03 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/31 08:57:13 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/31 11:48:55 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,5 @@ char	*verify_commands(char **path, char *cmd)
 		command = NULL;
 	}
 	free_double_char_ptr(path);
-	free(cmd);
 	return (command);
 }

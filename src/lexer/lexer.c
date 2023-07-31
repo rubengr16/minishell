@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/31 11:29:59 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/07/31 11:48:23 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,7 @@ t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 	free(real_token);
 	i = 0;
 	if (!cmd->cmd)
-	{
-		cmd->cmd = ft_strdup(splitted_token[i]);
-		if (!cmd->cmd)
-			return (mini_error(NULL, NULL, ALLOC_ERR, NULL));
-	}
+		cmd->cmd = splitted_token[i];
 	while (0 <= i && splitted_token[i])
 	{
 		if (!add_to_char_double_ptr(&cmd->args, splitted_token[i]))
