@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/31 10:24:32 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/01 19:48:12 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,8 @@ void	signalHandling(int sig)
 {
 	if (sig == SIGINT)
 		write(1, "\n", 1);
-	else if (sig == SIGQUIT)
-		write(1, "exit\n", 5);
-	else if (sig == SIGTERM)
-		write(1, "Hola\n", 5);
+	if (sig == SIGQUIT)
+		write(1, "", 0);
 }
 
 int	main(int argc, char **argv, char **envp)
