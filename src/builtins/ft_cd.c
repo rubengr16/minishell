@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:23:23 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/02 18:57:24 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/02 23:45:02 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@ static void	update_pwd(char *prvs_pwd, char *current_pwd)
 {
 	char	*oldpwd;
 	char	*newpwd;
-	
-	ft_putendl_fd(prvs_pwd, STDERR_FILENO);
-	ft_putendl_fd(current_pwd, STDERR_FILENO);
+
 	oldpwd = ft_strjoin("OLDPWD=", prvs_pwd);
 	if (!oldpwd)
 		return ((void)mini_error("cd", NULL, ALLOC_ERR, NULL));
@@ -28,7 +26,6 @@ static void	update_pwd(char *prvs_pwd, char *current_pwd)
 		return ((void)mini_error("cd", NULL, ALLOC_ERR, NULL));
 	free(current_pwd);
 	set_vble(oldpwd, ft_strchr(oldpwd, '='));
-	ft_putendl_fd(newpwd, STDERR_FILENO);
 	set_vble(newpwd, ft_strchr(newpwd, '='));
 	free(oldpwd);
 	free(newpwd);
@@ -38,7 +35,6 @@ int	ft_cd(char **args)
 {
 	char	*path;
 	char	*old;
-	char	*new;
 	int		len;
 
 	len = len_char_double_ptr(args);
@@ -64,9 +60,6 @@ int	ft_cd(char **args)
 		mini_error("cd", path, strerror(errno), old);
 		return (1);
 	}
-	new = getcwd(NULL, 0);
-	if (!new && errno == EACCES)
-		// Arreglar
-	update_pwd(old, new);
+	update_pwd(old, getcwd(NULL, 0));
 	return (0);
 }
