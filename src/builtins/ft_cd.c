@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:23:23 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/02 18:23:34 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/02 18:57:24 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,21 @@
 
 static void	update_pwd(char *prvs_pwd, char *current_pwd)
 {
-	char	*newpwd;
 	char	*oldpwd;
+	char	*newpwd;
 	
+	ft_putendl_fd(prvs_pwd, STDERR_FILENO);
+	ft_putendl_fd(current_pwd, STDERR_FILENO);
 	oldpwd = ft_strjoin("OLDPWD=", prvs_pwd);
 	if (!oldpwd)
 		return ((void)mini_error("cd", NULL, ALLOC_ERR, NULL));
+	free(prvs_pwd);
 	newpwd = ft_strjoin("PWD=", current_pwd);
 	if (!newpwd)
 		return ((void)mini_error("cd", NULL, ALLOC_ERR, NULL));
+	free(current_pwd);
 	set_vble(oldpwd, ft_strchr(oldpwd, '='));
+	ft_putendl_fd(newpwd, STDERR_FILENO);
 	set_vble(newpwd, ft_strchr(newpwd, '='));
 	free(oldpwd);
 	free(newpwd);
@@ -33,6 +38,7 @@ int	ft_cd(char **args)
 {
 	char	*path;
 	char	*old;
+	char	*new;
 	int		len;
 
 	len = len_char_double_ptr(args);
@@ -55,9 +61,12 @@ int	ft_cd(char **args)
 		path = args[1];
 	if (chdir(path))
 	{
-		mini_error("cd", path, strerror(errno), NULL);
+		mini_error("cd", path, strerror(errno), old);
 		return (1);
 	}
-	update_pwd(old, getcwd(NULL, 0));
+	new = getcwd(NULL, 0);
+	if (!new && errno == EACCES)
+		// Arreglar
+	update_pwd(old, new);
 	return (0);
 }
