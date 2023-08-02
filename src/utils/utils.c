@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:57:50 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/28 10:31:26 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/02 17:02:57 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	*mini_error(char *opt_str1, char *opt_str2, char *str, void *to_free)
 {
-	if (to_free)
-		free(to_free);
-	to_free = NULL;
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(opt_str1, STDERR_FILENO);
 	if (opt_str1)
@@ -25,6 +22,9 @@ void	*mini_error(char *opt_str1, char *opt_str2, char *str, void *to_free)
 	if (opt_str2)
 		ft_putstr_fd(": ", STDERR_FILENO);
 	ft_putendl_fd(str, STDERR_FILENO);
+	if (to_free)
+		free(to_free);
+	to_free = NULL;
 	return (NULL);
 }
 

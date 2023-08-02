@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:35:16 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/25 21:41:30 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/02 17:06:58 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static int	set_vble(char *vble, char *equal_sign)
+int	set_vble(char *vble, char *equal_sign)
 {
 	char	*vble_cpy;
 	int		pos;
