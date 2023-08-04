@@ -6,19 +6,11 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:59 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/05 01:00:20 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/05 01:37:36 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
-
-void	mini_fprintf(char *str, char *message)
-{
-	ft_putstr_fd(str,  2);
-	write(2, ": ", 2);
-	ft_putstr_fd(message,  2);
-	write(2, "\n", 1);
-}
 
 void	dup2_and_close(t_cmd *cmd)
 {

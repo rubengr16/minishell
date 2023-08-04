@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:55:34 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/05 01:13:52 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/05 01:38:28 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,17 @@
 # include "libft.h"
 # include "get_next_line.h"
 
-# define AMBIGUOUS_REDIR_MSG "ambiguous redirect"
+# define AMBIG_REDIR_MSG "ambiguous redirect"
 # define NO_HOME_MSG "HOME not set"
 # define UNEXPECTED_TK_MSG "syntax error near unexpected token: "
 # define UNCLOSED_Q_MSG "unclosed quotes found"
+# define CMD_NOT_FOUND_MSG "command not found..."
 
 # define SYS_ERR -1
 # define AMBIG_ERR 1
 # define NO_HOME_ERR 1
 # define SYNTAX_ERR 2
+# define CMD_NOT_FOUND_ERR 127
 
 /* ***************************** FUNC DECLARATION ************************** */
 /* ---------------------------------- UTILS -------------------------------- */

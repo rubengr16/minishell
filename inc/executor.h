@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:07 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/02 18:20:49 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/05 01:37:19 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ typedef	int t_pipe [2];
 void		exec_main(t_cmd **command);
 
 /********************************* REDIRECT ********************************* */
-void	mini_fprintf(char *str, char *message);
 void	dup2_and_close(t_cmd *cmd);
 void	files_management(t_cmd *cmd, int need_dup2);
 
