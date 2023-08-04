@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:59 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/31 11:05:15 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/05 01:00:20 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*here_doc_expand_aux(char **line, unsigned int name_len,
 		return (vble_cpy(line, "$", i, 0));
 	name = malloc(sizeof(char) * (name_len + 1));
 	if (!name)
-		*line = mini_error(NULL, NULL, ALLOC_ERR, *line);
+		*line = mini_error(NULL, NULL, SYS_ERR, *line);
 	ft_strlcpy(name, &((*line)[*i]), name_len + 1);
 	vble = get_env(name);
 	free(name);

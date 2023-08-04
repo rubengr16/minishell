@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:23:23 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/03 18:25:19 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/05 01:10:29 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static void	update_pwd(char *prvs_pwd, char *current_pwd)
 
 	oldpwd = ft_strjoin("OLDPWD=", prvs_pwd);
 	if (!oldpwd)
-		return ((void)mini_error("cd", NULL, ALLOC_ERR, NULL));
+		return ((void)mini_error("cd", NULL, SYS_ERR, NULL));
 	free(prvs_pwd);
 	newpwd = ft_strjoin("PWD=", current_pwd);
 	if (!newpwd)
-		return ((void)mini_error("cd", NULL, ALLOC_ERR, NULL));
+		return ((void)mini_error("cd", NULL, SYS_ERR, NULL));
 	free(current_pwd);
 	set_vble(oldpwd, ft_strchr(oldpwd, '='));
 	set_vble(newpwd, ft_strchr(newpwd, '='));
@@ -49,7 +49,7 @@ int	ft_cd(char **args)
 		path = get_env("HOME");
 		if (!path)
 		{
-			mini_error("cd", NULL, "HOME not set", NULL);
+			mini_error("cd", NO_HOME_MSG, NO_HOME_ERR, NULL);
 			return (1);
 		}
 	}
@@ -57,7 +57,7 @@ int	ft_cd(char **args)
 		path = args[1];
 	if (chdir(path))
 	{
-		mini_error("cd", path, strerror(errno), old);
+		mini_error("cd", path, SYS_ERR, old);
 		errno = 1;
 	}
 	else

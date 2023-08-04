@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/25 23:27:17 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/05 01:14:12 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static t_token	*get_token(char **line, unsigned int *i, enum e_state state)
 		}
 	}
 	if (state != NORMAL)
-		return (mini_error(NULL, NULL, UNCLOSED_Q_ERR, NULL));
+		return (mini_error(UNCLOSED_Q_MSG, NULL, SYNTAX_ERR, NULL));
 	return (new_token(&(*line)[start], *i - start, original_state));
 }
 

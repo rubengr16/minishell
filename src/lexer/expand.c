@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/26 08:18:26 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/05 01:12:09 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*vble_cpy(char **line, char *vble, unsigned int *i,
 	if (!aux)
 	{
 		free(*line);
-		return (mini_error(NULL, NULL, ALLOC_ERR, NULL));
+		return (mini_error(NULL, NULL, SYS_ERR, NULL));
 	}
 	(*i)--;
 	ft_strlcpy(aux, *line, ft_strlen_to(*line, &(*line)[*i]) + 1);
@@ -74,14 +74,14 @@ char	*expand(char **line, unsigned int *i, enum e_state state,
 		return (vble_cpy(line, "$", i, 0));
 	name = malloc(sizeof(char) * (len + 1));
 	if (!name)
-		return (mini_error(NULL, NULL, ALLOC_ERR, *line));
+		return (mini_error(NULL, NULL, SYS_ERR, *line));
 	ft_strlcpy(name, &((*line)[*i]), len + 1);
 	vble = get_env(name);
 	free(name);
 	if (!vble)
 		return (vble_cpy(line, "", i, len));
 	if (ft_strchr(vble, ' ') && state == NORMAL && is_redir)
-		return (mini_error(NULL, NULL, AMBIGUOUS_REDIR, NULL));
+		return (mini_error(AMBIGUOUS_REDIR_MSG, NULL, AMBIG_ERR, NULL));
 	if (ft_strchr(vble, ' ') && state == NORMAL && !is_redir)
 		ft_strrepl(vble, ' ', TRANS_VBLE_SPACE);
 	return (vble_cpy(line, vble, i, len));

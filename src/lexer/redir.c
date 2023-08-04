@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 22:10:25 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/22 10:01:21 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/05 00:48:52 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_redir	*new_redir(char *file, enum e_token_type type)
 
 	redir = malloc(sizeof(t_redir));
 	if (!redir)
-		return (mini_error(NULL, NULL, ALLOC_ERR, NULL));
+		return (mini_error(NULL, NULL, SYS_ERR, NULL));
 	redir->file = file;
 	redir->type = type;
 	redir->next = NULL;

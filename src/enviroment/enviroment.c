@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 18:11:30 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 23:23:08 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/05 01:00:27 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**create_my_env(char **envp)
 			i++;
 	g_sigenv.envp = malloc(sizeof(char *) * (i + 1));
 	if (!g_sigenv.envp)
-		mini_error(NULL, NULL, ALLOC_ERR, NULL);
+		mini_error(NULL, NULL, SYS_ERR, NULL);
 	i = 0;
 	while (g_sigenv.envp && envp[i])
 	{

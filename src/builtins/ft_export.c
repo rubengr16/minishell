@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:35:16 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/02 18:39:35 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/05 01:00:34 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	set_vble(char *vble, char *equal_sign)
 	vble_cpy = ft_strdup(vble);
 	if (!vble_cpy)
 	{
-		(void)mini_error(NULL, NULL, ALLOC_ERR, NULL);
+		(void)mini_error(NULL, NULL, SYS_ERR, NULL);
 		return (EXPORT_ERR);
 	}
 	*equal_sign = '\0';

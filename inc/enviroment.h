@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enviroment.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:20:09 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/02 18:05:35 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/05 01:03:44 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdio.h>
 # include <signal.h>
-# include <errno.h>
 # include "global.h"
 # include "lexer.h"
 # include "utils.h"

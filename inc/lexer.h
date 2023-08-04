@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 19:54:48 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/27 16:18:36 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/05 01:08:12 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,6 @@
 # include "utils.h"
 
 # define TRANS_VBLE_SPACE -4
-
-# define UNEXPECTED_TK "syntax error near unexpected token: "
-# define AMBIGUOUS_REDIR "ambiguous redirect"
-# define SPLIT_ERR "split failed"
 
 /* ******************************* ENUM ******************************* */
 enum	e_token_type

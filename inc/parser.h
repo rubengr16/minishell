@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:10:35 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 17:56:36 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/05 01:13:32 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 # define TRANS_SINGLE_Q -1
 # define TRANS_DOUBLE_Q -2
 # define TRANS_DOLLAR -3
-
-# define UNCLOSED_Q_ERR "unclosed quotes found"
 
 /* ******************************* ENUM ******************************* */
 enum	e_state

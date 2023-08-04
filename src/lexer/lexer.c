@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/31 11:48:23 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/05 01:09:32 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static t_cmd	*manage_redir(t_cmd *cmd, t_token **token,
 
 	*token = (*token)->next;
 	if (!*token)
-		return (mini_error(UNEXPECTED_TK, NULL, "newline", NULL));
+		return (mini_error(UNEXPECTED_TK_MSG, "newline", SYS_ERR, NULL));
 	if (get_token_type((*token)->token) != OTHER)
-		return (mini_error(UNEXPECTED_TK, NULL, (*token)->token, NULL));
+		return (mini_error(UNEXPECTED_TK_MSG, (*token)->token, SYS_ERR, NULL));
 	real_token = get_real_token((*token)->token, 1);
 	if (!real_token)
 		return (NULL);
@@ -41,7 +41,7 @@ t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 		return (NULL);
 	splitted_token = ft_split(real_token, TRANS_VBLE_SPACE);
 	if (!splitted_token && ft_strlen(real_token))
-		return (mini_error(NULL, NULL, SPLIT_ERR, real_token));
+		return (mini_error(NULL, NULL, SYS_ERR, real_token));
 	free(real_token);
 	i = 0;
 	if (!cmd->cmd)
@@ -61,10 +61,10 @@ t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 t_cmd	*manage_pipe(t_cmd *cmd_list, t_cmd *cmd, t_token **token)
 {
 	if (cmd_list == cmd && !cmd->cmd && !cmd->args && !cmd->redir)
-		return (mini_error(UNEXPECTED_TK, NULL, (*token)->token, NULL));
+		return (mini_error(UNEXPECTED_TK_MSG, (*token)->token, SYNTAX_ERR, NULL));
 	*token = (*token)->next;
 	if (*token && get_token_type((*token)->token) == PIPE)
-		return (mini_error(UNEXPECTED_TK,  NULL, (*token)->token, NULL));
+		return (mini_error(UNEXPECTED_TK_MSG,  (*token)->token, SYNTAX_ERR, NULL));
 	return (cmd);
 }
 
