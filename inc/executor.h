@@ -16,7 +16,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <dirent.h>
-# include "enviroment.h"
+# include "signals.h"
 # include "builtins.h"
 # include "lexer.h"
 

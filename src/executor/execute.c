@@ -124,6 +124,8 @@ void	exec_main(t_cmd **cmd)
 {
 	int	builtin_on_parent;
 
+	signal(SIGINT, sigExec);
+	signal(SIGQUIT, sigExec);
 	builtin_on_parent = is_builtin_on_parent(*cmd);
 	files_management(*cmd, builtin_on_parent);
 	if (builtin_on_parent && 0 <= (*cmd)->fd_in && 0 <= (*cmd)->fd_out)

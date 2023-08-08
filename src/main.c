@@ -48,16 +48,10 @@ static char	*get_line(void)
 			aux = NULL;
 		}
 	}
+	if (!line)
+		write (2, "exit\n", 5);
 	add_history(line);
 	return (line);
-}
-
-void	signalHandling(int sig)
-{
-	if (sig == SIGINT)
-		write(1, "\n", 1);
-	if (sig == SIGQUIT)
-		write(1, "", 0);
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -67,8 +61,8 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd			*cmd_list;
 
 	(void)argc, (void)argv;
-	signal(SIGINT, signalHandling);
-	signal(SIGQUIT, signalHandling);
+	signal(SIGINT, sigNormal);
+	signal(SIGQUIT, sigNormal);
 	line = get_line();
 	create_my_env(envp);
 	g_sigenv.last_status = ft_strdup("0");
@@ -81,6 +75,8 @@ int	main(int argc, char **argv, char **envp)
 			if (cmd_list)
 				exec_main(&cmd_list);
 		}
+		signal(SIGINT, sigNormal);
+		signal(SIGQUIT, sigNormal);
 		line = get_line();
 	}
 	delete_env_vbles();

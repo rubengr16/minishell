@@ -24,6 +24,8 @@ EXEC_DIR	=		executor/
 
 UTILS_DIR	=		utils/
 
+SIGNALS_DIR	=		signals/
+
 INC_DIR		=		inc/
 
 MINISHELL	=		main.c
@@ -66,6 +68,10 @@ UTILS		=		$(addprefix $(UTILS_DIR), \
 					utils.c \
 					)
 
+SIGNALS		=		$(addprefix $(SIGNALS_DIR), \
+					signals.c \
+					)
+
 SRCS		= 		$(addprefix $(SRC_DIR), \
 					$(MINISHELL) \
 					$(PARSER) \
@@ -74,6 +80,7 @@ SRCS		= 		$(addprefix $(SRC_DIR), \
 					$(BUILTINS) \
 					$(EXECUTOR) \
 					$(UTILS) \
+					$(SIGNALS) \
 					)
 
 OBJS	=			$(SRCS:.c=.o)
