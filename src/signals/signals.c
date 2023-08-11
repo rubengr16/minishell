@@ -1,23 +1,25 @@
 #include "signals.h"
 
-void	sigNormal(int sig)
+void	sig_normal(int sig)
 {
-	if (sig == SIGINT){
-		free(g_sigenv.last_status);
-		g_sigenv.last_status = ft_strdup("1");
-		write(2, "\r\nminishell> ", 13);
+	if (sig == SIGINT)
+	{
+		write(2, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
 	}
 	else if (sig == SIGQUIT)
-		write(1, "", 0);
+	{
+		write(2, "\b\b", 2);
+	}
 }
 
-void	sigExec(int sig)
+void	sig_exec(int sig)
 {
-	if (sig == SIGINT){
-		free(g_sigenv.last_status);
-		g_sigenv.last_status = ft_strdup("130");
+	if (sig == SIGINT)
+	{
 		write(2, "\n", 1);
 	}
 	else if (sig == SIGQUIT)
-		write(1, "", 0);
+		write(2, "Quit: 3\n", 8);
 }

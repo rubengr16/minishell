@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:07 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/05 01:37:19 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/11 12:23:19 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <dirent.h>
+# include <stdio.h>
 # include "signals.h"
 # include "builtins.h"
 # include "lexer.h"

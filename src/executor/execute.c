@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/31 11:27:56 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/11 12:43:37 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ void	exec_main(t_cmd **cmd)
 {
 	int	builtin_on_parent;
 
-	signal(SIGINT, sigExec);
-	signal(SIGQUIT, sigExec);
+	signal(SIGINT, sig_exec);
+	signal(SIGQUIT, sig_exec);
 	builtin_on_parent = is_builtin_on_parent(*cmd);
 	files_management(*cmd, builtin_on_parent);
 	if (builtin_on_parent && 0 <= (*cmd)->fd_in && 0 <= (*cmd)->fd_out)

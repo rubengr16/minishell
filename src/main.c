@@ -6,12 +6,10 @@
 /*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/01 19:48:12 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/11 12:43:25 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
 #include "minishell.h"
 #include "global.h"
 #include "parser.h"
@@ -49,7 +47,7 @@ static char	*get_line(void)
 		}
 	}
 	if (!line)
-		write (2, "exit\n", 5);
+		write (2, "\b\bexit\n", 7);
 	add_history(line);
 	return (line);
 }
@@ -61,8 +59,8 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd			*cmd_list;
 
 	(void)argc, (void)argv;
-	signal(SIGINT, sigNormal);
-	signal(SIGQUIT, sigNormal);
+	signal(SIGINT, sig_normal);
+	signal(SIGQUIT, sig_normal);
 	line = get_line();
 	create_my_env(envp);
 	g_sigenv.last_status = ft_strdup("0");
@@ -75,8 +73,8 @@ int	main(int argc, char **argv, char **envp)
 			if (cmd_list)
 				exec_main(&cmd_list);
 		}
-		signal(SIGINT, sigNormal);
-		signal(SIGQUIT, sigNormal);
+		signal(SIGINT, sig_normal);
+		signal(SIGQUIT, sig_normal);
 		line = get_line();
 	}
 	delete_env_vbles();

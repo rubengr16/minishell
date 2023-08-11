@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    vbles.mk                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
+#    By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/08/02 18:29:19 by rgallego         ###   ########.fr        #
+#    Updated: 2023/08/11 12:19:48 by socana-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -91,7 +91,11 @@ CC		=			gcc
 
 RM		=			-rm -f
 
-CFLAGS	=			-Wall -Werror -Wextra -MD
+CFLAGS	=			-Wall -Werror -Wextra -MD -g3
+
+RDLINE_INC	=		-I ~/.brew/opt/readline/include -I /usr/local/opt/readline/include
+
+RDLINE_LIB	=		-L /usr/local/opt/readline/lib -L ~/.brew/opt/readline/lib
 
 LDFLAGS	=			$(LIBFTNAME) \
 					$(GNLNAME)
