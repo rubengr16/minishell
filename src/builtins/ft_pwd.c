@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:34:37 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/01 18:37:10 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/10 18:16:20 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 void	ft_pwd(void)
 {
 	printf("%s\n", getcwd(NULL, 0));
-	exit(0);
+	errno = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:35:16 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/05 01:00:34 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/11 11:11:36 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,23 @@ int	set_vble(char *vble, char *equal_sign)
 	return (0);
 }
 
+static int	is_valid_vble_name(char *s, char *equal_sign)
+{
+	int	i;
+
+	i = 0;
+	if (!s)
+		return (0);
+	while (s[i] && s != equal_sign && (ft_isalnum(s[i]) || s[i] == '_'))
+		i++;
+	if (s[i])
+	{
+		printf("BAD NAME\n");
+		return (0);
+	}
+	return (1);
+}
+
 void	ft_export(char **args)
 {
 	char	*equal_sign;
@@ -46,8 +63,17 @@ void	ft_export(char **args)
 	while (0 < i && args[i])
 	{
 		equal_sign = ft_strchr(args[i], '=');
-		if (equal_sign && set_vble(args[i], equal_sign))
-			i = EXPORT_ERR;
-		i++;
+		if (equal_sign)
+		{
+			if (is_valid_vble_name(args[i], equal_sign)
+				&& !set_vble(args[i], equal_sign))
+				i++;
+			else
+				i = EXPORT_ERR;
+		}
 	}
+	if (i == EXPORT_ERR)
+		errno = 1;
+	else
+		errno = 0;
 }
