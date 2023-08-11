@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:19:41 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/05 01:10:34 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/11 11:11:35 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "global.h"
 # include "utils.h"
 
-# define EXPORT_ERR -2
+# define EXPORT_ERR -1
 
 /* ******************************** BUILTINS ******************************** */
 void	ft_echo(char **args);							// juanizado
