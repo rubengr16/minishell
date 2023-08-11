@@ -60,7 +60,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc, (void)argv;
 	signal(SIGINT, sig_normal);
-	signal(SIGQUIT, sig_normal);
+	signal(SIGQUIT, SIG_IGN);
 	line = get_line();
 	create_my_env(envp);
 	g_sigenv.last_status = ft_strdup("0");
@@ -74,7 +74,7 @@ int	main(int argc, char **argv, char **envp)
 				exec_main(&cmd_list);
 		}
 		signal(SIGINT, sig_normal);
-		signal(SIGQUIT, sig_normal);
+		signal(SIGQUIT, SIG_IGN);
 		line = get_line();
 	}
 	delete_env_vbles();

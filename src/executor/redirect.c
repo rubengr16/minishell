@@ -98,7 +98,11 @@ static int	here_doc(char *end_of_input)
 static void	redirect_in(t_cmd *cmd, t_redir redir,	int close_all)
 {
 	if (redir.type == R_IN_HERE_DOC)
+	{
+		signal(SIGINT, sig_here_doc);
+		signal(SIGQUIT, sig_here_doc);
 		cmd->fd_in = here_doc(redir.file);
+	}
 	else
 	{
 		cmd->fd_in = open(redir.file, O_RDONLY, 0222);

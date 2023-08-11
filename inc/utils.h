@@ -22,7 +22,7 @@
 # define NO_HOME_MSG "HOME not set"
 # define UNEXPECTED_TK_MSG "syntax error near unexpected token: "
 # define UNCLOSED_Q_MSG "unclosed quotes found"
-# define CMD_NOT_FOUND_MSG "command not found..."
+# define CMD_NOT_FOUND_MSG "command not found"
 
 # define SYS_ERR -1
 # define AMBIG_ERR 1
