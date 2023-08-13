@@ -6,7 +6,11 @@
 #    By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2023/08/11 12:19:48 by socana-b         ###   ########.fr        #
+=======
+#    Updated: 2023/08/14 01:11:53 by rgallego         ###   ########.fr        #
+>>>>>>> a5f0ba0 (exit errcode ok)
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,12 +64,14 @@ BUILTINS	=	$(addprefix $(BUILTINS_DIR), \
 					ft_echo.c \
 					ft_env.c \
 					ft_export.c \
-					ft_pwd.c \
 					ft_unset.c \
+					ft_pwd.c \
+					ft_exit.c \
 					)
 
 UTILS		=		$(addprefix $(UTILS_DIR), \
 					utils.c \
+					nbr_utils.c \
 					)
 
 SIGNALS		=		$(addprefix $(SIGNALS_DIR), \

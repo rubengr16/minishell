@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/11 12:43:37 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/14 01:55:25 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int exec_builtin(t_cmd *cmd)
 	else if (!ft_strncmp(cmd->cmd, "env", 4))
 		ft_env();
 	else if (!ft_strncmp(cmd->cmd, "exit", 5))
-		exit(0);
+		ft_exit(cmd->args);
 	else if (!ft_strncmp(cmd->cmd, "cd", 3))
 		ft_cd(cmd->args);
 	else
@@ -133,6 +133,4 @@ void	exec_main(t_cmd **cmd)
 	else
 		prepare_command(*cmd);
 	delete_cmd_list(cmd);
-	// if (builtin_on_parent && !ft_strncmp((*cmd)->cmd, "exit", 5))
-	// 	return (1);
 }

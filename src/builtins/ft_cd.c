@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:23:23 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/05 01:10:29 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 01:13:13 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	update_pwd(char *prvs_pwd, char *current_pwd)
 	free(newpwd);
 }
 
-int	ft_cd(char **args)
+void	ft_cd(char **args)
 {
 	char	*path;
 	char	*old;
@@ -42,7 +42,7 @@ int	ft_cd(char **args)
 	if (len > 2)
 	{
 		write(2, "cd: too many arguments\n", 23);
-		return (1);
+		return ;
 	}
 	if (len == 1)
 	{
@@ -50,7 +50,7 @@ int	ft_cd(char **args)
 		if (!path)
 		{
 			mini_error("cd", NO_HOME_MSG, NO_HOME_ERR, NULL);
-			return (1);
+			return ;
 		}
 	}
 	else
@@ -65,5 +65,4 @@ int	ft_cd(char **args)
 		update_pwd(old, getcwd(NULL, 0));
 		errno = 0;
 	}
-	return (errno);
 }

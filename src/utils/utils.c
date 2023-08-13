@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:57:50 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/05 01:03:53 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 01:51:52 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,16 @@ void	*mini_error(char *s1, char *s2, int errcode, void *to_free)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(s1, STDERR_FILENO);
-	if (s1)
+	if (s1 && (s2 || errcode < 0))
 		ft_putstr_fd(": ", STDERR_FILENO);
 	ft_putstr_fd(s2, STDERR_FILENO);
-	if (s2)
+	if (s2 && errcode < 0)
 		ft_putstr_fd(": ", STDERR_FILENO);
 	if (0 < errcode)
 		errno = errcode;
 	else
-		ft_putendl_fd(strerror(errno), STDERR_FILENO);
+		ft_putstr_fd(strerror(errno), STDERR_FILENO);
+	ft_putchar_fd('\n', STDERR_FILENO);
 	if (to_free)
 		free(to_free);
 	return (NULL);
