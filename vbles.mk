@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    vbles.mk                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+         #
+#    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2023/08/11 12:19:48 by socana-b         ###   ########.fr        #
-=======
-#    Updated: 2023/08/14 01:11:53 by rgallego         ###   ########.fr        #
->>>>>>> a5f0ba0 (exit errcode ok)
+#    Updated: 2023/08/14 01:56:28 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
