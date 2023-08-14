@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:55:34 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 11:35:09 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 13:31:14 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <string.h>
 # include <errno.h>
+# include <stdio.h>
 # include "libft.h"
 # include "global.h"
 # include "get_next_line.h"

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:45:40 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:36:20 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ static void	wait_status_change(t_cmd *cmd, pid_t last_id)
 	while (i)
 	{
 		id = wait(&state);
-		if (id == last_id)
+		if (id == last_id && g_sigenv.signal == 0)
 		{
 			errno = state;
 			if (WIFEXITED(errno))

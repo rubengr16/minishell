@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:59 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:44:43 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:50:42 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,13 @@ static char	*here_doc_expand(char **line)
 	return (*line);
 }
 
-static int	here_doc(char *end_of_input)
+static void	here_doc_child(char *end_of_input, int here_pipe[])
 {
-	int		here_pipe[2];
 	char	*str;
 	char	*aux;
 
-	if (pipe(here_pipe) == -1)
-		return (-1);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, sig_here_doc);
 	write(2, "> ", 2);
 	str = ft_strdup("");
 	aux = get_next_line(STDIN_FILENO);
@@ -95,7 +94,23 @@ static int	here_doc(char *end_of_input)
 		aux = get_next_line(STDIN_FILENO);
 	}
 	free(aux);
+	close(here_pipe[PIPE_RD]);
 	write(here_pipe[PIPE_WR], str, ft_strlen(str));
+	close(here_pipe[PIPE_WR]);
+}
+
+static int	here_doc(char *end_of_input)
+{
+	int		here_pipe[2];
+
+	if (pipe(here_pipe) == -1)
+		return (-1);
+	if (fork() == 0)
+	{
+		here_doc_child(end_of_input, here_pipe);
+		exit(0);
+	}
+	wait(NULL);
 	close(here_pipe[PIPE_WR]);
 	return (here_pipe[PIPE_RD]);
 }
@@ -105,7 +120,7 @@ static void	redirect_in(t_cmd *cmd, t_redir redir,	int close_all)
 	if (redir.type == R_IN_HERE_DOC)
 	{
 		signal(SIGINT, sig_here_doc);
-		signal(SIGQUIT, sig_here_doc);
+		signal(SIGQUIT, SIG_IGN);		
 		cmd->fd_in = here_doc(redir.file);
 	}
 	else

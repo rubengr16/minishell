@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:36:36 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 15:37:22 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ static char	*get_line(int safe_errno)
 	}
 	if (!line)
 		write (2, "\b\bexit\n", 7);
-	add_history(line);
+	if (line && *line)
+		add_history(line);
 	errno = safe_errno;
 	return (line);
 }
@@ -59,12 +60,14 @@ int	main(int argc, char **argv, char **envp)
 	t_cmd			*cmd_list;
 
 	(void)argc, (void)argv;
+	g_sigenv.signal = 0;
 	signal(SIGINT, sig_normal);
 	signal(SIGQUIT, SIG_IGN);
 	line = get_line(errno);
 	create_my_env(envp);
 	while (line)
 	{
+		g_sigenv.signal = 0;
 		list = tokenize(&line);
 		if (list)
 		{
