@@ -6,11 +6,32 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 18:11:30 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/05 01:00:27 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 10:48:33 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "enviroment.h"
+
+static char	*increment_shlvl(char *s)
+{
+	char	*aux;
+	int		num_shlvl;
+
+	if (!ft_strchr(s, '='))
+		return (ft_strdup(s));
+	s = ft_strchr(s, '=') + 1;
+	num_shlvl = ft_atoi(s);
+	if ((!num_shlvl || num_shlvl == -1) && (ft_strlen(s) > 2))
+		return (ft_strdup(s));
+	aux = ft_itoa(num_shlvl + 1);
+	if (!aux)
+		return (ft_strdup(s));
+	s = ft_strjoin("SHLVL=", aux);
+	free(aux);
+	if (!s)
+		return (ft_strdup(s));
+	return (s);
+}
 
 char	**create_my_env(char **envp)
 {
@@ -26,7 +47,10 @@ char	**create_my_env(char **envp)
 	i = 0;
 	while (g_sigenv.envp && envp[i])
 	{
-		g_sigenv.envp[i] = ft_strdup(envp[i]);
+		if (!ft_strncmp(envp[i], "SHLVL=", 6))
+			g_sigenv.envp[i] = increment_shlvl(envp[i]);
+		else
+			g_sigenv.envp[i] = ft_strdup(envp[i]);
 		if (!g_sigenv.envp[i])
 			delete_env_vbles();
 		i++;
