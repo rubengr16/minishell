@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 11:42:06 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:25:39 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	discover_leaks(void)
 	system("leaks minishell");
 }
 
-static char	*get_line(void)
+static char	*get_line(int safe_errno)
 {
 	char	*result_line;
 	char	*line;
@@ -32,7 +32,6 @@ static char	*get_line(void)
 	line = readline("minishell> ");
 	if (line && *line && line[ft_strlen(line) - 1] == '|')
 	{
-		aux = NULL;
 		while (line[ft_strlen(line) - 1] == '|')
 		{
 			aux = readline("> ");
@@ -49,6 +48,7 @@ static char	*get_line(void)
 	if (!line)
 		write (2, "\b\bexit\n", 7);
 	add_history(line);
+	errno = safe_errno;
 	return (line);
 }
 
@@ -61,7 +61,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc, (void)argv;
 	signal(SIGINT, sig_normal);
 	signal(SIGQUIT, SIG_IGN);
-	line = get_line();
+	line = get_line(errno);
 	create_my_env(envp);
 	while (line)
 	{
@@ -74,7 +74,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		signal(SIGINT, sig_normal);
 		signal(SIGQUIT, SIG_IGN);
-		line = get_line();
+		line = get_line(errno);
 	}
 	delete_env_vbles();
 	return (0);

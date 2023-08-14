@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:35:16 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 11:40:58 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:20:56 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	ft_export(char **args)
 		}
 	}
 	if (i == EXPORT_ERR)
-		g_sigenv.my_errno = 1;
+		errno = 1;
 	else
-		g_sigenv.my_errno = 0;
+		errno = 0;
 }

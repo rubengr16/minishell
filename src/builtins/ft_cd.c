@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:23:23 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 11:41:03 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:20:56 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ void	ft_cd(char **args)
 	if (chdir(path))
 	{
 		mini_error("cd", path, SYS_ERR, old);
-		g_sigenv.my_errno = 1;
+		errno = 1;
 	}
 	else
 	{
 		update_pwd(old, getcwd(NULL, 0));
-		g_sigenv.my_errno = 0;
+		errno = 0;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:26:53 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 11:36:07 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:20:56 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,5 @@ void	ft_echo(char **args)
 	}
 	if (!new_line)
 		printf("\n");
-	g_sigenv.my_errno = 0;
+	errno = 0;
 }

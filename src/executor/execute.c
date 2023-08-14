@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:17:04 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:30:25 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,11 @@ static void exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 		cmd->cmd = verify_commands(ft_split(get_env("PATH"), ':'), cmd->cmd);
 		if (cmd->cmd)
 			execve(cmd->cmd, cmd->args, g_sigenv.envp);
+		else
+			exit(errno);
 	}
 	else if (is_builtin(cmd->cmd))
-		exit(g_sigenv.my_errno);
+		exit(errno);
 	exit(1);
 }
 
@@ -87,9 +89,9 @@ static void	wait_status_change(t_cmd *cmd, pid_t last_id)
 		id = wait(&state);
 		if (id == last_id)
 		{
-			g_sigenv.my_errno = state;
-			if (WIFEXITED(g_sigenv.my_errno))
-				g_sigenv.my_errno = WEXITSTATUS(g_sigenv.my_errno);
+			errno = state;
+			if (WIFEXITED(errno))
+				errno = WEXITSTATUS(errno);
 		}
 		i--;
 	}
