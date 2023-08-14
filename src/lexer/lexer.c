@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/05 01:09:32 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:40:19 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 	char	**splitted_token;
 	char	*real_token;
 	int		i;
-	
+
 	real_token = get_real_token((*token)->token, 0);
 	if (!real_token)
 		return (NULL);
@@ -61,10 +61,12 @@ t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 t_cmd	*manage_pipe(t_cmd *cmd_list, t_cmd *cmd, t_token **token)
 {
 	if (cmd_list == cmd && !cmd->cmd && !cmd->args && !cmd->redir)
-		return (mini_error(UNEXPECTED_TK_MSG, (*token)->token, SYNTAX_ERR, NULL));
+		return (mini_error(UNEXPECTED_TK_MSG, (*token)->token, SYNTAX_ERR,
+				NULL));
 	*token = (*token)->next;
 	if (*token && get_token_type((*token)->token) == PIPE)
-		return (mini_error(UNEXPECTED_TK_MSG,  (*token)->token, SYNTAX_ERR, NULL));
+		return (mini_error(UNEXPECTED_TK_MSG, (*token)->token, SYNTAX_ERR,
+				NULL));
 	return (cmd);
 }
 

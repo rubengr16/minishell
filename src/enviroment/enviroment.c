@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 18:11:30 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:20:56 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:41:11 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,10 @@ void	delete_env_vbles(void)
 	g_sigenv.envp = NULL;
 }
 
- int	get_pos_vble(char *name)
+int	get_pos_vble(char *name)
 {
 	unsigned int	i;
-	int	pos;
+	int				pos;
 
 	if (!g_sigenv.envp)
 		return (-1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:07 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/11 12:23:19 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:34:00 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@
 # include "lexer.h"
 
 /********************************** PIPE ************************************ */
-typedef	int t_pipe [2];
+typedef int	t_pipe [2];
 
 /***************************** PIPE MANAGEMENT ****************************** */
 # define PIPE_RD 0
 # define PIPE_WR 1
 
 /********************************* EXECUTOR ********************************* */
-void		exec_main(t_cmd **command);
+void	exec_main(t_cmd **command);
 
 /********************************* REDIRECT ********************************* */
 void	dup2_and_close(t_cmd *cmd);

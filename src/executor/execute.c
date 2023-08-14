@@ -6,13 +6,13 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:30:25 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:45:40 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static void piping(t_cmd *cmd, t_pipe *pipes, int i, int length)
+static void	piping(t_cmd *cmd, t_pipe *pipes, int i, int length)
 {
 	if (i == 0 && cmd->next)
 	{
@@ -35,10 +35,10 @@ static void piping(t_cmd *cmd, t_pipe *pipes, int i, int length)
 	}
 }
 
-static int exec_builtin(t_cmd *cmd)
+static int	exec_builtin(t_cmd *cmd)
 {
 	if (!cmd->cmd)
-		return 0;
+		return (0);
 	if (!ft_strncmp(cmd->cmd, "echo", 5))
 		ft_echo(cmd->args);
 	else if (!ft_strncmp(cmd->cmd, "pwd", 4))
@@ -58,7 +58,7 @@ static int exec_builtin(t_cmd *cmd)
 	return (1);
 }
 
-static void exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
+static void	exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 {
 	if (cmd->fd_in < 0 || cmd->fd_out < 0)
 		exit(1);

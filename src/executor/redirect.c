@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:59 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 11:05:45 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:44:43 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ static char	*here_doc_expand(char **line)
 			i++;
 			name_len = 0;
 			while ((*line)[i + name_len] && (*line)[i + name_len] != '\''
-				&& (*line)[i + name_len] != '\"' && (*line)[i + name_len] != '\n'
+				&& (*line)[i + name_len] != '\"'
+				&& (*line)[i + name_len] != '\n'
 				&& (*line)[i + name_len] != ' ')
 				name_len++;
 			*line = here_doc_expand_aux(line, name_len, &i);

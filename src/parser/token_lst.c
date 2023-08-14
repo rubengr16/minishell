@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 11:41:51 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:41:13 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_token	*add_to_token_list(t_token_list *list, t_token *token)
 	}
 	return (token);
 }
-#include <stdio.h>
+
 /**
  * Deletes a list
  * INPUT:	t_token_list *list

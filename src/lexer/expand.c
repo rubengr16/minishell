@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 11:41:18 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:38:43 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static unsigned int	ft_vble_len(char *line)
 	if (line[len] == '?')
 		return (1);
 	while (line[len] && line[len] != TRANS_SINGLE_Q
-		&& line[len] != TRANS_DOUBLE_Q 
-		&& line[len] != TRANS_DOLLAR 
+		&& line[len] != TRANS_DOUBLE_Q
+		&& line[len] != TRANS_DOLLAR
 		&& line[len] != ' ' && (len || (!len && line[len] != '?')))
 		len++;
 	return (len);

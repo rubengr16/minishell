@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:25:39 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:36:36 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "lexer.h"
 #include "executor.h"
 
-t_global g_sigenv;
+t_global	g_sigenv;
 
 void	discover_leaks(void)
 {

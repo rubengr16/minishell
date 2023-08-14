@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/05 01:14:12 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 12:41:12 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static t_token	*get_token(char **line, unsigned int *i, enum e_state state)
 			while (is_end_of_vble((*line)[*i], state))
 				(*i)++;
 		}
-		else 
+		else
 		{
 			if (is_true_quote((*line)[*i], state))
 				manage_quotes(*line, &state, i);
