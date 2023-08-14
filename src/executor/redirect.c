@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:59 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/11 12:50:36 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:05:45 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static char	*here_doc_expand_aux(char **line, unsigned int name_len,
 {
 	char	*name;
 	char	*vble;
+	char	*expansion_result;
 
 	if (!name_len)
 		return (vble_cpy(line, "$", i, 0));
@@ -39,10 +40,13 @@ static char	*here_doc_expand_aux(char **line, unsigned int name_len,
 		*line = mini_error(NULL, NULL, SYS_ERR, *line);
 	ft_strlcpy(name, &((*line)[*i]), name_len + 1);
 	vble = get_env(name);
-	free(name);
 	if (!vble)
-		return (vble_cpy(line, "", i, name_len));
-	return (vble_cpy(line, vble, i, name_len));
+		expansion_result = vble_cpy(line, "", i, name_len);
+	expansion_result = vble_cpy(line, vble, i, name_len);
+	if (vble && !ft_strncmp(name, "?", 1))
+		free(vble);
+	free(name);
+	return (expansion_result);
 }
 
 static char	*here_doc_expand(char **line)

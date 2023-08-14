@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 01:55:25 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:46:46 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,7 @@ static void	wait_status_change(t_cmd *cmd, pid_t last_id)
 	{
 		id = wait(&state);
 		if (id == last_id)
-		{
-			free(g_sigenv.last_status);
-			g_sigenv.last_status = ft_itoa(state);
-		}
+			g_sigenv.my_errno = state % 256;
 		i--;
 	}
 }

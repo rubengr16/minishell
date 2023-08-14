@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/05 01:38:25 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:41:18 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	*expand(char **line, unsigned int *i, enum e_state state,
 {
 	char			*vble;
 	char			*name;
+	char			*expansion_result;
 	unsigned int	len;
 
 	(*i)++;
@@ -77,12 +78,15 @@ char	*expand(char **line, unsigned int *i, enum e_state state,
 		return (mini_error(NULL, NULL, SYS_ERR, *line));
 	ft_strlcpy(name, &((*line)[*i]), len + 1);
 	vble = get_env(name);
-	free(name);
 	if (!vble)
-		return (vble_cpy(line, "", i, len));
+		expansion_result = vble_cpy(line, "", i, len);
 	if (ft_strchr(vble, ' ') && state == NORMAL && is_redir)
-		return (mini_error(AMBIG_REDIR_MSG, NULL, AMBIG_ERR, NULL));
+		expansion_result = mini_error(AMBIG_REDIR_MSG, NULL, AMBIG_ERR, NULL);
 	if (ft_strchr(vble, ' ') && state == NORMAL && !is_redir)
 		ft_strrepl(vble, ' ', TRANS_VBLE_SPACE);
-	return (vble_cpy(line, vble, i, len));
+	expansion_result = vble_cpy(line, vble, i, len);
+	if (vble && !ft_strncmp(name, "?", 1))
+		free(vble);
+	free(name);
+	return (expansion_result);
 }

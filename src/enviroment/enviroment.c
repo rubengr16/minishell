@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 18:11:30 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 10:48:33 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:45:43 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,11 @@ char	*get_env(char *name)
 
 	if (!name)
 		return (NULL);
-	if (!ft_strncmp(name, "?", 2))
-		return (g_sigenv.last_status);
+	if (!ft_strncmp(name, "?", 1))
+	{
+		printf("errno = %d\n", g_sigenv.my_errno);
+		return (ft_itoa(g_sigenv.my_errno));
+	}
 	pos = get_pos_vble(name);
 	if (pos < 0)
 		return (NULL);

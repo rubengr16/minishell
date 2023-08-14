@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 08:59:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/24 14:41:11 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:29:43 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 typedef struct s_global
 {
 	char	**envp;
-	char	*last_status;
+	int		my_errno;
 }	t_global;
 
 extern t_global g_sigenv;

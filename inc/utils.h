@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:55:34 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 01:33:04 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:35:09 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <string.h>
 # include <errno.h>
 # include "libft.h"
+# include "global.h"
 # include "get_next_line.h"
 
 # define AMBIG_REDIR_MSG "ambiguous redirect"

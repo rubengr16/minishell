@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:35:44 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/11 18:17:37 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/14 11:35:14 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_unset(char **args)
 	free(g_sigenv.envp);
 	g_sigenv.envp = aux;
 	if (pos < 0)
-		errno = 1;
+		g_sigenv.my_errno = 1;
 	else
-		errno = 0;
+		g_sigenv.my_errno = 0;
 }
