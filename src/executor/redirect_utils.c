@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_doc.c                                         :+:      :+:    :+:   */
+/*   redirect_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:16:05 by socana-b          #+#    #+#             */
-/*   Updated: 2023/08/15 11:16:07 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/15 16:49:47 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,14 @@ int	here_doc(char *end_of_input)
 	wait(NULL);
 	close(here_pipe[PIPE_WR]);
 	return (here_pipe[PIPE_RD]);
+}
+
+int	is_last_redir(t_redir *next, enum e_token_type type1,
+	enum e_token_type type2)
+{
+	while (next && next->type != type1 && next->type != type2)
+		next = next->next;
+	if (next)
+		return (0);
+	return (1);
 }

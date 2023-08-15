@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:59 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 11:14:51 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/15 16:20:31 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	redirect_in(t_cmd *cmd, t_redir redir,	int close_all)
 		cmd->fd_in = open(redir.file, O_RDONLY, 0222);
 		if (cmd->fd_in < 0)
 			perror(redir.file);
-		else if (redir.next || close_all)
+		else if (!is_last_redir(redir.next, R_IN, R_IN_HERE_DOC) || close_all)
 			close(cmd->fd_in);
 	}
 }
@@ -75,7 +75,7 @@ static void	redirect_out(t_cmd *cmd, t_redir redir,	int close_all)
 		cmd->fd_out = open(redir.file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (cmd->fd_out < 0)
 		perror(redir.file);
-	else if (redir.next || close_all)
+	else if (!is_last_redir(redir.next, R_OUT, R_OUT_APPEND) || close_all)
 		close(cmd->fd_out);
 }
 
@@ -97,6 +97,7 @@ void	files_management(t_cmd *cmd, int close_all)
 			if (0 <= cmd_aux->fd_in && 0 <= cmd_aux->fd_out)
 				redir_aux = redir_aux->next;
 		}
+		printf("fd_in = %d, fd_out = %d\n", cmd_aux->fd_in, cmd_aux->fd_out);
 		cmd_aux = cmd_aux->next;
 	}
 }
