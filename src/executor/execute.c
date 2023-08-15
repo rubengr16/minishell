@@ -6,34 +6,11 @@
 /*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 15:36:20 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/15 11:15:18 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
-
-static void	piping(t_cmd *cmd, t_pipe *pipes, int i, int length)
-{
-	if (i == 0 && cmd->next)
-	{
-		close(pipes[i][PIPE_RD]);
-		dup2(pipes[i][PIPE_WR], STDOUT_FILENO);
-		close(pipes[i][PIPE_WR]);
-	}
-	else if (i < (length - 1) && 1 < length)
-	{
-		close(pipes[i][PIPE_RD]);
-		dup2(pipes[i - 1][PIPE_RD], STDIN_FILENO);
-		close(pipes[i - 1][PIPE_RD]);
-		dup2(pipes[i][PIPE_WR], STDOUT_FILENO);
-		close(pipes[i][PIPE_WR]);
-	}
-	else if (1 < length)
-	{
-		dup2(pipes[i - 1][PIPE_RD], STDIN_FILENO);
-		close(pipes[i - 1][PIPE_RD]);
-	}
-}
 
 static int	exec_builtin(t_cmd *cmd)
 {

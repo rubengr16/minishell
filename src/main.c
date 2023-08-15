@@ -6,7 +6,7 @@
 /*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 15:37:22 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/15 11:34:56 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,25 @@ static char	*get_line(int safe_errno)
 			aux = NULL;
 		}
 	}
-	if (!line)
-		write (2, "\b\bexit\n", 7);
 	if (line && *line)
 		add_history(line);
 	errno = safe_errno;
+	return (line);
+}
+
+char	*aux_func(char *line, t_token_list *list, t_cmd *cmd_list)
+{
+	g_sigenv.signal = 0;
+	list = tokenize(&line);
+	if (list)
+	{
+		cmd_list = lexer(&list);
+		if (cmd_list)
+			exec_main(&cmd_list);
+	}
+	signal(SIGINT, sig_normal);
+	signal(SIGQUIT, SIG_IGN);
+	line = get_line(errno);
 	return (line);
 }
 
@@ -59,6 +73,8 @@ int	main(int argc, char **argv, char **envp)
 	t_token_list	*list;
 	t_cmd			*cmd_list;
 
+	list = NULL;
+	cmd_list = NULL;
 	(void)argc, (void)argv;
 	g_sigenv.signal = 0;
 	signal(SIGINT, sig_normal);
@@ -66,19 +82,9 @@ int	main(int argc, char **argv, char **envp)
 	line = get_line(errno);
 	create_my_env(envp);
 	while (line)
-	{
-		g_sigenv.signal = 0;
-		list = tokenize(&line);
-		if (list)
-		{
-			cmd_list = lexer(&list);
-			if (cmd_list)
-				exec_main(&cmd_list);
-		}
-		signal(SIGINT, sig_normal);
-		signal(SIGQUIT, SIG_IGN);
-		line = get_line(errno);
-	}
+		line = aux_func(line, list, cmd_list);
+	if (!line)
+		write (2, "\b\bexit\n", 7);
 	delete_env_vbles();
 	return (0);
 }

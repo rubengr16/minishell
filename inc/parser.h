@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:10:35 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/05 01:13:32 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/15 11:55:55 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int				is_true_char(char c, enum e_state state);
 /* -------------------------------- TOKEN_LST ------------------------------ */
 t_token			*new_token(char *str, unsigned int size, enum e_state state);
 void			print_list(t_token_list *list); // DELETE WHEN FINISHED
-void			delete_token_list(t_token_list **list);
+void			*delete_token_list(t_token_list **list);
 t_token			*add_to_token_list(t_token_list *list, t_token *token);
 t_token_list	*create_token_list(void);
 /* -------------------------------- TOKENIZE ------------------------------- */

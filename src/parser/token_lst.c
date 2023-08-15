@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_lst.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:41:13 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/15 11:55:44 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ t_token	*add_to_token_list(t_token_list *list, t_token *token)
  * INPUT:	t_token_list *list
  * OUTPUT:	void
  */
-void	delete_token_list(t_token_list **list)
+void	*delete_token_list(t_token_list **list)
 {
 	t_token	*aux;
 
@@ -110,6 +110,7 @@ void	delete_token_list(t_token_list **list)
 	}
 	free(*list);
 	*list = NULL;
+	return (NULL);
 }
 
 // TODO: DELETE

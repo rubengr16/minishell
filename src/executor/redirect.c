@@ -6,11 +6,34 @@
 /*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:59 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 15:50:42 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/15 11:14:51 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
+
+void	piping(t_cmd *cmd, t_pipe *pipes, int i, int length)
+{
+	if (i == 0 && cmd->next)
+	{
+		close(pipes[i][PIPE_RD]);
+		dup2(pipes[i][PIPE_WR], STDOUT_FILENO);
+		close(pipes[i][PIPE_WR]);
+	}
+	else if (i < (length - 1) && 1 < length)
+	{
+		close(pipes[i][PIPE_RD]);
+		dup2(pipes[i - 1][PIPE_RD], STDIN_FILENO);
+		close(pipes[i - 1][PIPE_RD]);
+		dup2(pipes[i][PIPE_WR], STDOUT_FILENO);
+		close(pipes[i][PIPE_WR]);
+	}
+	else if (1 < length)
+	{
+		dup2(pipes[i - 1][PIPE_RD], STDIN_FILENO);
+		close(pipes[i - 1][PIPE_RD]);
+	}
+}
 
 void	dup2_and_close(t_cmd *cmd)
 {
@@ -26,101 +49,12 @@ void	dup2_and_close(t_cmd *cmd)
 	}
 }
 
-static char	*here_doc_expand_aux(char **line, unsigned int name_len,
-	unsigned int *i)
-{
-	char	*name;
-	char	*vble;
-	char	*expansion_result;
-
-	if (!name_len)
-		return (vble_cpy(line, "$", i, 0));
-	name = malloc(sizeof(char) * (name_len + 1));
-	if (!name)
-		*line = mini_error(NULL, NULL, SYS_ERR, *line);
-	ft_strlcpy(name, &((*line)[*i]), name_len + 1);
-	vble = get_env(name);
-	if (!vble)
-		expansion_result = vble_cpy(line, "", i, name_len);
-	expansion_result = vble_cpy(line, vble, i, name_len);
-	if (vble && !ft_strncmp(name, "?", 1))
-		free(vble);
-	free(name);
-	return (expansion_result);
-}
-
-static char	*here_doc_expand(char **line)
-{
-	unsigned int	name_len;
-	unsigned int	i;
-
-	if (!*line)
-		return (NULL);
-	i = 0;
-	while (*line && (*line)[i])
-	{
-		if ((*line)[i] == '$')
-		{
-			i++;
-			name_len = 0;
-			while ((*line)[i + name_len] && (*line)[i + name_len] != '\''
-				&& (*line)[i + name_len] != '\"'
-				&& (*line)[i + name_len] != '\n'
-				&& (*line)[i + name_len] != ' ')
-				name_len++;
-			*line = here_doc_expand_aux(line, name_len, &i);
-		}
-		i++;
-	}
-	return (*line);
-}
-
-static void	here_doc_child(char *end_of_input, int here_pipe[])
-{
-	char	*str;
-	char	*aux;
-
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, sig_here_doc);
-	write(2, "> ", 2);
-	str = ft_strdup("");
-	aux = get_next_line(STDIN_FILENO);
-	while (ft_strncmp(aux, end_of_input, ft_strlen(end_of_input) + 1) != '\n')
-	{
-		aux = here_doc_expand(&aux);
-		str = ft_strjoin(str, aux);
-		free(aux);
-		write(2, "> ", 2);
-		aux = get_next_line(STDIN_FILENO);
-	}
-	free(aux);
-	close(here_pipe[PIPE_RD]);
-	write(here_pipe[PIPE_WR], str, ft_strlen(str));
-	close(here_pipe[PIPE_WR]);
-}
-
-static int	here_doc(char *end_of_input)
-{
-	int		here_pipe[2];
-
-	if (pipe(here_pipe) == -1)
-		return (-1);
-	if (fork() == 0)
-	{
-		here_doc_child(end_of_input, here_pipe);
-		exit(0);
-	}
-	wait(NULL);
-	close(here_pipe[PIPE_WR]);
-	return (here_pipe[PIPE_RD]);
-}
-
 static void	redirect_in(t_cmd *cmd, t_redir redir,	int close_all)
 {
 	if (redir.type == R_IN_HERE_DOC)
 	{
 		signal(SIGINT, sig_here_doc);
-		signal(SIGQUIT, SIG_IGN);		
+		signal(SIGQUIT, SIG_IGN);
 		cmd->fd_in = here_doc(redir.file);
 	}
 	else

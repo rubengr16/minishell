@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:23:23 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:20:56 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/15 10:50:34 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,20 @@ static void	update_pwd(char *prvs_pwd, char *current_pwd)
 	set_vble(newpwd, ft_strchr(newpwd, '='));
 	free(oldpwd);
 	free(newpwd);
+}
+
+void	change_dir(char *path, char *old)
+{
+	if (chdir(path))
+	{
+		mini_error("cd", path, SYS_ERR, old);
+		errno = 1;
+	}
+	else
+	{
+		update_pwd(old, getcwd(NULL, 0));
+		errno = 0;
+	}
 }
 
 void	ft_cd(char **args)
@@ -55,14 +69,5 @@ void	ft_cd(char **args)
 	}
 	else
 		path = args[1];
-	if (chdir(path))
-	{
-		mini_error("cd", path, SYS_ERR, old);
-		errno = 1;
-	}
-	else
-	{
-		update_pwd(old, getcwd(NULL, 0));
-		errno = 0;
-	}
+	change_dir(path, old);
 }

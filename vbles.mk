@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    vbles.mk                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
+#    By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/08/14 01:56:28 by rgallego         ###   ########.fr        #
+#    Updated: 2023/08/15 11:12:20 by socana-b         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ EXECUTOR		=	$(addprefix $(EXEC_DIR), \
 					execute.c \
 					utils.c \
 					redirect.c \
+					here_doc.c \
 					)
 
 ENVIROMENT	=		$(addprefix $(ENV_DIR), \

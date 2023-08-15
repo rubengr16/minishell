@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:41:12 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/15 11:56:11 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,7 @@ t_token_list	*tokenize(char **line)
 		else
 			token = get_metachar(&(*line)[i], &i, state);
 		if (!add_to_token_list(list, token))
-		{
-			delete_token_list(&list);
-			return (NULL);
-		}
+			return (delete_token_list(&list));
 	}
 	free(*line);
 	return (list);
