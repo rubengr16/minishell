@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:55:34 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 20:01:04 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/15 23:10:30 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@
 # define AMBIG_REDIR_MSG "ambiguous redirect"
 # define NO_HOME_MSG "HOME not set"
 # define NUMERIC_ARGS_MSG "numeric argument required"
+# define NOT_VALID_IDENTIFIER_MSG "not a valid identifier"
 # define TOO_MANY_ARGS_MSG "too many arguments"
-# define UNEXPECTED_TK_MSG "syntax error near unexpected token: "
+# define UNEXPECTED_TK_MSG "syntax error near unexpected token"
 # define UNCLOSED_Q_MSG "unclosed quotes found"
 # define CMD_NOT_FOUND_MSG "command not found"
 
@@ -33,9 +34,10 @@
 # define NO_HOME_ERR 1
 # define NUMERIC_ARGS_ERR 2
 # define TOO_MANY_ARGS_ERR 1
+# define UNEXPECTED_TK_ERR 2
 # define SYNTAX_ERR 2
 # define CMD_NOT_FOUND_ERR 127
-# define EXPORT_ERR -1
+# define EXPORT_ERR -2
 
 /* ***************************** FUNC DECLARATION ************************** */
 /* ---------------------------------- UTILS -------------------------------- */

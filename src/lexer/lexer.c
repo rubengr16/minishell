@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:40:19 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/15 20:13:42 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,11 @@ static t_cmd	*manage_redir(t_cmd *cmd, t_token **token,
 
 	*token = (*token)->next;
 	if (!*token)
-		return (mini_error(UNEXPECTED_TK_MSG, "newline", SYS_ERR, NULL));
+		return (mini_error(UNEXPECTED_TK_MSG, "newline",
+				UNEXPECTED_TK_ERR, NULL));
 	if (get_token_type((*token)->token) != OTHER)
-		return (mini_error(UNEXPECTED_TK_MSG, (*token)->token, SYS_ERR, NULL));
+		return (mini_error(UNEXPECTED_TK_MSG, (*token)->token,
+				UNEXPECTED_TK_ERR, NULL));
 	real_token = get_real_token((*token)->token, 1);
 	if (!real_token)
 		return (NULL);
