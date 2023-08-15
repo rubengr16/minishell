@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 20:13:42 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 01:37:21 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,19 @@ static t_cmd	*manage_redir(t_cmd *cmd, t_token **token,
 	return (cmd);
 }
 
-t_cmd	*manage_other(t_cmd *cmd, t_token **token)
+static t_cmd	*manage_other(t_cmd *cmd, char **splitted_token, char *token)
 {
-	char	**splitted_token;
-	char	*real_token;
-	int		i;
+	unsigned int	split_len;
+	int	i;
 
-	real_token = get_real_token((*token)->token, 0);
-	if (!real_token)
+	if (!splitted_token && ft_strlen(token))
+		return (mini_error(NULL, NULL, SYS_ERR, NULL));
+	split_len = len_char_double_ptr(splitted_token);
+	i = -1;
+	while ((i < 0 || splitted_token[i]) && splitted_token[++i])
+		splitted_token[i] = get_real_token(splitted_token[i], 0);
+	if ((0 <= i && !splitted_token[i] && (unsigned int)i < split_len))
 		return (NULL);
-	if (!real_token[0] && cmd->cmd)
-	{
-		add_to_char_double_ptr(&cmd->args, real_token);
-		return (cmd);
-	}
-	splitted_token = ft_split(real_token, TRANS_VBLE_SPACE);
-	if (!splitted_token && ft_strlen(real_token))
-		return (mini_error(NULL, NULL, SYS_ERR, real_token));
-	free(real_token);
 	i = 0;
 	if (!cmd->cmd)
 		cmd->cmd = splitted_token[i];
@@ -62,10 +57,11 @@ t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 	free(splitted_token);
 	if (i < 0)
 		return (NULL);
+	printf("HOLLAAA\n");
 	return (cmd);
 }
 
-t_cmd	*manage_pipe(t_cmd *cmd_list, t_cmd *cmd, t_token **token)
+static t_cmd	*manage_pipe(t_cmd *cmd_list, t_cmd *cmd, t_token **token)
 {
 	if (cmd_list == cmd && !cmd->cmd && !cmd->args && !cmd->redir)
 		return (mini_error(UNEXPECTED_TK_MSG, (*token)->token, SYNTAX_ERR,
@@ -77,7 +73,7 @@ t_cmd	*manage_pipe(t_cmd *cmd_list, t_cmd *cmd, t_token **token)
 	return (cmd);
 }
 
-t_cmd	*get_cmd(t_cmd **cmd_list, t_cmd *cmd, t_token **token)
+static t_cmd	*get_cmd(t_cmd **cmd_list, t_cmd *cmd, t_token **token)
 {
 	enum e_token_type	type;
 
@@ -85,7 +81,8 @@ t_cmd	*get_cmd(t_cmd **cmd_list, t_cmd *cmd, t_token **token)
 	while (*token && cmd && type != PIPE)
 	{
 		if (type == OTHER)
-			cmd = manage_other(cmd, token);
+			cmd = manage_other(cmd,
+				ft_split((*token)->token, TRANS_VBLE_SPACE), (*token)->token);
 		if (type == R_IN || type == R_IN_HERE_DOC
 			|| type == R_OUT || type == R_OUT_APPEND)
 			cmd = manage_redir(cmd, token, type);
