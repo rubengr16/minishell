@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 12:43:12 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 23:36:42 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/15 23:37:22 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,5 @@ void	sig_here_doc(int sig)
 		write(2, "\n", 1);
 		errno = 1;
 	}
-	else if (sig == SIGQUIT)
-		write(1, "\b\b  \b\b", 6);
 	g_sigenv.signal = sig;
 }
