@@ -67,7 +67,10 @@ char	*verify_commands(char **path, char *cmd)
 
 	i = 0;
 	if (!path)
+	{
+		mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL);
 		return (NULL);
+	}
 	if (!access(cmd, X_OK))
 		return (cmd);
 	command = ft_strjoinsep(path[i], cmd, "/");
