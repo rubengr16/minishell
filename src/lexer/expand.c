@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:38:43 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/15 13:07:19 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ char	*vble_cpy(char **line, char *vble, unsigned int *i,
 {
 	char			*aux;
 	unsigned int	total_len;
+	unsigned int	is_last_status;
 
+	is_last_status = (*line) && (*line)[*i] == '?';
 	total_len = ft_strlen(*line) - (len + 1) + ft_strlen(vble) + 1;
 	aux = malloc(sizeof(char) * total_len);
 	if (!aux)
@@ -58,6 +60,8 @@ char	*vble_cpy(char **line, char *vble, unsigned int *i,
 	free(*line);
 	*line = aux;
 	*i = *i + ft_strlen(vble) - 1;
+	if (is_last_status)
+		free(vble);
 	return (*line);
 }
 
@@ -65,28 +69,25 @@ char	*expand(char **line, unsigned int *i, enum e_state state,
 	unsigned int is_redir)
 {
 	char			*vble;
-	char			*name;
-	char			*expansion_result;
+	char			*aux;
 	unsigned int	len;
 
 	(*i)++;
 	len = ft_vble_len(&(*line)[*i]);
 	if (!len)
 		return (vble_cpy(line, "$", i, 0));
-	name = malloc(sizeof(char) * (len + 1));
-	if (!name)
+	aux = malloc(sizeof(char) * (len + 1));
+	if (!aux)
 		return (mini_error(NULL, NULL, SYS_ERR, *line));
-	ft_strlcpy(name, &((*line)[*i]), len + 1);
-	vble = get_env(name);
+	ft_strlcpy(aux, &((*line)[*i]), len + 1);
+	vble = get_env(aux);
+	free(aux);
 	if (!vble)
-		expansion_result = vble_cpy(line, "", i, len);
+		return (vble_cpy(line, "", i, len));
 	if (ft_strchr(vble, ' ') && state == NORMAL && is_redir)
-		expansion_result = mini_error(AMBIG_REDIR_MSG, NULL, AMBIG_ERR, NULL);
+		return (mini_error(AMBIG_REDIR_MSG, NULL, AMBIG_ERR, NULL));
 	if (ft_strchr(vble, ' ') && state == NORMAL && !is_redir)
 		ft_strrepl(vble, ' ', TRANS_VBLE_SPACE);
-	expansion_result = vble_cpy(line, vble, i, len);
-	if (vble && !ft_strncmp(name, "?", 1))
-		free(vble);
-	free(name);
-	return (expansion_result);
+	aux = vble_cpy(line, vble, i, len);
+	return (aux);
 }
