@@ -55,7 +55,6 @@ char	*aux_func(char *line, t_token_list *list, t_cmd *cmd_list)
 {
 	if (!isstrspace(line))
 	{
-		g_sigenv.signal = 0;
 		list = tokenize(&line);
 		if (list)
 		{
@@ -63,6 +62,7 @@ char	*aux_func(char *line, t_token_list *list, t_cmd *cmd_list)
 			if (cmd_list)
 				exec_main(&cmd_list);
 		}
+		g_sigenv.signal = 0;
 		signal(SIGINT, sig_normal);
 		signal(SIGQUIT, SIG_IGN);
 	}
