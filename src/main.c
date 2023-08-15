@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 16:54:23 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/15 17:16:40 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*get_line(int safe_errno)
 	char	*line;
 	char	*aux;
 
-	line = readline("minishell> ");
+	line = readline("minishell$ ");
 	if (line && *line && line[ft_strlen(line) - 1] == '|')
 	{
 		while (line[ft_strlen(line) - 1] == '|')
@@ -86,7 +86,7 @@ int	main(int argc, char **argv, char **envp)
 	while (line)
 		line = aux_func(line, list, cmd_list);
 	if (!line)
-		write (2, "\b\bexit\n", 7);
+		ft_putendl_fd("\b\bexit", STDERR_FILENO);
 	delete_env_vbles();
 	return (0);
 }
