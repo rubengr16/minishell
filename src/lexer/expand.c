@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 13:07:19 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/15 16:57:51 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*vble_cpy(char **line, char *vble, unsigned int *i,
 	unsigned int	total_len;
 	unsigned int	is_last_status;
 
-	is_last_status = (*line) && (*line)[*i] == '?';
+	is_last_status = ((*line) && (*line)[*i] == '?');
 	total_len = ft_strlen(*line) - (len + 1) + ft_strlen(vble) + 1;
 	aux = malloc(sizeof(char) * total_len);
 	if (!aux)

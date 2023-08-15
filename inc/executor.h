@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:07 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 16:48:29 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/15 16:55:35 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,7 @@ void	piping(t_cmd *cmd, t_pipe *pipes, int i, int length);
 /******************************* REDIR_UTILS ******************************** */
 int		here_doc(char *end_of_input);
 int		is_last_redir(t_redir *next, enum e_token_type type1,
-	enum e_token_type type2);
-
+			enum e_token_type type2);
 
 /*********************************** UTILS ********************************** */
 int		count_cmds(t_cmd *cmd);

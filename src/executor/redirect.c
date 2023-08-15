@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:59 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 16:20:31 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/15 16:54:09 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	files_management(t_cmd *cmd, int close_all)
 			if (0 <= cmd_aux->fd_in && 0 <= cmd_aux->fd_out)
 				redir_aux = redir_aux->next;
 		}
-		printf("fd_in = %d, fd_out = %d\n", cmd_aux->fd_in, cmd_aux->fd_out);
 		cmd_aux = cmd_aux->next;
 	}
 }
