@@ -6,7 +6,7 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/08/15 16:09:45 by rgallego         ###   ########.fr        #
+#    Updated: 2023/08/15 20:01:45 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,6 @@ BUILTINS	=	$(addprefix $(BUILTINS_DIR), \
 
 UTILS		=		$(addprefix $(UTILS_DIR), \
 					utils.c \
-					nbr_utils.c \
 					)
 
 SIGNALS		=		$(addprefix $(SIGNALS_DIR), \
