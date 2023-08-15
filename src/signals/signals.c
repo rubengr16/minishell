@@ -41,15 +41,3 @@ void	sig_exec(int sig)
 	}
 	g_sigenv.signal = sig;
 }
-
-void	sig_here_doc(int sig)
-{
-	if (sig == SIGINT)
-	{
-		write(2, "\n", 1);
-		errno = 1;
-	}
-	else if (sig == SIGQUIT)
-		write(1, "\b\b  \b\b", 6);
-	g_sigenv.signal = sig;
-}

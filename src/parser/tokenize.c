@@ -94,5 +94,6 @@ t_token_list	*tokenize(char **line)
 			return (delete_token_list(&list));
 	}
 	free(*line);
+	//print_list(list);
 	return (list);
 }

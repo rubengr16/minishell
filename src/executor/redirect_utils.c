@@ -67,17 +67,16 @@ static void	here_doc_child(char *end_of_input, int here_pipe[])
 	char	*aux;
 
 	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, sig_here_doc);
-	write(2, "> ", 2);
+	signal(SIGQUIT, SIG_IGN);
 	str = ft_strdup("");
-	aux = get_next_line(STDIN_FILENO);
-	while (ft_strncmp(aux, end_of_input, ft_strlen(end_of_input) + 1) != '\n')
+	aux = readline("> ");
+	while (ft_strncmp(aux, end_of_input, ft_strlen(end_of_input) + 1) != 0)
 	{
 		aux = here_doc_expand(&aux);
 		str = ft_strjoin(str, aux);
+		str = ft_strjoin(str, "\n");
 		free(aux);
-		write(2, "> ", 2);
-		aux = get_next_line(STDIN_FILENO);
+		aux = readline("> ");
 	}
 	free(aux);
 	close(here_pipe[PIPE_RD]);
