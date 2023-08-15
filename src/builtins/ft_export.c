@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:35:16 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:20:56 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/15 20:52:22 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ static int	is_valid_vble_name(char *s, char *equal_sign)
 	i = 0;
 	if (!s)
 		return (0);
-	while (s[i] && s != equal_sign && (ft_isalnum(s[i]) || s[i] == '_'))
+	while (s[i] && &s[i] != equal_sign && (ft_isalnum(s[i]) || s[i] == '_'))
 		i++;
-	if (s[i])
+	if (s[i] && &s[i] != equal_sign)
 		return (0);
 	return (1);
 }
