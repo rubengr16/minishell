@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 11:34:56 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/15 13:43:27 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,20 @@ static char	*get_line(int safe_errno)
 
 char	*aux_func(char *line, t_token_list *list, t_cmd *cmd_list)
 {
-	g_sigenv.signal = 0;
-	list = tokenize(&line);
-	if (list)
+	if (!isstrspace(line))
 	{
-		cmd_list = lexer(&list);
-		if (cmd_list)
-			exec_main(&cmd_list);
+		g_sigenv.signal = 0;
+		list = tokenize(&line);
+		if (list)
+		{
+			cmd_list = lexer(&list);
+			if (cmd_list)
+				exec_main(&cmd_list);
+		}
+		signal(SIGINT, sig_normal);
+		signal(SIGQUIT, SIG_IGN);
 	}
-	signal(SIGINT, sig_normal);
-	signal(SIGQUIT, SIG_IGN);
-	line = get_line(errno);
-	return (line);
+	return (get_line(errno));
 }
 
 int	main(int argc, char **argv, char **envp)

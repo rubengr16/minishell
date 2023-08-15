@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:57:50 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:20:56 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/15 13:42:27 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,16 @@ void	free_double_char_ptr(char **char_double_ptr)
 	}
 	free(char_double_ptr);
 	char_double_ptr = NULL;
+}
+
+int	isstrspace(char *s)
+{
+	int	i;
+
+	i = 0;
+	if (s)
+		while (s[i] && (s[i] == ' ' || s[i] == '\t' || s[i] == '\n'
+				|| s[i] == '\v' || s[i] == '\f' || s[i] == '\r'))
+			i++;
+	return (!s || !s[i]);
 }
