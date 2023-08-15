@@ -6,12 +6,11 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 12:43:12 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 23:37:22 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 00:18:12 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "signals.h"
-#include <sys/ioctl.h>
 
 void	sig_normal(int sig)
 {

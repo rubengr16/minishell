@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 12:34:34 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 23:36:39 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 00:17:30 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/ioctl.h>
 # include "enviroment.h"
 
 void	sig_normal(int sig);

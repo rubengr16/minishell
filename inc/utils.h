@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:55:34 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 23:10:30 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/15 23:42:29 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <stdio.h>
 # include "libft.h"
 # include "global.h"
-# include "get_next_line.h"
 
 # define AMBIG_REDIR_MSG "ambiguous redirect"
 # define NO_HOME_MSG "HOME not set"

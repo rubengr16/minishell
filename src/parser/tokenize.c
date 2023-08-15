@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 11:56:11 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/16 00:09:22 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,5 @@ t_token_list	*tokenize(char **line)
 			return (delete_token_list(&list));
 	}
 	free(*line);
-	//print_list(list);
 	return (list);
 }

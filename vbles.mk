@@ -6,7 +6,7 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/08/15 20:01:45 by rgallego         ###   ########.fr        #
+#    Updated: 2023/08/15 23:40:51 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,15 +99,13 @@ RDLINE_INC	=		-I ~/.brew/opt/readline/include -I /usr/local/opt/readline/include
 
 RDLINE_LIB	=		-L /usr/local/opt/readline/lib -L ~/.brew/opt/readline/lib
 
-LDFLAGS	=			$(LIBFTNAME) \
-					$(GNLNAME)
+LDFLAGS	=			$(LIBFTNAME)
 
 NAME	=			minishell
 
 INC_ALL	=			\
 					$(INC_DIR) \
-					$(LIBFT)$(INC_DIR) \
-					$(GNL)$(INC_DIR)
+					$(LIBFT)$(INC_DIR)
 
 LIB_ALL = 			\
 					readline
@@ -115,7 +113,3 @@ LIB_ALL = 			\
 LIBFT	=			libft/
 
 LIBFTNAME	=		$(LIBFT)libft.a
-
-GNL		=			get_next_line/
-
-GNLNAME	=			$(GNL)get_next_line.a
