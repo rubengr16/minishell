@@ -41,6 +41,11 @@ t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 	real_token = get_real_token((*token)->token, 0);
 	if (!real_token)
 		return (NULL);
+	if (!real_token[0] && cmd->cmd)
+	{
+		add_to_char_double_ptr(&cmd->args, real_token);
+		return (cmd);
+	}
 	splitted_token = ft_split(real_token, TRANS_VBLE_SPACE);
 	if (!splitted_token && ft_strlen(real_token))
 		return (mini_error(NULL, NULL, SYS_ERR, real_token));
