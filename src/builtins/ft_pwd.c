@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:34:37 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:43:31 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 23:18:04 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 void	ft_pwd(void)
 {
-	printf("%s\n", getcwd(NULL, 0));
+	char	*pwd;
+
+	pwd = getcwd(NULL, 0);
+	printf("%s\n", pwd);
+	free(pwd);
 	errno = 0;
 }
