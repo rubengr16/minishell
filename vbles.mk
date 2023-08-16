@@ -6,7 +6,7 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/08/16 13:05:57 by rgallego         ###   ########.fr        #
+#    Updated: 2023/08/16 15:52:04 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,9 +96,11 @@ RM		=			-rm -f
 
 CFLAGS	=			-Wall -Werror -Wextra -MD
 
-RDLINE_INC	=		-I ~/.brew/opt/readline/include -I /usr/local/opt/readline/include
+RDLINE_INC	=		-I ~/.brew/opt/readline/include 
+# -I /usr/local/opt/readline/include
 
-RDLINE_LIB	=		-L /usr/local/opt/readline/lib -L ~/.brew/opt/readline/lib
+RDLINE_LIB	=		-L ~/.brew/opt/readline/lib
+# -L /usr/local/opt/readline/lib
 
 LDFLAGS	=			$(LIBFTNAME)
 

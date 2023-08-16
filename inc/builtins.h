@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:19:41 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 15:21:40 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:48:30 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ void	ft_unset(char **args);	// 3 Done it
 void	ft_env(void);					// 3 Done it
 void	ft_exit(char **args, int is_child);
 
-int		set_vble(char *vble, char *equal_sign);
+void		set_vble(char *vble, char *equal_sign);
 
 #endif
