@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:57:50 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 22:27:11 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 23:25:17 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	**free_double_char_ptr(char **char_double_ptr)
 
 	if (!char_double_ptr)
 		return (NULL);
-	i = 1;
+	i = 0;
 	while (char_double_ptr[i])
 	{
 		free(char_double_ptr[i]);
