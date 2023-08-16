@@ -16,17 +16,26 @@ static void	is_n_valid(char **args, int *new_line, int *i)
 {
 	int	j;
 
-	*i = 0;
-	j = -1;
-	while (args[*i] && (j < 0 || !args[*i][j]))
+	*i = 1;
+	while (args[*i])
 	{
-		(*i)++;
+		if (!ft_strncmp(args[*i], "-", 2))
+			return ;
 		j = 0;
-		while (args[*i] && args[*i][j]
-			&& ((!j && args[*i][j] == '-') || (0 < j && args[*i][j] == 'n')))
-			j++;
-		if (args[*i] && !args[*i][j] && j)
+		if (args[*i][j++] != '-')
+			return ;
+		while (args[*i][j] && args[*i][j] == 'n')
+		{
 			*new_line = 1;
+			j++;
+		}
+		if (args[*i][j])
+		{
+			if (*i == 1)
+				*new_line = 0;
+			return ;
+		}
+		(*i)++;
 	}
 }
 
