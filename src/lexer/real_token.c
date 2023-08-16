@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   real_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 17:18:57 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 19:11:45 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/16 21:51:26 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,10 @@ char	*get_real_token(char *token, unsigned int is_redir)
 
 	state = NORMAL;
 	i = 0;
-	while (token && token[i])
+	token = ft_strdup(token);
+	if (!token)
+		return (mini_error(NULL, NULL, SYS_ERR, NULL));
+	while (token[i])
 	{
 		if (token[i] == TRANS_DOUBLE_Q && state == NORMAL)
 			state = DOUBLE_QUOTE;
@@ -69,8 +72,6 @@ char	*get_real_token(char *token, unsigned int is_redir)
 			token = expand(&token, &i, state, is_redir);
 		i++;
 	}
-	if (!token)
-		return (NULL);
 	aux = delete_quotes_trans(&token, is_redir);
 	ft_strrepl(aux, TRANS_VBLE_SPACE, ' ');
 	token = aux;
