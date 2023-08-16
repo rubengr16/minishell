@@ -6,7 +6,7 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/08/15 23:40:51 by rgallego         ###   ########.fr        #
+#    Updated: 2023/08/16 11:41:00 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,7 +93,7 @@ CC		=			gcc
 
 RM		=			-rm -f
 
-CFLAGS	=			-Wall -Werror -Wextra -MD -g3
+CFLAGS	=			-Wall -Werror -Wextra -MD
 
 RDLINE_INC	=		-I ~/.brew/opt/readline/include -I /usr/local/opt/readline/include
 
