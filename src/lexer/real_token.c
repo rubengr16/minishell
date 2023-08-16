@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 17:18:57 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 23:13:05 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 23:34:42 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,7 @@ char	*get_real_token(char *token, unsigned int is_redir)
 	token = ft_strdup(token);
 	if (!is_redir)
 		free(aux);
-	if (!token)
-		return (mini_error(NULL, NULL, SYS_ERR, NULL));
-	while (token[i])
+	while (token && token[i])
 	{
 		if (token[i] == TRANS_DOUBLE_Q && state == NORMAL)
 			state = DOUBLE_QUOTE;
@@ -74,6 +72,8 @@ char	*get_real_token(char *token, unsigned int is_redir)
 			token = expand(&token, &i, state, is_redir);
 		i++;
 	}
+	if (!token)
+		return (NULL);
 	aux = delete_quotes_trans(&token);
 	ft_strrepl(aux, TRANS_VBLE_SPACE, ' ');
 	return (aux);
