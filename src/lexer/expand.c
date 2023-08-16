@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 16:29:01 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 19:26:13 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ char	*vble_cpy(char **line, char *vble, unsigned int *i,
 {
 	char			*aux;
 	unsigned int	total_len;
-	unsigned int	is_last_status;
 
-	is_last_status = ((*line) && (*line)[*i] == '?');
 	total_len = ft_strlen(*line) - (len + 1) + ft_strlen(vble) + 1;
 	aux = malloc(sizeof(char) * total_len);
 	if (!aux)
@@ -58,12 +56,39 @@ char	*vble_cpy(char **line, char *vble, unsigned int *i,
 	ft_strlcpy(&aux[*i], vble, ft_strlen(vble) + 1);
 	ft_strlcpy(&aux[*i + ft_strlen(vble)], &(*line)[*i + 1 + len],
 		ft_strlen(&(*line)[*i + 1 + len]) + 1);
-	free(*line);
+	free(line);
 	*line = aux;
 	*i = *i + ft_strlen(vble) - 1;
-	if (is_last_status)
-		free(vble);
 	return (*line);
+}
+
+char	*trim_n_vble_cpy(char **line, char *vble, unsigned int *i,
+	unsigned int vble_len)
+{
+	int		len;
+	char	*aux_vble;
+	char	*aux;
+
+	if (!vble)
+		return (NULL);
+	aux_vble = vble;
+	len = ft_strlen(vble) + 1;
+	while (*vble && (ft_strchr("\t\n\v\f\r", *vble) || *vble == TRANS_VBLE_SPACE))
+	{
+		vble++;
+		len--;
+	}
+	while (len > 1 && (ft_strchr("\t\n\v\f\r", vble[len - 2]) || vble[len - 2] == TRANS_VBLE_SPACE))
+		len--;
+	aux = malloc(sizeof(char) * (len));
+	if (!aux)
+		return (mini_error(NULL, NULL, SYS_ERR, NULL));
+	(void)ft_strlcpy(aux, vble, len);
+	if ((*line) && (*line)[*i] == '?')
+		free(aux_vble);
+	vble = vble_cpy(line, aux, i, vble_len);
+	free(aux);
+	return (vble);	
 }
 
 char	*expand(char **line, unsigned int *i, enum e_state state,
@@ -92,6 +117,5 @@ char	*expand(char **line, unsigned int *i, enum e_state state,
 		return (mini_error(AMBIG_REDIR_MSG, NULL, AMBIG_ERR, NULL));
 	if (ft_strchr(vble, ' ') && state == NORMAL && !is_redir)
 		ft_strrepl(vble, ' ', TRANS_VBLE_SPACE);
-	aux = vble_cpy(line, vble, i, len);
-	return (aux);
+	return (trim_n_vble_cpy(line, vble, i, len));
 }
