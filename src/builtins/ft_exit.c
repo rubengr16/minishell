@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 18:22:20 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 15:21:53 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/16 23:50:42 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	ft_exit(char **args, int is_child)
 		errno = NUMERIC_ARGS_ERR;
 	}
 	else if (2 < len_char_double_ptr(args))
-		mini_error(args[CMD], TOO_MANY_ARGS_MSG, TOO_MANY_ARGS_ERR, NULL);
+		return ((void)mini_error(args[CMD], TOO_MANY_ARGS_MSG,
+				TOO_MANY_ARGS_ERR, NULL));
 	else if (2 == len_char_double_ptr(args))
 		errno = ft_atoi(args[ARG_1]) % 256;
 	else

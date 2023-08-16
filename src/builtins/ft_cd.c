@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:23:23 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 13:40:25 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/17 00:22:23 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,13 @@ void	ft_cd(char **args)
 	old = getcwd(NULL, 0);
 	if (len > 2)
 		return ((void)mini_error("cd", TOO_MANY_ARGS_MSG, TOO_MANY_ARGS_ERR,
-				NULL));
+				old));
 	if (len == 1)
 	{
 		path = get_env("HOME");
 		if (!path && get_pos_vble("HOME"))
-			return ((void)mini_error("cd", NO_HOME_MSG, NO_HOME_ERR, NULL));
-		else
-		{
-			errno = 0;
-			return ;
-		}
+			return ((void)mini_error("cd", NO_HOME_MSG, NO_HOME_ERR, old));
+		errno = 0;
 	}
 	else
 		path = args[1];

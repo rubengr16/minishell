@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 23:38:24 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 23:49:06 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*trim_n_vble_cpy(char **line, char *vble, unsigned int *i,
 		free(aux_vble);
 	vble = vble_cpy(line, aux, i, vble_len);
 	free(aux);
-	return (vble);	
+	return (vble);
 }
 
 char	*expand(char **line, unsigned int *i, enum e_state state,
