@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 08:49:29 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:17:30 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,11 @@ static void	exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 	{
 		cmd->cmd = verify_commands(ft_split(get_env("PATH"), ':'), cmd->cmd);
 		if (cmd->cmd)
+		{
 			execve(cmd->cmd, cmd->args, g_sigenv.envp);
+			mini_error(cmd->cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL);
+			exit(errno);
+		}
 		else
 			exit(errno);
 	}
