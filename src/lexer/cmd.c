@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 22:10:25 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/05 01:00:13 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 07:38:56 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	delete_cmd_list(t_cmd **list)
 		if (aux->cmd)
 			free(aux->cmd);
 		if (aux->args)
-			free_double_char_ptr(aux->args);
+			(void)free_double_char_ptr(aux->args);
 		if (aux->redir)
 			delete_redir_list(&aux->redir);
 		free(aux);

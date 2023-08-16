@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:55:34 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 23:42:29 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 07:38:24 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 void			*mini_error(char *s1, char *s2, int errcode, void *to_free);
 char			**add_to_char_double_ptr(char ***char_double_ptr, char *str);
 unsigned int	len_char_double_ptr(char **char_double_ptr);
-void			free_double_char_ptr(char **char_double_ptr);
+char			**free_double_char_ptr(char **char_double_ptr);
 int				isstrspace(char *s);
 
 #endif

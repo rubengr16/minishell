@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 01:37:21 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 08:16:18 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static t_cmd	*manage_other(t_cmd *cmd, char **splitted_token, char *token)
 	while ((i < 0 || splitted_token[i]) && splitted_token[++i])
 		splitted_token[i] = get_real_token(splitted_token[i], 0);
 	if ((0 <= i && !splitted_token[i] && (unsigned int)i < split_len))
-		return (NULL);
+		return ((t_cmd *)free_double_char_ptr(splitted_token));
 	i = 0;
 	if (!cmd->cmd)
 		cmd->cmd = splitted_token[i];
@@ -57,7 +57,6 @@ static t_cmd	*manage_other(t_cmd *cmd, char **splitted_token, char *token)
 	free(splitted_token);
 	if (i < 0)
 		return (NULL);
-	printf("HOLLAAA\n");
 	return (cmd);
 }
 
