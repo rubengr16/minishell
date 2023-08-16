@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:23:23 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 12:53:23 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 13:40:25 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	ft_cd(char **args)
 	len = len_char_double_ptr(args);
 	old = getcwd(NULL, 0);
 	if (len > 2)
-		return ((void)mini_error("cd", TOO_MANY_ARGS_MSG, TOO_MANY_ARGS_ERR, NULL));
+		return ((void)mini_error("cd", TOO_MANY_ARGS_MSG, TOO_MANY_ARGS_ERR,
+				NULL));
 	if (len == 1)
 	{
 		path = get_env("HOME");

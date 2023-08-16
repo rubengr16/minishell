@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:55:34 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 07:38:24 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 13:31:18 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 # define TOO_MANY_ARGS_MSG "too many arguments"
 # define UNEXPECTED_TK_MSG "syntax error near unexpected token"
 # define UNCLOSED_Q_MSG "unclosed quotes found"
-# define CMD_NOT_FOUND_MSG "command not found"
+# define EXEC_DENIED_MSG "permission denied"
+# define CMD_NOT_FOUND_MSG "command not found..."
 
 # define SYS_ERR -1
 # define AMBIG_ERR 1
@@ -35,6 +36,7 @@
 # define TOO_MANY_ARGS_ERR 1
 # define UNEXPECTED_TK_ERR 2
 # define SYNTAX_ERR 2
+# define EXEC_DENIED_ERR 126
 # define CMD_NOT_FOUND_ERR 127
 # define EXPORT_ERR -2
 

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:07 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 11:04:06 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 13:12:24 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # include "lexer.h"
 
 # define ERR_DUP2 -1
+# define NOT_FOUND 1
+# define OK 0
+# define EXEC_DENIED -1
 
 /********************************** PIPE ************************************ */
 typedef int	t_pipe [2];

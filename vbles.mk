@@ -6,7 +6,7 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/08/16 11:41:00 by rgallego         ###   ########.fr        #
+#    Updated: 2023/08/16 13:05:57 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ LEXER		=		$(addprefix $(LEXER_DIR), \
 
 EXECUTOR		=	$(addprefix $(EXEC_DIR), \
 					execute.c \
+					verify_command.c \
 					utils.c \
 					redirect.c \
 					redirect_utils.c \
