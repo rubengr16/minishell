@@ -6,13 +6,13 @@
 /*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 15:17:30 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:22:26 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-static int	exec_builtin(t_cmd *cmd)
+static int	exec_builtin(t_cmd *cmd, int is_child)
 {
 	if (!cmd->cmd)
 		return (0);
@@ -27,7 +27,7 @@ static int	exec_builtin(t_cmd *cmd)
 	else if (!ft_strncmp(cmd->cmd, "env", 4))
 		ft_env();
 	else if (!ft_strncmp(cmd->cmd, "exit", 5))
-		ft_exit(cmd->args);
+		ft_exit(cmd->args, is_child);
 	else if (!ft_strncmp(cmd->cmd, "cd", 3))
 		ft_cd(cmd->args);
 	else
@@ -41,7 +41,7 @@ static void	exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 		exit(1);
 	piping(cmd, pipes, i, length);
 	dup2_and_close(cmd);
-	if (!exec_builtin(cmd) && cmd->cmd)
+	if (!exec_builtin(cmd, 1) && cmd->cmd)
 	{
 		cmd->cmd = verify_commands(ft_split(get_env("PATH"), ':'), cmd->cmd);
 		if (cmd->cmd)
@@ -116,7 +116,7 @@ void	exec_main(t_cmd **cmd)
 	builtin_on_parent = is_builtin_on_parent(*cmd);
 	files_management(*cmd, builtin_on_parent);
 	if (builtin_on_parent && 0 <= (*cmd)->fd_in && 0 <= (*cmd)->fd_out)
-		exec_builtin(*cmd);
+		exec_builtin(*cmd, 0);
 	else
 		prepare_command(*cmd);
 	delete_cmd_list(cmd);
