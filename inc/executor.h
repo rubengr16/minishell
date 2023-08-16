@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:07 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 08:24:07 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 11:04:06 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <fcntl.h>
 # include <dirent.h>
 # include <stdio.h>
+# include "utils.h"
 # include "signals.h"
 # include "builtins.h"
 # include "lexer.h"

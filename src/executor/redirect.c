@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:59 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 08:48:53 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 11:04:28 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	dup2_protected(int oldfd, int newfd)
 {
 	if (dup2(oldfd, newfd) == ERR_DUP2)
 	{
-		(void)mini_error(NULL, NULL, ERR_SYS, NULL);
+		(void)mini_error(NULL, NULL, SYS_ERR, NULL);
 		exit(errno);
 	}
 }
