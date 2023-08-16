@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:03 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 07:39:03 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 08:20:17 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*verify_commands(char **path, char *cmd)
 	int		i;
 
 	i = 0;
-	if (!path)
+	if (!path || !*cmd)
 	{
 		mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL);
 		return (NULL);
