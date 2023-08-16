@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:55:34 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 15:34:31 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:03:39 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define AMBIG_ERR 1
 # define NO_HOME_ERR 1
 # define NUMERIC_ARGS_ERR 2
+# define NOT_VALID_IDENTIFIER_ERR 1
 # define TOO_MANY_ARGS_ERR 1
 # define UNEXPECTED_TK_ERR 2
 # define SYNTAX_ERR 2

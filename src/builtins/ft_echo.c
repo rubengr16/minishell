@@ -6,13 +6,13 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:26:53 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 12:37:18 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:22:29 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static int	is_n_valid(char **args, int *new_line, int *i)
+static void	is_n_valid(char **args, int *new_line, int *i)
 {
 	int	j;
 
@@ -25,10 +25,9 @@ static int	is_n_valid(char **args, int *new_line, int *i)
 		while (args[*i] && args[*i][j]
 			&& ((!j && args[*i][j] == '-') || (0 < j && args[*i][j] == 'n')))
 			j++;
-		if (args[*i] && !args[*i][j])
+		if (args[*i] && !args[*i][j] && j)
 			*new_line = 1;
 	}
-	return (args[*i][j]);
 }
 
 void	ft_echo(char **args)

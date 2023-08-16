@@ -6,16 +6,18 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:35:44 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:20:56 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:06:00 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static int	ft_unset_vble(char ***aux, int pos)
+static void	ft_unset_vble(char ***aux, char *name)
 {
+	int	pos;
 	int	i;
 
+	pos = get_pos_vble(name);
 	i = 0;
 	while (0 <= pos && g_sigenv.envp[i])
 	{
@@ -25,34 +27,29 @@ static int	ft_unset_vble(char ***aux, int pos)
 			pos = -1;
 		i++;
 	}
-	return (pos);
+	if (pos < 0)
+		(void)mini_error("unset", NOT_VALID_IDENTIFIER_MSG,
+			NOT_VALID_IDENTIFIER_ERR, NULL);
 }
 
 void	ft_unset(char **args)
 {
 	char			**aux;
 	unsigned int	i;
-	int				pos;
 
 	if (!g_sigenv.envp || len_char_double_ptr(args) <= 1)
 		return ;
 	i = 1;
-	pos = 0;
 	aux = NULL;
-	while (0 <= pos && args[i])
+	errno = 0;
+	while (args[i])
 	{
-		pos = get_pos_vble(args[i]);
-		if (0 <= pos)
-			pos = ft_unset_vble(&aux, pos);
-		else
-			pos = 0;
+		ft_unset_vble(&aux, args[i]);
 		i++;
 	}
-	i = 0;
-	free(g_sigenv.envp);
-	g_sigenv.envp = aux;
-	if (pos < 0)
-		errno = 1;
-	else
-		errno = 0;
+	if (aux)
+	{
+		free(g_sigenv.envp);
+		g_sigenv.envp = aux;
+	}
 }
