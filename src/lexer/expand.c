@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 19:26:13 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/16 22:19:49 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,13 @@ char	*vble_cpy(char **line, char *vble, unsigned int *i,
 	total_len = ft_strlen(*line) - (len + 1) + ft_strlen(vble) + 1;
 	aux = malloc(sizeof(char) * total_len);
 	if (!aux)
-	{
-		free(*line);
-		return (mini_error(NULL, NULL, SYS_ERR, NULL));
-	}
+		return (mini_error(NULL, NULL, SYS_ERR, *line));
 	(*i)--;
 	ft_strlcpy(aux, *line, ft_strlen_to(*line, &(*line)[*i]) + 1);
 	ft_strlcpy(&aux[*i], vble, ft_strlen(vble) + 1);
 	ft_strlcpy(&aux[*i + ft_strlen(vble)], &(*line)[*i + 1 + len],
 		ft_strlen(&(*line)[*i + 1 + len]) + 1);
-	free(line);
+	free(*line);
 	*line = aux;
 	*i = *i + ft_strlen(vble) - 1;
 	return (*line);
@@ -73,12 +70,14 @@ char	*trim_n_vble_cpy(char **line, char *vble, unsigned int *i,
 		return (NULL);
 	aux_vble = vble;
 	len = ft_strlen(vble) + 1;
-	while (*vble && (ft_strchr("\t\n\v\f\r", *vble) || *vble == TRANS_VBLE_SPACE))
+	while (*vble && (ft_strchr("\t\n\v\f\r", *vble)
+			|| *vble == TRANS_VBLE_SPACE))
 	{
 		vble++;
 		len--;
 	}
-	while (len > 1 && (ft_strchr("\t\n\v\f\r", vble[len - 2]) || vble[len - 2] == TRANS_VBLE_SPACE))
+	while (len > 1 && (ft_strchr("\t\n\v\f\r", vble[len - 2])
+			|| vble[len - 2] == TRANS_VBLE_SPACE))
 		len--;
 	aux = malloc(sizeof(char) * (len));
 	if (!aux)

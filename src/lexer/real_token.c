@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 17:18:57 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 21:51:26 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 22:23:37 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static unsigned int	cnt_quotes(char *line)
 	return (quotes_cnt);
 }
 
-static char	*delete_quotes_trans(char **token, unsigned int is_redir)
+static char	*delete_quotes_trans(char **token)
 {
 	char			*aux;
 	unsigned int	i;
@@ -46,8 +46,7 @@ static char	*delete_quotes_trans(char **token, unsigned int is_redir)
 		i++;
 	}
 	aux[j] = '\0';
-	if (!is_redir)
-		free(*token);
+	free(*token);
 	return (aux);
 }
 
@@ -59,7 +58,9 @@ char	*get_real_token(char *token, unsigned int is_redir)
 
 	state = NORMAL;
 	i = 0;
+	aux = token;
 	token = ft_strdup(token);
+	free(aux);
 	if (!token)
 		return (mini_error(NULL, NULL, SYS_ERR, NULL));
 	while (token[i])
@@ -72,7 +73,7 @@ char	*get_real_token(char *token, unsigned int is_redir)
 			token = expand(&token, &i, state, is_redir);
 		i++;
 	}
-	aux = delete_quotes_trans(&token, is_redir);
+	aux = delete_quotes_trans(&token);
 	ft_strrepl(aux, TRANS_VBLE_SPACE, ' ');
 	token = aux;
 	return (token);
