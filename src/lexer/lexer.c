@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 08:16:18 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 08:50:44 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static t_cmd	*manage_redir(t_cmd *cmd, t_token **token,
 static t_cmd	*manage_other(t_cmd *cmd, char **splitted_token, char *token)
 {
 	unsigned int	split_len;
-	int	i;
+	int				i;
 
 	if (!splitted_token && ft_strlen(token))
 		return (mini_error(NULL, NULL, SYS_ERR, NULL));
@@ -81,7 +81,8 @@ static t_cmd	*get_cmd(t_cmd **cmd_list, t_cmd *cmd, t_token **token)
 	{
 		if (type == OTHER)
 			cmd = manage_other(cmd,
-				ft_split((*token)->token, TRANS_VBLE_SPACE), (*token)->token);
+					ft_split((*token)->token, TRANS_VBLE_SPACE),
+					(*token)->token);
 		if (type == R_IN || type == R_IN_HERE_DOC
 			|| type == R_OUT || type == R_OUT_APPEND)
 			cmd = manage_redir(cmd, token, type);

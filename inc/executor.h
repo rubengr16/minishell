@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:07 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 16:55:35 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 08:24:07 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include "signals.h"
 # include "builtins.h"
 # include "lexer.h"
+
+# define ERR_DUP2 -1
 
 /********************************** PIPE ************************************ */
 typedef int	t_pipe [2];

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 08:11:10 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 08:48:28 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ char	*aux_func(char *line, t_token_list *list, t_cmd *cmd_list)
 		{
 			cmd_list = lexer(&list);
 			if (cmd_list)
-			{
-				print_cmd_list(cmd_list);
 				exec_main(&cmd_list);
-			}
 		}
 		g_sigenv.signal = 0;
 		signal(SIGINT, sig_normal);

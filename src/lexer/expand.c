@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 00:20:04 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 08:51:22 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*expand(char **line, unsigned int *i, enum e_state state,
 	len = ft_vble_len(&(*line)[*i]);
 	if (!len && (*line)[*i] != TRANS_SINGLE_Q && (*line)[*i] != TRANS_DOUBLE_Q)
 		return (vble_cpy(line, "$", i, 0));
-	else if (!len 
+	else if (!len
 		&& ((*line)[*i] == TRANS_SINGLE_Q || (*line)[*i] == TRANS_DOUBLE_Q))
 		return (vble_cpy(line, "", i, len));
 	aux = malloc(sizeof(char) * (len + 1));

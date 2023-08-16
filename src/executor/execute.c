@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 08:17:50 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 08:49:29 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ static void	prepare_command(t_cmd *cmd)
 	while (aux)
 	{
 		if (i < (count_cmds(cmd) - 1))
-			pipe(pipes[i]);
+			if (pipe(pipes[i]))
+				return ((void)mini_error(NULL, NULL, SYS_ERR, NULL));
 		id = fork();
 		if (!id)
 			exec_cmd(aux, pipes, i, count_cmds(cmd));
