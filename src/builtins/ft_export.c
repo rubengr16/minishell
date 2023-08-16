@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:35:16 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 23:23:56 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:42:42 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,27 @@ static int	is_valid_vble_name(char *s)
 	int	i;
 
 	i = 0;
-	if (!s)
+	if (!s || !*s)
 		return (0);
 	while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
 		i++;
-	if (s[i] && s[i] != '=')
+	if ((!i && s[i] == '=') || (s[i] && s[i] != '='))
 		return (0);
 	return (1);
 }
 
-static void	export_error(char *identifier)
+static void	export_error(char *identifier, int *i)
 {
 	ft_putstr_fd("minishell: export: ", STDERR_FILENO);
-	ft_putstr_fd(identifier, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
-	ft_putendl_fd(NOT_VALID_IDENTIFIER_MSG, STDERR_FILENO);
+	if (identifier && *identifier)
+	{
+		ft_putstr_fd(identifier, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putendl_fd(NOT_VALID_IDENTIFIER_MSG, STDERR_FILENO);
+	}
+	else
+		ft_putendl_fd(NOT_IN_CONTEXT_MSG, STDERR_FILENO);
+	*i = EXPORT_ERR;
 }
 
 void	ft_export(char **args)
@@ -68,10 +74,7 @@ void	ft_export(char **args)
 	while (0 < i && args[i])
 	{
 		if (!is_valid_vble_name(args[i]))
-		{
-			export_error(args[i]);
-			i = EXPORT_ERR;
-		}
+			export_error(args[i], &i);
 		else
 		{
 			equal_sign = ft_strchr(args[i], '=');

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verify_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:05:29 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 15:04:53 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:28:29 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static int	extensive_command_search(char **path, char **command, char *cmd)
 
 	*command = cmd;
 	cmd_state = exists_and_exec(*command);
-	printf("First OK\n");
 	if (cmd_state == OK)
 		return (cmd_state);
 	else if (cmd_state == EXEC_DENIED)
@@ -63,10 +62,8 @@ static int	extensive_command_search(char **path, char **command, char *cmd)
 		*command = ft_strjoinsep(path[i], cmd, "/");
 		cmd_state = exists_and_exec(*command);
 	}
-	printf("Denied\n");
 	if (cmd_state != OK && (cmd_state == EXEC_DENIED || denied == EXEC_DENIED))
 		return (EXEC_DENIED);
-	printf("OK\n");
 	return (cmd_state);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:55:34 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 13:31:18 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:34:31 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define NO_HOME_MSG "HOME not set"
 # define NUMERIC_ARGS_MSG "numeric argument required"
 # define NOT_VALID_IDENTIFIER_MSG "not a valid identifier"
+# define NOT_IN_CONTEXT_MSG "not a valid in this context"
 # define TOO_MANY_ARGS_MSG "too many arguments"
 # define UNEXPECTED_TK_MSG "syntax error near unexpected token"
 # define UNCLOSED_Q_MSG "unclosed quotes found"
