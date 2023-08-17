@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/17 16:25:14 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:46:54 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,6 @@
 #include "executor.h"
 
 t_global	g_sigenv;
-
-void	discover_leaks(void)
-{
-	system("leaks minishell");
-}
 
 static char	*get_line(int safe_errno)
 {
@@ -39,7 +34,12 @@ static char	*get_line(int safe_errno)
 
 char	*aux_func(char *line, t_token_list *list, t_cmd *cmd_list)
 {
-	if (!isstrspace(line))
+	if (isstrspace(line))
+		free(line);
+	else if (line[ft_strlen(line) - 1] == '|'
+		|| (ft_strrchr(line, '|') && isstrspace(ft_strrchr(line, '|') + 1)))
+		mini_error(UNEXPECTED_TK_MSG, "|", SYNTAX_ERR, line);
+	else
 	{
 		list = tokenize(&line);
 		if (list)
@@ -52,8 +52,6 @@ char	*aux_func(char *line, t_token_list *list, t_cmd *cmd_list)
 		signal(SIGINT, sig_normal);
 		signal(SIGQUIT, SIG_IGN);
 	}
-	else
-		free(line);
 	return (get_line(errno));
 }
 
