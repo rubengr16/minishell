@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:35:44 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 16:06:00 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/17 15:27:24 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	ft_unset_vble(char ***aux, char *name)
 	int	i;
 
 	pos = get_pos_vble(name);
+	if (pos < 0)
+		return ;
 	i = 0;
 	while (0 <= pos && g_sigenv.envp[i])
 	{
@@ -44,7 +46,10 @@ void	ft_unset(char **args)
 	errno = 0;
 	while (args[i])
 	{
-		ft_unset_vble(&aux, args[i]);
+		if (!is_valid_vble_name(args[i], 0))
+			export_unset_error("unset", args[i]);
+		else
+			ft_unset_vble(&aux, args[i]);
 		i++;
 	}
 	if (aux)

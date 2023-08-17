@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:19:41 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 23:48:08 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/17 15:26:56 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ void	ft_env(void);					// 3 Done it
 void	ft_exit(char **args, int is_child);
 
 void	set_vble(char *vble, char *equal_sign);
+int		is_valid_vble_name(char *s, unsigned int is_export);
+void	export_unset_error(char *cmd, char *identifier);
 
 #endif
