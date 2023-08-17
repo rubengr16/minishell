@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verify_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:05:29 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 15:28:29 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:58:59 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,17 +38,14 @@ static char	*ft_strjoinsep(char const *s1, char const *s2, char *c)
 	return (s);
 }
 
-static int	extensive_command_search(char **path, char **command, char *cmd)
+static int	extensive_command_search(char **path, char **command, char *cmd,
+	int cmd_state)
 {
-	int	cmd_state;
 	int	denied;
 	int	i;
 
 	*command = cmd;
-	cmd_state = exists_and_exec(*command);
-	if (cmd_state == OK)
-		return (cmd_state);
-	else if (cmd_state == EXEC_DENIED)
+	if (cmd_state == EXEC_DENIED)
 		denied = EXEC_DENIED;
 	i = 0;
 	*command = ft_strjoinsep(path[i], cmd, "/");
@@ -70,14 +67,17 @@ static int	extensive_command_search(char **path, char **command, char *cmd)
 char	*verify_commands(char **path, char *cmd)
 {
 	char	*command;
+	int		cmd_state;
 	int		is_executable;
 
-	if (!path || !*cmd)
-	{
-		mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL);
-		return (NULL);
-	}
-	is_executable = extensive_command_search(path, &command, cmd);
+	if (!*cmd)
+		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
+	cmd_state = exists_and_exec(cmd);
+	if (cmd_state == OK)
+		return (cmd);
+	if (!path)
+		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
+	is_executable = extensive_command_search(path, &command, cmd, cmd_state);
 	if (is_executable == NOT_FOUND || is_executable == EXEC_DENIED)
 	{
 		command = NULL;
