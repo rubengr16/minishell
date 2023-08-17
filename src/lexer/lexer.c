@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 23:22:06 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:30:02 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static t_cmd	*get_cmd(t_cmd **cmd_list, t_cmd *cmd, t_token **token)
 	{
 		if (type == OTHER)
 			cmd = manage_other(cmd,
-					ft_split((*token)->token, TRANS_VBLE_SPACE),
+					ft_split((*token)->token, TRANS_SPACE),
 					(*token)->token);
 		if (type == R_IN || type == R_IN_HERE_DOC
 			|| type == R_OUT || type == R_OUT_APPEND)

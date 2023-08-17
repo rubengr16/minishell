@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   real_token.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 17:18:57 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 23:34:42 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:30:35 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ char	*get_real_token(char *token, unsigned int is_redir)
 	if (!token)
 		return (NULL);
 	aux = delete_quotes_trans(&token);
-	ft_strrepl(aux, TRANS_VBLE_SPACE, ' ');
+	ft_strrepl(aux, TRANS_SPACE, ' ');
 	return (aux);
 }

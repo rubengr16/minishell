@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 19:54:48 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 21:58:06 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:25:00 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include "enviroment.h"
 # include "utils.h"
 
-# define TRANS_VBLE_SPACE -4
+# define TRANS_SPACE -4
 
 /* ******************************* ENUM ******************************* */
 enum	e_token_type

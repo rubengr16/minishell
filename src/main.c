@@ -6,7 +6,7 @@
 /*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 18:34:53 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:25:14 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,15 @@ void	discover_leaks(void)
 
 static char	*get_line(int safe_errno)
 {
-	char	*result_line;
 	char	*line;
-	char	*aux;
 
 	line = readline("minishell$ ");
-	if (line && *line && line[ft_strlen(line) - 1] == '|')
-	{
-		while (line[ft_strlen(line) - 1] == '|')
-		{
-			aux = readline("> ");
-			if (aux && *aux)
-			{
-				result_line = ft_strjoin(line, aux);
-				free(line);
-				line = result_line;
-			}
-			free(aux);
-			aux = NULL;
-		}
-	}
+	if (g_sigenv.signal == SIGINT)
+		errno = 1;
 	if (line && *line)
 		add_history(line);
-	errno = safe_errno;
+	if (g_sigenv.signal != SIGINT)
+		errno = safe_errno;
 	return (line);
 }
 
@@ -66,6 +52,8 @@ char	*aux_func(char *line, t_token_list *list, t_cmd *cmd_list)
 		signal(SIGINT, sig_normal);
 		signal(SIGQUIT, SIG_IGN);
 	}
+	else
+		free(line);
 	return (get_line(errno));
 }
 
@@ -86,7 +74,7 @@ int	main(int argc, char **argv, char **envp)
 	while (line)
 		line = aux_func(line, list, cmd_list);
 	if (!line)
-		ft_putendl_fd("\b\bexit", STDERR_FILENO);
+		ft_putendl_fd("exit", STDERR_FILENO);
 	delete_env_vbles();
 	return (0);
 }

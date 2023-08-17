@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 23:49:06 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:25:53 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,13 @@ char	*trim_n_vble_cpy(char **line, char *vble, unsigned int *i,
 		return (NULL);
 	aux_vble = vble;
 	len = ft_strlen(vble) + 1;
-	while (*vble && (ft_strchr("\t\n\v\f\r", *vble)
-			|| *vble == TRANS_VBLE_SPACE))
+	while (*vble && (ft_strchr("\t\n\v\f\r", *vble) || *vble == TRANS_SPACE))
 	{
 		vble++;
 		len--;
 	}
 	while (len > 1 && (ft_strchr("\t\n\v\f\r", vble[len - 2])
-			|| vble[len - 2] == TRANS_VBLE_SPACE))
+		|| vble[len - 2] == TRANS_SPACE))
 		len--;
 	aux = malloc(sizeof(char) * (len));
 	if (!aux)
@@ -115,6 +114,6 @@ char	*expand(char **line, unsigned int *i, enum e_state state,
 	if (ft_strchr(vble, ' ') && state == NORMAL && is_redir)
 		return (mini_error(vble, AMBIG_REDIR_MSG, AMBIG_ERR, *line));
 	if (ft_strchr(vble, ' ') && state == NORMAL && !is_redir)
-		ft_strrepl(vble, ' ', TRANS_VBLE_SPACE);
+		ft_strrepl(vble, ' ', TRANS_SPACE);
 	return (trim_n_vble_cpy(line, vble, i, len));
 }
