@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verify_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:05:29 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/17 16:58:59 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/18 17:56:27 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ char	*verify_commands(char **path, char *cmd)
 	if (ft_strncmp(cmd, "./", 2) == 0 || ft_strncmp(cmd, "../", 3) == 0
 			|| *cmd == '/')
 	{
+		(void)free_double_char_ptr(path);
 		if (exists_and_exec(cmd) == OK)
 			return (cmd);
 		if (exists_and_exec(cmd) == EXEC_DENIED)
@@ -81,10 +82,10 @@ char	*verify_commands(char **path, char *cmd)
 	if (!path)
 		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
 	is_executable = extensive_command_search(path, &command, cmd, 0);
+	(void)free_double_char_ptr(path);
 	if (is_executable == NOT_FOUND)
 		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
 	if (is_executable == EXEC_DENIED)
 		return (mini_error(cmd, EXEC_DENIED_MSG, EXEC_DENIED_ERR, NULL));
-	(void)free_double_char_ptr(path);
 	return (command);
 }
