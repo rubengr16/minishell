@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/17 16:25:53 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/08/18 08:59:04 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*trim_n_vble_cpy(char **line, char *vble, unsigned int *i,
 		len--;
 	}
 	while (len > 1 && (ft_strchr("\t\n\v\f\r", vble[len - 2])
-		|| vble[len - 2] == TRANS_SPACE))
+			|| vble[len - 2] == TRANS_SPACE))
 		len--;
 	aux = malloc(sizeof(char) * (len));
 	if (!aux)

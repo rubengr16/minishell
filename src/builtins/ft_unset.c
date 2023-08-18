@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:35:44 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/17 15:27:24 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/18 08:58:17 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ static void	ft_unset_vble(char ***aux, char *name)
 		if (pos == i)
 			free(g_sigenv.envp[pos]);
 		else if (!add_to_char_double_ptr(aux, g_sigenv.envp[i]))
-			pos = -1;
+			pos = -2;
 		i++;
 	}
-	if (pos < 0)
-		(void)mini_error("unset", NOT_VALID_IDENTIFIER_MSG,
-			NOT_VALID_IDENTIFIER_ERR, NULL);
+	free(g_sigenv.envp);
+	g_sigenv.envp = *aux;
+	*aux = NULL;
 }
 
 void	ft_unset(char **args)
@@ -51,10 +51,5 @@ void	ft_unset(char **args)
 		else
 			ft_unset_vble(&aux, args[i]);
 		i++;
-	}
-	if (aux)
-	{
-		free(g_sigenv.envp);
-		g_sigenv.envp = aux;
 	}
 }
