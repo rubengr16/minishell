@@ -29,6 +29,7 @@
 # define UNCLOSED_Q_MSG "unclosed quotes found"
 # define EXEC_DENIED_MSG "permission denied"
 # define CMD_NOT_FOUND_MSG "command not found..."
+# define NOT_FILE_DIR "Not such file or directory"
 
 # define SYS_ERR -1
 # define AMBIG_ERR 1

@@ -45,11 +45,7 @@ static void	exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 	{
 		cmd->cmd = verify_commands(ft_split(get_env("PATH"), ':'), cmd->cmd);
 		if (cmd->cmd)
-		{
 			execve(cmd->cmd, cmd->args, g_sigenv.envp);
-			mini_error(cmd->cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL);
-			exit(errno);
-		}
 		else
 			exit(errno);
 	}

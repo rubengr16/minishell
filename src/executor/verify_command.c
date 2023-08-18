@@ -45,8 +45,6 @@ static int	extensive_command_search(char **path, char **command, char *cmd,
 	int	i;
 
 	*command = cmd;
-	if (cmd_state == EXEC_DENIED)
-		denied = EXEC_DENIED;
 	i = 0;
 	*command = ft_strjoinsep(path[i], cmd, "/");
 	cmd_state = exists_and_exec(*command);
@@ -67,25 +65,26 @@ static int	extensive_command_search(char **path, char **command, char *cmd,
 char	*verify_commands(char **path, char *cmd)
 {
 	char	*command;
-	int		cmd_state;
 	int		is_executable;
 
 	if (!*cmd)
 		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
-	cmd_state = exists_and_exec(cmd);
-	if (cmd_state == OK)
-		return (cmd);
+	if (ft_strncmp(cmd, "./", 2) == 0 || ft_strncmp(cmd, "../", 3) == 0
+			|| *cmd == '/')
+	{
+		if (exists_and_exec(cmd) == OK)
+			return (cmd);
+		if (exists_and_exec(cmd) == EXEC_DENIED)
+			return(mini_error(cmd, EXEC_DENIED_MSG, EXEC_DENIED_ERR, NULL));
+		return(mini_error(cmd, NOT_FILE_DIR, CMD_NOT_FOUND_ERR, NULL));
+	}
 	if (!path)
 		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
-	is_executable = extensive_command_search(path, &command, cmd, cmd_state);
-	if (is_executable == NOT_FOUND || is_executable == EXEC_DENIED)
-	{
-		command = NULL;
-		if (is_executable == NOT_FOUND)
-			(void)mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL);
-		else if (is_executable == EXEC_DENIED)
-			(void)mini_error(cmd, EXEC_DENIED_MSG, EXEC_DENIED_ERR, NULL);
-	}
+	is_executable = extensive_command_search(path, &command, cmd, 0);
+	if (is_executable == NOT_FOUND)
+		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
+	if (is_executable == EXEC_DENIED)
+		return (mini_error(cmd, EXEC_DENIED_MSG, EXEC_DENIED_ERR, NULL));
 	(void)free_double_char_ptr(path);
 	return (command);
 }
