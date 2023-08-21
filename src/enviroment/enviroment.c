@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 18:11:30 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/21 17:09:03 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/21 18:54:50 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,34 @@ static char	*increment_shlvl(char *s)
 	return (s);
 }
 
+static char	**always_shlvl(void)
+{
+	char	*shlvl;
+
+	shlvl = ft_strdup("SHLVL=1");
+	if (!shlvl)
+		return (mini_error(NULL, NULL, SYS_ERR, NULL));
+	g_sigenv.envp = malloc(sizeof(char *) * 2);
+	if (!g_sigenv.envp)
+		return (mini_error(NULL, NULL, SYS_ERR, NULL));
+	g_sigenv.envp[0] = shlvl;
+	g_sigenv.envp[1] = NULL;
+	return (g_sigenv.envp);
+}
+
 char	**create_my_env(char **envp)
 {
 	unsigned int	i;
 
+	if (envp && !envp[0])
+		return always_shlvl();
 	i = 0;
 	if (envp)
 		while (envp[i])
 			i++;
 	g_sigenv.envp = malloc(sizeof(char *) * (i + 1));
 	if (!g_sigenv.envp)
-		mini_error(NULL, NULL, SYS_ERR, NULL);
+		return (mini_error(NULL, NULL, SYS_ERR, NULL));
 	i = 0;
 	while (envp && envp[i])
 	{
@@ -57,8 +74,6 @@ char	**create_my_env(char **envp)
 	}
 	if (g_sigenv.envp)
 		g_sigenv.envp[i] = NULL;
-	if (!i)
-		g_sigenv.envp = add_to_char_double_ptr(&g_sigenv.envp, "SHLVL=1");
 	return (g_sigenv.envp);
 }
 
@@ -76,39 +91,4 @@ void	delete_env_vbles(void)
 	}
 	free(g_sigenv.envp);
 	g_sigenv.envp = NULL;
-}
-
-int	get_pos_vble(char *name)
-{
-	unsigned int	i;
-	int				pos;
-
-	if (!g_sigenv.envp)
-		return (-1);
-	i = 0;
-	pos = -1;
-	while (pos < 0 && g_sigenv.envp[i])
-	{
-		if (ft_strncmp(g_sigenv.envp[i], name, (ft_strlen(name) + 1)) == '=')
-			pos = i;
-		else
-			i++;
-	}
-	if (!g_sigenv.envp[i])
-		return (-1);
-	return (pos);
-}
-
-char	*get_env(char *name)
-{
-	int				pos;
-
-	if (!name)
-		return (NULL);
-	if (!ft_strncmp(name, "?", 1))
-		return (ft_itoa(errno));
-	pos = get_pos_vble(name);
-	if (pos < 0)
-		return (NULL);
-	return (ft_strchr(g_sigenv.envp[pos], '=') + 1);
 }

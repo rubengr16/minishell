@@ -6,7 +6,7 @@
 #    By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/28 19:42:48 by rgallego          #+#    #+#              #
-#    Updated: 2023/08/18 08:39:18 by rgallego         ###   ########.fr        #
+#    Updated: 2023/08/21 18:41:32 by rgallego         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ EXECUTOR		=	$(addprefix $(EXEC_DIR), \
 
 ENVIROMENT	=		$(addprefix $(ENV_DIR), \
 					enviroment.c \
+					get_env.c \
 					)
 
 BUILTINS	=	$(addprefix $(BUILTINS_DIR), \
