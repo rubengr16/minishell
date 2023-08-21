@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 01:31:11 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 00:00:46 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/21 10:33:41 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ unsigned int	get_state(char c)
 		return (SINGLE_QUOTE);
 	else if (c == (char)DOUBLE_QUOTE)
 		return (DOUBLE_QUOTE);
-	else if (c == (char)SPACE_CHAR)
+	else if (c == (char)SPACE_CHAR || ft_strchr("\t\n\v\f\r", c))
 		return (SPACE_CHAR);
 	else
 		return (NORMAL);
@@ -29,13 +29,14 @@ unsigned int	get_state(char c)
 int	is_end_of_token(char c, enum e_state state)
 {
 	return (c && (state != NORMAL
-			|| (get_state(c) != SPACE_CHAR && get_state(c) != METACHAR)));
+			|| ((get_state(c) != SPACE_CHAR) 
+					&& get_state(c) != METACHAR)));
 }
 
 int	is_end_of_vble(char c, enum e_state state)
 {
-	return (c && c != (char)SPACE_CHAR && c != (char)DOUBLE_QUOTE
-		&& c != '$' && (state == DOUBLE_QUOTE
+	return (c && (c != (char)SPACE_CHAR || !ft_strchr("\t\n\v\f\r", c))
+		&& c != (char)DOUBLE_QUOTE && c != '$' && (state == DOUBLE_QUOTE
 			|| (get_state(c) != METACHAR && c != (char)SINGLE_QUOTE)));
 }
 
