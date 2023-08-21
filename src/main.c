@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/17 16:46:54 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/21 11:11:19 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*aux_func(char *line, t_token_list *list, t_cmd *cmd_list)
 	else
 	{
 		list = tokenize(&line);
+		free(line);
 		if (list)
 		{
 			cmd_list = lexer(&list);

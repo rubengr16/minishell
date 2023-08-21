@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/21 10:36:02 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/21 11:11:34 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,18 @@ t_token_list	*tokenize(char **line)
 		return (NULL);
 	while ((*line)[i])
 	{
-		while ((*line)[i] == ' ' || ft_strchr("\t\n\v\f\r", (*line)[i]))
+		while ((*line)[i] && ft_strchr(" \t\n\v\f\r", (*line)[i]))
 			i++;
-		state = get_state((*line)[i]);
-		if (state != METACHAR)
-			token = get_token(line, &i, state);
-		else
-			token = get_metachar(&(*line)[i], &i, state);
-		if (!add_to_token_list(list, token))
-			return (delete_token_list(&list));
+		if ((*line)[i])
+		{
+			state = get_state((*line)[i]);
+			if (state != METACHAR)
+				token = get_token(line, &i, state);
+			else
+				token = get_metachar(&(*line)[i], &i, state);
+			if (!add_to_token_list(list, token))
+				return (delete_token_list(&list));
+		}
 	}
-	free(*line);
 	return (list);
 }
