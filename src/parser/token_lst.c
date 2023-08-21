@@ -6,38 +6,11 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/15 12:53:25 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/21 11:55:47 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
-
-static void	fill_token(char *token, char *str, unsigned int size,
-	enum e_state *state)
-{
-	unsigned int	i;
-	unsigned int	j;
-
-	i = 0;
-	j = 0;
-	while (str[i] && j < size)
-	{
-		if (is_true_char(str[i], *state))
-			token[j++] = str[i++];
-		else if (str[i] == '\'' || str[i] == '\"')
-		{
-			if ((str[i] == (char)SINGLE_QUOTE && *state == SINGLE_QUOTE)
-				|| (str[i] == (char)DOUBLE_QUOTE && *state == DOUBLE_QUOTE))
-				*state = NORMAL;
-			else if (str[i] == (char)SINGLE_QUOTE && *state == NORMAL)
-				*state = SINGLE_QUOTE;
-			else if (str[i] == (char)DOUBLE_QUOTE && *state == NORMAL)
-				*state = DOUBLE_QUOTE;
-			i++;
-		}
-	}
-	token[j] = '\0';
-}
 
 /**
  * Creates a new token from str with the given size
@@ -46,9 +19,10 @@ static void	fill_token(char *token, char *str, unsigned int size,
  * 							!NULL	Token allocation is correct
  * 							
  */
-t_token	*new_token(char *str, unsigned int size, enum e_state state)
+t_token	*new_token(char *str, unsigned int size)
 {
 	t_token	*new_token;
+	unsigned int	i;
 
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
@@ -59,7 +33,13 @@ t_token	*new_token(char *str, unsigned int size, enum e_state state)
 		free(new_token);
 		return (mini_error(NULL, NULL, SYS_ERR, NULL));
 	}
-	fill_token(new_token->token, str, size, &state);
+	i = 0;
+	while (str[i] && i < size)
+	{
+		new_token->token[i] = str[i];
+		i++;
+	}
+	new_token->token[i] = '\0';
 	new_token->next = NULL;
 	return (new_token);
 }

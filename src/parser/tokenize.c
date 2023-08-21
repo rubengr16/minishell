@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:01:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/21 11:11:34 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/21 11:57:22 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	manage_quotes(char *line, enum e_state *state, unsigned int *i)
 	line[*i] = translate_quotes(line, *i);
 }
 
-static t_token	*get_metachar(char *line, unsigned int *i, enum e_state state)
+static t_token	*get_metachar(char *line, unsigned int *i)
 {
 	unsigned int	size;
 
@@ -38,15 +38,13 @@ static t_token	*get_metachar(char *line, unsigned int *i, enum e_state state)
 	if ((*line == '<' && line[1] == '<') || (*line == '>' && line[1] == '>'))
 		size = 2;
 	*i += size;
-	return (new_token(line, size, state));
+	return (new_token(line, size));
 }
 
 static t_token	*get_token(char **line, unsigned int *i, enum e_state state)
 {
-	enum e_state	original_state;
 	unsigned int	start;
 
-	original_state = state;
 	start = *i;
 	if (state != NORMAL)
 		(*line)[*i] = translate_quotes(*line, *i);
@@ -67,7 +65,7 @@ static t_token	*get_token(char **line, unsigned int *i, enum e_state state)
 	}
 	if (state != NORMAL)
 		return (mini_error(UNCLOSED_Q_MSG, NULL, SYNTAX_ERR, NULL));
-	return (new_token(&(*line)[start], *i - start, original_state));
+	return (new_token(&(*line)[start], *i - start));
 }
 
 t_token_list	*tokenize(char **line)
@@ -91,7 +89,7 @@ t_token_list	*tokenize(char **line)
 			if (state != METACHAR)
 				token = get_token(line, &i, state);
 			else
-				token = get_metachar(&(*line)[i], &i, state);
+				token = get_metachar(&(*line)[i], &i);
 			if (!add_to_token_list(list, token))
 				return (delete_token_list(&list));
 		}

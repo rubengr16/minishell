@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:10:35 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/21 10:23:55 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/21 11:56:53 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int				is_end_of_vble(char c, enum e_state state);
 int				is_true_quote(char c, enum e_state state);
 int				is_true_char(char c, enum e_state state);
 /* -------------------------------- TOKEN_LST ------------------------------ */
-t_token			*new_token(char *str, unsigned int size, enum e_state state);
+t_token			*new_token(char *str, unsigned int size);
 void			print_list(t_token_list *list); // DELETE WHEN FINISHED
 void			*delete_token_list(t_token_list **list);
 t_token			*add_to_token_list(t_token_list *list, t_token *token);
