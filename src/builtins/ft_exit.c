@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 18:22:20 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/18 09:00:42 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/21 17:10:41 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	ft_isstrnbr(char *s)
 	{
 		i++;
 		if (!ft_isdigit(s[i]))
-		return (0);
+			return (0);
 	}
 	while (s[i] && ft_isdigit(s[i]))
 		i++;

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:05:29 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/18 17:56:27 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/21 17:11:15 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,14 @@ char	*verify_commands(char **path, char *cmd)
 	if (!*cmd)
 		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
 	if (ft_strncmp(cmd, "./", 2) == 0 || ft_strncmp(cmd, "../", 3) == 0
-			|| *cmd == '/')
+		|| *cmd == '/')
 	{
 		(void)free_double_char_ptr(path);
 		if (exists_and_exec(cmd) == OK)
 			return (cmd);
 		if (exists_and_exec(cmd) == EXEC_DENIED)
-			return(mini_error(cmd, EXEC_DENIED_MSG, EXEC_DENIED_ERR, NULL));
-		return(mini_error(cmd, NOT_FILE_DIR, CMD_NOT_FOUND_ERR, NULL));
+			return (mini_error(cmd, EXEC_DENIED_MSG, EXEC_DENIED_ERR, NULL));
+		return (mini_error(cmd, NOT_FILE_DIR, CMD_NOT_FOUND_ERR, NULL));
 	}
 	if (!path)
 		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));

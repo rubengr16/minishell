@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/21 11:55:47 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/21 17:11:36 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  */
 t_token	*new_token(char *str, unsigned int size)
 {
-	t_token	*new_token;
+	t_token			*new_token;
 	unsigned int	i;
 
 	new_token = malloc(sizeof(t_token));

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 18:11:30 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:41:11 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/21 17:09:03 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	**create_my_env(char **envp)
 	if (!g_sigenv.envp)
 		mini_error(NULL, NULL, SYS_ERR, NULL);
 	i = 0;
-	while (g_sigenv.envp && envp[i])
+	while (envp && envp[i])
 	{
 		if (!ft_strncmp(envp[i], "SHLVL=", 6))
 			g_sigenv.envp[i] = increment_shlvl(envp[i]);
@@ -57,6 +57,8 @@ char	**create_my_env(char **envp)
 	}
 	if (g_sigenv.envp)
 		g_sigenv.envp[i] = NULL;
+	if (!i)
+		g_sigenv.envp = add_to_char_double_ptr(&g_sigenv.envp, "SHLVL=1");
 	return (g_sigenv.envp);
 }
 
