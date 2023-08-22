@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 23:43:22 by rgallego          #+#    #+#             */
-/*   Updated: 2023/07/21 17:24:06 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/08/22 10:38:25 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,22 @@ void	ft_strrepl(char *str, char old_char, char new_char)
 	while (str[i])
 	{
 		if (str[i] == old_char)
+			str[i] = new_char;
+		i++;
+	}
+}
+
+
+void	ft_strreplset(char *str, char *set, char new_char)
+{
+	int	i;
+
+	i = 0;
+	if (!str)
+		return ;
+	while (str[i])
+	{
+		if (ft_strchr(set, str[i]))
 			str[i] = new_char;
 		i++;
 	}
