@@ -17,7 +17,10 @@ void	ft_pwd(void)
 	char	*pwd;
 
 	pwd = getcwd(NULL, 0);
-	printf("%s\n", pwd);
+	if (!pwd)
+		ft_putendl_fd("(null)", STDERR_FILENO);
+	else
+		printf("%s\n", pwd);
 	free(pwd);
 	errno = 0;
 }

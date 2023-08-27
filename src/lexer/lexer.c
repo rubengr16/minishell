@@ -38,7 +38,14 @@ static t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 	unsigned int	i;
 
 	(*token)->token = get_real_token((*token)->token, 0);
-	splitted_token = ft_split((*token)->token, TRANS_SPACE);
+	if ((*token)->token[0] != '\0')
+		splitted_token = ft_split((*token)->token, TRANS_SPACE);
+	else
+	{
+		splitted_token = malloc(sizeof(char *) * 2);
+		splitted_token[0] = ft_strdup("");
+		splitted_token[1] = NULL;
+	}
 	if (!splitted_token)
 		return (mini_error(NULL, NULL, SYS_ERR, NULL));
 	i = 0;

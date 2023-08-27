@@ -43,7 +43,9 @@ char	*vble_cpy(char **line, char *vble, unsigned int *i,
 {
 	char			*aux;
 	unsigned int	total_len;
+	unsigned int	j;
 
+	j = 0;
 	total_len = ft_strlen(*line) - (len + 1) + ft_strlen(vble) + 1;
 	aux = malloc(sizeof(char) * total_len);
 	if (!aux)
@@ -53,9 +55,13 @@ char	*vble_cpy(char **line, char *vble, unsigned int *i,
 	ft_strlcpy(&aux[*i], vble, ft_strlen(vble) + 1);
 	ft_strlcpy(&aux[*i + ft_strlen(vble)], &(*line)[*i + 1 + len],
 		ft_strlen(&(*line)[*i + 1 + len]) + 1);
+	*i = *i + ft_strlen(vble) - 1;
+	while ((*line)[j] && (*line)[j] != '?')
+		j++;
+	if (j != 0 && (*line)[j] == '?' && (*line)[j - 1] == TRANS_DOLLAR)
+		free(vble);
 	free(*line);
 	*line = aux;
-	*i = *i + ft_strlen(vble) - 1;
 	return (*line);
 }
 

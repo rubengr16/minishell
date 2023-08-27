@@ -105,7 +105,7 @@ void	print_list(t_token_list *list)
 	aux = list->start;
 	while (aux)
 	{
-		printf("Token %d: token = %s\n", i, aux->token);
+		printf("Token %d: token = -%s-\n", i, aux->token);
 		i++;
 		aux = aux->next;
 	}

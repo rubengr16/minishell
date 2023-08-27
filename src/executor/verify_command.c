@@ -44,6 +44,8 @@ static int	extensive_command_search(char **path, char **command, char *cmd,
 	int	denied;
 	int	i;
 
+	if (!*cmd)
+		return (NOT_FOUND);
 	*command = cmd;
 	i = 0;
 	*command = ft_strjoinsep(path[i], cmd, "/");
@@ -67,8 +69,6 @@ char	*verify_commands(char **path, char *cmd)
 	char	*command;
 	int		is_executable;
 
-	if (!*cmd)
-		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
 	if (ft_strncmp(cmd, "./", 2) == 0 || ft_strncmp(cmd, "../", 3) == 0
 		|| *cmd == '/')
 	{
@@ -83,6 +83,8 @@ char	*verify_commands(char **path, char *cmd)
 		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
 	is_executable = extensive_command_search(path, &command, cmd, 0);
 	(void)free_double_char_ptr(path);
+	if (!*cmd)
+		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
 	if (is_executable == NOT_FOUND)
 		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
 	if (is_executable == EXEC_DENIED)
