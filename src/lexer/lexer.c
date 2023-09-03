@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/22 10:46:35 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/04 00:10:49 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,15 @@ static t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 	unsigned int	i;
 
 	(*token)->token = get_real_token((*token)->token, 0);
-	if ((*token)->token[0] != '\0')
-		splitted_token = ft_split((*token)->token, TRANS_SPACE);
-	else
-	{
-		splitted_token = malloc(sizeof(char *) * 2);
-		splitted_token[0] = ft_strdup("");
-		splitted_token[1] = NULL;
-	}
+	splitted_token = ft_split((*token)->token, TRANS_SPACE);
+	if (splitted_token && !splitted_token[0])
+		empty_token_split(&splitted_token);
 	if (!splitted_token)
 		return (mini_error(NULL, NULL, SYS_ERR, NULL));
 	i = 0;
 	if (!cmd->cmd)
 		cmd->cmd = splitted_token[i];
-	while (splitted_token[i] 
+	while (splitted_token[i]
 		&& add_to_char_double_ptr(&cmd->args, splitted_token[i]))
 		i++;
 	if (splitted_token[i] && !cmd->args[i])

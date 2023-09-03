@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 01:31:11 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/21 11:08:06 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/04 00:10:09 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ unsigned int	get_state(char c)
 int	is_end_of_token(char c, enum e_state state)
 {
 	return (c && (state != NORMAL
-			|| ((get_state(c) != SPACE_CHAR) 
-					&& get_state(c) != METACHAR)));
+			|| ((get_state(c) != SPACE_CHAR)
+				&& get_state(c) != METACHAR)));
 }
 
 int	is_end_of_vble(char c, enum e_state state)

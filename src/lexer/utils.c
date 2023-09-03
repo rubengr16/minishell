@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 23:43:22 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/22 10:38:25 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/04 00:08:31 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,20 @@ enum e_token_type	get_token_type(char *token)
 	return (OTHER);
 }
 
+void	empty_token_split(char ***splitted_token)
+{
+	char	*str;
+
+	str = ft_strdup("");
+	if (!str)
+	{
+		(void)mini_error(NULL, NULL, SYS_ERR, NULL);
+		free_double_char_ptr(*splitted_token);
+		return ;
+	}
+	*splitted_token = add_to_char_double_ptr(splitted_token, str);
+}
+
 void	ft_strrepl(char *str, char old_char, char new_char)
 {
 	int	i;
@@ -44,7 +58,6 @@ void	ft_strrepl(char *str, char old_char, char new_char)
 		i++;
 	}
 }
-
 
 void	ft_strreplset(char *str, char *set, char new_char)
 {

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 18:11:30 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/21 18:54:50 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/04 00:09:45 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	**create_my_env(char **envp)
 	unsigned int	i;
 
 	if (envp && !envp[0])
-		return always_shlvl();
+		return (always_shlvl());
 	i = 0;
 	if (envp)
 		while (envp[i])

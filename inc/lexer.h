@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 19:54:48 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/22 10:44:47 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/04 00:05:48 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_cmd
 /* ***************************** FUNC DECLARATION ************************** */
 /* --------------------------------- UTILS --------------------------------- */
 enum e_token_type	get_token_type(char *token);
+void				empty_token_split(char ***splitted_token);
 void				ft_strrepl(char *str, char old_char, char new_char);
 void				ft_strreplset(char *str, char *set, char new_char);
 /* --------------------------------- REDIR --------------------------------- */
