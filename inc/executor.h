@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:07 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/03 22:23:06 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:30:46 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ int		is_last_redir(t_redir *next, enum e_token_type type1,
 int		count_cmds(t_cmd *cmd);
 int		is_builtin(char *cmd);
 int		is_builtin_on_parent(t_cmd	*cmd);
-char	*verify_commands(char **path, char *cmd);
+char	*verify_command(char **path, char *cmd);
 
 #endif

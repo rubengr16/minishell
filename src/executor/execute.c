@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/04 20:19:14 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:30:47 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 		path = get_env("PATH");
 		if (path)
 		{
-			cmd->cmd = verify_commands(ft_split(path, ':'), cmd->cmd);
+			cmd->cmd = verify_command(ft_split(path, ':'), cmd->cmd);
 			free(path);
 		}
 		if (cmd->cmd)

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:05:29 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/21 17:11:15 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:44:21 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,21 +64,34 @@ static int	extensive_command_search(char **path, char **command, char *cmd,
 	return (cmd_state);
 }
 
-char	*verify_commands(char **path, char *cmd)
+static char	*pointed_command(char **path, char *cmd)
 {
-	char	*command;
-	int		is_executable;
-
-	if (ft_strncmp(cmd, "./", 2) == 0 || ft_strncmp(cmd, "../", 3) == 0
-		|| *cmd == '/')
+	(void)free_double_char_ptr(path);
+	if (!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "../", 3) || *cmd == '/')
 	{
-		(void)free_double_char_ptr(path);
 		if (exists_and_exec(cmd) == OK)
 			return (cmd);
 		if (exists_and_exec(cmd) == EXEC_DENIED)
 			return (mini_error(cmd, EXEC_DENIED_MSG, EXEC_DENIED_ERR, NULL));
 		return (mini_error(cmd, NOT_FILE_DIR, CMD_NOT_FOUND_ERR, NULL));
 	}
+	if (!ft_strncmp(cmd, "..", 2))
+		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putendl_fd(FILE_ARG_REQ_MSG, STDERR_FILENO);
+	ft_putendl_fd(FILE_ARG_REQ_2_MSG, STDERR_FILENO);
+	errno = FILE_ARG_REQ_ERR;
+	return (NULL);
+}
+
+char	*verify_command(char **path, char *cmd)
+{
+	char	*command;
+	int		is_executable;
+
+	if (!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "../", 3) || *cmd == '/'
+		|| !ft_strncmp(cmd, ".", 1) || !ft_strncmp(cmd, "..", 2))
+		return (pointed_command(path, cmd));
 	if (!path)
 		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
 	is_executable = extensive_command_search(path, &command, cmd, 0);
