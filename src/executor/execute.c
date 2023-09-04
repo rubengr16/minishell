@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 18:35:36 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:19:14 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,20 @@ static int	exec_builtin(t_cmd *cmd, int is_child)
 
 static void	exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 {
+	char	*path;
+
 	if (cmd->fd_in < 0 || cmd->fd_out < 0)
 		exit(1);
 	piping(cmd, pipes, i, length);
 	dup2_and_close(cmd);
 	if (!exec_builtin(cmd, 1) && cmd->cmd)
 	{
-		cmd->cmd = verify_commands(ft_split(get_env("PATH"), ':'), cmd->cmd);
+		path = get_env("PATH");
+		if (path)
+		{
+			cmd->cmd = verify_commands(ft_split(path, ':'), cmd->cmd);
+			free(path);
+		}
 		if (cmd->cmd)
 			execve(cmd->cmd, cmd->args, g_sigenv.envp);
 		else
@@ -51,6 +58,8 @@ static void	exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 	}
 	else if (is_builtin(cmd->cmd))
 		exit(errno);
+	else if (!cmd->cmd)
+		exit(0);
 	exit(1);
 }
 
