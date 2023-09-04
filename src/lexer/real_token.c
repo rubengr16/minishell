@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 17:18:57 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/03 23:51:02 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/04 18:57:06 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*get_real_token(char *token, unsigned int is_redir)
 			state = DOUBLE_QUOTE;
 		else if (token[i] == TRANS_DOUBLE_Q && state == DOUBLE_QUOTE)
 			state = NORMAL;
-		else if (token[i] == TRANS_DOLLAR)
+		else if (token[i] == TRANS_DOLLAR && ++i)
 			token = expand(&token, &i, state, is_redir);
 		i++;
 	}

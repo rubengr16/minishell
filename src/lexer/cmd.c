@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 22:10:25 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 23:25:00 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/04 18:21:55 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,15 @@ void	print_cmd_list(t_cmd *list)
 	while (aux)
 	{
 		printf("##############################\n");
-		printf("- cmd: %s\n", aux->cmd);
+		printf("- cmd: %s|\n", aux->cmd);
 		printf("------------------------------\n");
 		i = 0;
 		while (aux->args && aux->args[i])
 		{
 			if (!i)
-				printf("- args: = %s\n", aux->args[i]);
+				printf("- args: = %s|\n", aux->args[i]);
 			else
-				printf("         = %s\n", aux->args[i]);
+				printf("         = %s|\n", aux->args[i]);
 			i++;
 		}
 		printf("------------------------------\n");

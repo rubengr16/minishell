@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/03 22:47:28 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/04 18:53:20 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*vble_cpy(char **line, char *vble, unsigned int *i,
 	ft_strlcpy(&aux[*i], vble, ft_strlen(vble) + 1);
 	ft_strlcpy(&aux[*i + ft_strlen(vble)], &(*line)[*i + 1 + len],
 		ft_strlen(&(*line)[*i + 1 + len]) + 1);
-	if ((*line)[*i] != '?')
+	if ((*line)[*i] == '?')
 		free(vble);
 	*i = *i + ft_strlen(vble) - 1;
 	free(*line);
@@ -98,7 +98,6 @@ char	*expand(char **line, unsigned int *i, enum e_state state,
 	char			*aux;
 	unsigned int	len;
 
-	(*i)++;
 	len = ft_vble_len(&(*line)[*i]);
 	if (!len && (*line)[*i] != TRANS_SINGLE_Q && (*line)[*i] != TRANS_DOUBLE_Q)
 		return (vble_cpy(line, "$", i, 0));
@@ -117,5 +116,7 @@ char	*expand(char **line, unsigned int *i, enum e_state state,
 		return (mini_error(vble, AMBIG_REDIR_MSG, AMBIG_ERR, *line));
 	if (state == NORMAL && !is_redir)
 		ft_strreplset(vble, " \t\n\v\f\r", TRANS_SPACE);
-	return (vble_cpy(line, vble, i, len));
+	aux = vble_cpy(line, vble, i, len);
+	free(vble);
+	return (aux);
 }
