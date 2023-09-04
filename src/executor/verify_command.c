@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:05:29 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/04 20:44:21 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/04 21:19:43 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,18 @@ static int	extensive_command_search(char **path, char **command, char *cmd,
 
 static char	*pointed_command(char **path, char *cmd)
 {
+	DIR	*dir_desc;
+
 	(void)free_double_char_ptr(path);
+	if (*cmd == '/')
+	{
+		dir_desc = opendir(cmd);
+		if (dir_desc)
+		{
+			closedir(dir_desc);
+			return (mini_error(cmd, IS_DIR_MSG, IS_DIR_ERR, NULL));
+		}
+	}
 	if (!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "../", 3) || *cmd == '/')
 	{
 		if (exists_and_exec(cmd) == OK)
@@ -77,10 +88,8 @@ static char	*pointed_command(char **path, char *cmd)
 	}
 	if (!ft_strncmp(cmd, "..", 2))
 		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putendl_fd(FILE_ARG_REQ_MSG, STDERR_FILENO);
+	(void)mini_error(cmd, FILE_ARG_REQ_MSG, FILE_ARG_REQ_ERR, NULL);
 	ft_putendl_fd(FILE_ARG_REQ_2_MSG, STDERR_FILENO);
-	errno = FILE_ARG_REQ_ERR;
 	return (NULL);
 }
 
