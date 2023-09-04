@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:23:23 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/17 16:29:26 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/04 21:42:16 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,20 @@ static void	update_pwd(char *prvs_pwd, char *current_pwd)
 	free(newpwd);
 }
 
-void	change_dir(char *path, char *old)
+static void	change_dir(char *path, char *old, unsigned int is_home)
 {
-	if (chdir(path))
-	{
-		mini_error("cd", path, SYS_ERR, old);
-		errno = 1;
-	}
-	else
+	if (!chdir(path) || !ft_strncmp(path, "", 1))
 	{
 		update_pwd(old, getcwd(NULL, 0));
 		errno = 0;
 	}
+	else
+	{
+		mini_error("cd", path, SYS_ERR, old);
+		errno = 1;
+	}
+	if (is_home)
+		free(path);
 }
 
 void	ft_cd(char **args)
@@ -62,5 +64,5 @@ void	ft_cd(char **args)
 	}
 	else
 		path = args[1];
-	change_dir(path, old);
+	change_dir(path, old, len == 1);
 }
