@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/04 20:30:47 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/04 20:57:14 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ static void	exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 		exit(1);
 	piping(cmd, pipes, i, length);
 	dup2_and_close(cmd);
-	if (!exec_builtin(cmd, 1) && cmd->cmd)
+	if (!cmd->cmd || !ft_strncmp(cmd->cmd, "", 1))
+		exit(0);
+	if (!exec_builtin(cmd, 1))
 	{
 		path = get_env("PATH");
 		if (path)
@@ -58,8 +60,6 @@ static void	exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 	}
 	else if (is_builtin(cmd->cmd))
 		exit(errno);
-	else if (!cmd->cmd)
-		exit(0);
 	exit(1);
 }
 
