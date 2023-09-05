@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 09:40:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 12:20:56 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/05 19:43:36 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ void	ft_env(void)
 	unsigned int	i;
 
 	if (!g_sigenv.envp)
+	{
+		errno = 0;
 		return ;
+	}
 	i = 0;
 	while (g_sigenv.envp[i])
 	{

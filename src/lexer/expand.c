@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/04 18:53:20 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/05 19:49:45 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,11 +99,8 @@ char	*expand(char **line, unsigned int *i, enum e_state state,
 	unsigned int	len;
 
 	len = ft_vble_len(&(*line)[*i]);
-	if (!len && (*line)[*i] != TRANS_SINGLE_Q && (*line)[*i] != TRANS_DOUBLE_Q)
+	if (!len)
 		return (vble_cpy(line, "$", i, 0));
-	else if (!len
-		&& ((*line)[*i] == TRANS_SINGLE_Q || (*line)[*i] == TRANS_DOUBLE_Q))
-		return (vble_cpy(line, "", i, len));
 	aux = malloc(sizeof(char) * (len + 1));
 	if (!aux)
 		return (mini_error(NULL, NULL, SYS_ERR, *line));
