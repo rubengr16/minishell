@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verify_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:05:29 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/04 21:19:43 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/05 19:11:52 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static char	*pointed_command(char **path, char *cmd)
 	DIR	*dir_desc;
 
 	(void)free_double_char_ptr(path);
-	if (*cmd == '/')
+	if (!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "../", 3) || *cmd == '/')
 	{
 		dir_desc = opendir(cmd);
 		if (dir_desc)
@@ -77,9 +77,6 @@ static char	*pointed_command(char **path, char *cmd)
 			closedir(dir_desc);
 			return (mini_error(cmd, IS_DIR_MSG, IS_DIR_ERR, NULL));
 		}
-	}
-	if (!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "../", 3) || *cmd == '/')
-	{
 		if (exists_and_exec(cmd) == OK)
 			return (cmd);
 		if (exists_and_exec(cmd) == EXEC_DENIED)
@@ -99,7 +96,7 @@ char	*verify_command(char **path, char *cmd)
 	int		is_executable;
 
 	if (!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "../", 3) || *cmd == '/'
-		|| !ft_strncmp(cmd, ".", 1) || !ft_strncmp(cmd, "..", 2))
+		|| !ft_strncmp(cmd, ".", 2) || !ft_strncmp(cmd, "..", 3))
 		return (pointed_command(path, cmd));
 	if (!path)
 		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));

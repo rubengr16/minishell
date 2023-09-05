@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:55:34 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/04 21:20:10 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/05 19:20:50 by socana-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define FILE_ARG_REQ_2_MSG ".: usage: . filename [arguments]"
 # define EXEC_DENIED_MSG "permission denied"
 # define IS_DIR_MSG "Is a directory"
-# define CMD_NOT_FOUND_MSG "command not found..."
+# define CMD_NOT_FOUND_MSG "command not found"
 # define NOT_FILE_DIR "Not such file or directory"
 
 # define SYS_ERR -1
