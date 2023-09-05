@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 09:23:46 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/05 19:49:45 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/09/05 19:54:16 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,36 +60,6 @@ char	*vble_cpy(char **line, char *vble, unsigned int *i,
 	*line = aux;
 	return (*line);
 }
-
-// char	*trim_n_vble_cpy(char **line, char *vble, unsigned int *i,
-// 	unsigned int vble_len)
-// {
-// 	int		len;
-// 	char	*aux_vble;
-// 	char	*aux;
-
-// 	if (!vble)
-// 		return (NULL);
-// 	aux_vble = vble;
-// 	len = ft_strlen(vble) + 1;
-// 	while (*vble && (ft_strchr("\t\n\v\f\r", *vble) || *vble == TRANS_SPACE))
-// 	{
-// 		vble++;
-// 		len--;
-// 	}
-// 	while (len > 1 && (ft_strchr("\t\n\v\f\r", vble[len - 2])
-// 			|| vble[len - 2] == TRANS_SPACE))
-// 		len--;
-// 	aux = malloc(sizeof(char) * (len));
-// 	if (!aux)
-// 		return (mini_error(NULL, NULL, SYS_ERR, NULL));
-// 	(void)ft_strlcpy(aux, vble, len);
-// 	if ((*line) && (*line)[*i] == '?')
-// 		free(aux_vble);
-// 	vble = vble_cpy(line, aux, i, vble_len);
-// 	free(aux);
-// 	return (vble);
-// }
 
 char	*expand(char **line, unsigned int *i, enum e_state state,
 	unsigned int is_redir)

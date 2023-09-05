@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verify_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:05:29 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/05 19:41:13 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/09/05 19:53:47 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	*verify_command(char **path, char *cmd)
 
 	if (!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "../", 3) || *cmd == '/'
 		|| !ft_strncmp(cmd, ".", 2) || !ft_strncmp(cmd, "..", 3))
-			return (pointed_command(path, cmd));
+		return (pointed_command(path, cmd));
 	if (!path)
 		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
 	is_executable = extensive_command_search(path, &command, cmd, 0);

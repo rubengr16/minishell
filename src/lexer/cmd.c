@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 22:10:25 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/04 18:21:55 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/05 19:53:59 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,42 +67,4 @@ void	delete_cmd_list(t_cmd **list)
 		aux = *list;
 	}
 	*list = NULL;
-}
-
-void	print_cmd_list(t_cmd *list)
-{
-	t_cmd			*aux;
-	t_redir			*redir_aux;
-	unsigned int	i;
-
-	aux = list;
-	while (aux)
-	{
-		printf("##############################\n");
-		printf("- cmd: %s|\n", aux->cmd);
-		printf("------------------------------\n");
-		i = 0;
-		while (aux->args && aux->args[i])
-		{
-			if (!i)
-				printf("- args: = %s|\n", aux->args[i]);
-			else
-				printf("         = %s|\n", aux->args[i]);
-			i++;
-		}
-		printf("------------------------------\n");
-		redir_aux = aux->redir;
-		if (redir_aux)
-		{
-			printf("- redir: = (file: %s, type: %d)\n", redir_aux->file, redir_aux->type);
-			redir_aux = redir_aux->next;
-			while (redir_aux)
-			{
-				printf("         (file: %s, type: %d)\n", redir_aux->file, redir_aux->type);
-				redir_aux = redir_aux->next;
-			}
-		}
-		printf("\n\n");
-		aux = aux->next;
-	}
 }

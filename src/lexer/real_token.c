@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 17:18:57 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/04 18:57:06 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/05 19:54:07 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ char	*get_real_token(char *token, unsigned int is_redir)
 	}
 	if (!token)
 		return (NULL);
-	// aux = ft_strtrim(token, " \t\n\v\f\r");
 	aux = delete_quotes_trans(&token);
 	return (aux);
 }
