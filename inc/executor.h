@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:07 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/04 20:30:46 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/07 12:50:19 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,15 @@ int		here_doc(char *end_of_input);
 int		is_last_redir(t_redir *next, enum e_token_type type1,
 			enum e_token_type type2);
 
+/***************************** VERIFY COMMAND ******************************* */
+char	*verify_command(char **path, char *cmd);
+
 /*********************************** UTILS ********************************** */
 int		count_cmds(t_cmd *cmd);
 int		is_builtin(char *cmd);
 int		is_builtin_on_parent(t_cmd	*cmd);
-char	*verify_command(char **path, char *cmd);
+char	*ft_strjoinsep(char const *s1, char const *s2, char *c);
+
+
 
 #endif

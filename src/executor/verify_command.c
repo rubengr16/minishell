@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:05:29 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/05 19:53:47 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/07 17:59:23 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,6 @@ int	exists_and_exec(char *cmd)
 	else if (access(cmd, X_OK))
 		return (EXEC_DENIED);
 	return (OK);
-}
-
-static char	*ft_strjoinsep(char const *s1, char const *s2, char *c)
-{
-	int		len;
-	char	*s;
-
-	if (!s1 || !s2)
-		return (NULL);
-	len = ft_strlen(s1) + ft_strlen(s2) + 2;
-	s = malloc(sizeof(char) * (len));
-	if (!s)
-		return (NULL);
-	(void)ft_strlcpy(s, s1, len);
-	(void)ft_strlcat(s, c, len);
-	(void)ft_strlcat(s, s2, len);
-	return (s);
 }
 
 static int	extensive_command_search(char **path, char **command, char *cmd,
@@ -90,6 +73,15 @@ static char	*pointed_command(char **path, char *cmd)
 	return (NULL);
 }
 
+static char	*relative_tranform(char **path, char *cmd)
+{
+	char	*aux;
+
+	(void)free_double_char_ptr(path);
+	aux = cmd;
+	cmd = ft_strjoin("./", cmd);
+}
+
 char	*verify_command(char **path, char *cmd)
 {
 	char	*command;
@@ -98,6 +90,8 @@ char	*verify_command(char **path, char *cmd)
 	if (!ft_strncmp(cmd, "./", 2) || !ft_strncmp(cmd, "../", 3) || *cmd == '/'
 		|| !ft_strncmp(cmd, ".", 2) || !ft_strncmp(cmd, "..", 3))
 		return (pointed_command(path, cmd));
+	if (ft_strchr(cmd, '/'))
+		return (relative_tranform(path, cmd));
 	if (!path)
 		return (mini_error(cmd, CMD_NOT_FOUND_MSG, CMD_NOT_FOUND_ERR, NULL));
 	is_executable = extensive_command_search(path, &command, cmd, 0);
