@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:35:44 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/18 08:58:17 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:14:06 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	ft_unset(char **args)
 		return ;
 	i = 1;
 	aux = NULL;
-	errno = 0;
+	g_sigenv.our_errno = 0;
 	while (args[i])
 	{
 		if (!is_valid_vble_name(args[i], 0))

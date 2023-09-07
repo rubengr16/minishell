@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:35:16 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/04 17:30:56 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:14:03 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	export_unset_error(char *cmd, char *identifier)
 	}
 	else
 		ft_putendl_fd(NOT_IN_CONTEXT_MSG, STDERR_FILENO);
-	errno = 1;
+	g_sigenv.our_errno = 1;
 }
 
 void	ft_export(char **args)
@@ -70,7 +70,7 @@ void	ft_export(char **args)
 	if (len_char_double_ptr(args) <= 1)
 		return ;
 	i = 1;
-	errno = 0;
+	g_sigenv.our_errno = 0;
 	while (0 < i && args[i])
 	{
 		if (!is_valid_vble_name(args[i], 1))

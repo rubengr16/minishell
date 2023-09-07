@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:39:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/05 19:22:31 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:14:21 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ static void	exec_cmd(t_cmd *cmd, t_pipe *pipes, int i, int length)
 		if (cmd->cmd)
 			execve(cmd->cmd, cmd->args, g_sigenv.envp);
 		else
-			exit(errno);
+			exit(g_sigenv.our_errno);
 	}
 	else if (is_builtin(cmd->cmd))
-		exit(errno);
+		exit(g_sigenv.our_errno);
 	exit(1);
 }
 
@@ -73,9 +73,9 @@ static void	wait_status_change(t_cmd *cmd, pid_t last_id)
 		id = wait(&state);
 		if (id == last_id && g_sigenv.signal == 0)
 		{
-			errno = state;
-			if (WIFEXITED(errno))
-				errno = WEXITSTATUS(errno);
+			g_sigenv.our_errno = state;
+			if (WIFEXITED(g_sigenv.our_errno))
+				g_sigenv.our_errno = WEXITSTATUS(g_sigenv.our_errno);
 		}
 		i--;
 	}

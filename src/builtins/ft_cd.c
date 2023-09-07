@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:23:23 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/04 21:42:16 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:13:21 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ static void	change_dir(char *path, char *old, unsigned int is_home)
 	if (!chdir(path) || !ft_strncmp(path, "", 1))
 	{
 		update_pwd(old, getcwd(NULL, 0));
-		errno = 0;
+		g_sigenv.our_errno = 0;
 	}
 	else
 	{
 		mini_error("cd", path, SYS_ERR, old);
-		errno = 1;
+		g_sigenv.our_errno = 1;
 	}
 	if (is_home)
 		free(path);
@@ -60,7 +60,7 @@ void	ft_cd(char **args)
 		path = get_env("HOME");
 		if (!path && get_pos_vble("HOME"))
 			return ((void)mini_error("cd", NO_HOME_MSG, NO_HOME_ERR, old));
-		errno = 0;
+		g_sigenv.our_errno = 0;
 	}
 	else
 		path = args[1];

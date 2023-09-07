@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 09:40:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/05 19:43:36 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:13:50 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_env(void)
 
 	if (!g_sigenv.envp)
 	{
-		errno = 0;
+		g_sigenv.our_errno = 0;
 		return ;
 	}
 	i = 0;
@@ -27,5 +27,5 @@ void	ft_env(void)
 		ft_putendl_fd(g_sigenv.envp[i], STDOUT_FILENO);
 		i++;
 	}
-	errno = 0;
+	g_sigenv.our_errno = 0;
 }

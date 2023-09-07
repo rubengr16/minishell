@@ -6,13 +6,13 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/16 13:05:29 by rgallego          #+#    #+#             */
-/*   Updated: 2023/09/07 17:59:23 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:19:52 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
-int	exists_and_exec(char *cmd)
+static int	exists_and_exec(char *cmd)
 {
 	if (access(cmd, F_OK))
 		return (NOT_FOUND);
@@ -29,7 +29,6 @@ static int	extensive_command_search(char **path, char **command, char *cmd,
 
 	if (!*cmd)
 		return (NOT_FOUND);
-	*command = cmd;
 	i = 0;
 	*command = ft_strjoinsep(path[i], cmd, "/");
 	cmd_state = exists_and_exec(*command);
@@ -75,11 +74,18 @@ static char	*pointed_command(char **path, char *cmd)
 
 static char	*relative_tranform(char **path, char *cmd)
 {
-	char	*aux;
+	int	cmd_status;
 
 	(void)free_double_char_ptr(path);
-	aux = cmd;
 	cmd = ft_strjoin("./", cmd);
+	if (!cmd)
+		return (mini_error(NULL, NULL, SYS_ERR, NULL));
+	cmd_status = exists_and_exec(cmd);
+	if (cmd_status == OK)
+		return (cmd);
+	if (cmd_status == EXEC_DENIED)
+		return (mini_error(cmd, EXEC_DENIED_MSG, EXEC_DENIED_ERR, NULL));
+	return (mini_error(cmd, NOT_FILE_DIR, CMD_NOT_FOUND_ERR, NULL));
 }
 
 char	*verify_command(char **path, char *cmd)
