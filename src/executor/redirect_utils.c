@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 11:16:05 by socana-b          #+#    #+#             */
-/*   Updated: 2023/08/15 16:49:47 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/03 22:16:16 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,28 @@ static char	*here_doc_expand(char **line)
 static void	here_doc_child(char *end_of_input, int here_pipe[])
 {
 	char	*str;
+	char	*buffer;
 	char	*aux;
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_IGN);
 	str = ft_strdup("");
-	aux = readline("> ");
-	while (ft_strncmp(aux, end_of_input, ft_strlen(end_of_input) + 1) != 0)
+	buffer = readline("> ");
+	while (ft_strncmp(buffer, end_of_input, ft_strlen(end_of_input) + 1) != 0)
 	{
-		aux = here_doc_expand(&aux);
-		str = ft_strjoin(str, aux);
-		str = ft_strjoin(str, "\n");
+		buffer = here_doc_expand(&buffer);
+		aux = ft_strjoin(str, buffer);
+		free(str);
+		str = ft_strjoin(aux, "\n");
 		free(aux);
-		aux = readline("> ");
+		free(buffer);
+		buffer = readline("> ");
 	}
-	free(aux);
+	free(buffer);
 	close(here_pipe[PIPE_RD]);
 	write(here_pipe[PIPE_WR], str, ft_strlen(str));
 	close(here_pipe[PIPE_WR]);
+	free(str);
 }
 
 int	here_doc(char *end_of_input)

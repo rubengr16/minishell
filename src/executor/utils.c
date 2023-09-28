@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:40:03 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 13:36:52 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/07 12:48:35 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,21 @@ int	is_builtin_on_parent(t_cmd	*cmd)
 			|| !ft_strncmp(cmd->cmd, "cd", 3)
 			|| !ft_strncmp(cmd->cmd, "unset", 6)
 			|| !ft_strncmp(cmd->cmd, "exit", 5)));
+}
+
+char	*ft_strjoinsep(char const *s1, char const *s2, char *c)
+{
+	int		len;
+	char	*s;
+
+	if (!s1 || !s2)
+		return (NULL);
+	len = ft_strlen(s1) + ft_strlen(s2) + 2;
+	s = malloc(sizeof(char) * (len));
+	if (!s)
+		return (NULL);
+	(void)ft_strlcpy(s, s1, len);
+	(void)ft_strlcat(s, c, len);
+	(void)ft_strlcat(s, s2, len);
+	return (s);
 }

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:23:23 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/17 16:29:26 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:13:21 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,20 @@ static void	update_pwd(char *prvs_pwd, char *current_pwd)
 	free(newpwd);
 }
 
-void	change_dir(char *path, char *old)
+static void	change_dir(char *path, char *old, unsigned int is_home)
 {
-	if (chdir(path))
+	if (!chdir(path) || !ft_strncmp(path, "", 1))
 	{
-		mini_error("cd", path, SYS_ERR, old);
-		errno = 1;
+		update_pwd(old, getcwd(NULL, 0));
+		g_sigenv.our_errno = 0;
 	}
 	else
 	{
-		update_pwd(old, getcwd(NULL, 0));
-		errno = 0;
+		mini_error("cd", path, SYS_ERR, old);
+		g_sigenv.our_errno = 1;
 	}
+	if (is_home)
+		free(path);
 }
 
 void	ft_cd(char **args)
@@ -58,9 +60,9 @@ void	ft_cd(char **args)
 		path = get_env("HOME");
 		if (!path && get_pos_vble("HOME"))
 			return ((void)mini_error("cd", NO_HOME_MSG, NO_HOME_ERR, old));
-		errno = 0;
+		g_sigenv.our_errno = 0;
 	}
 	else
 		path = args[1];
-	change_dir(path, old);
+	change_dir(path, old, len == 1);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/21 18:40:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/21 18:40:56 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:14:10 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,18 @@ int	get_pos_vble(char *name)
 
 char	*get_env(char *name)
 {
+	char			*vble;
 	int				pos;
 
 	if (!name)
 		return (NULL);
 	if (!ft_strncmp(name, "?", 1))
-		return (ft_itoa(errno));
+		return (ft_itoa(g_sigenv.our_errno));
 	pos = get_pos_vble(name);
 	if (pos < 0)
 		return (NULL);
-	return (ft_strchr(g_sigenv.envp[pos], '=') + 1);
+	vble = ft_strdup(ft_strchr(g_sigenv.envp[pos], '=') + 1);
+	if (!vble)
+		return (mini_error(NULL, NULL, SYS_ERR, NULL));
+	return (vble);
 }

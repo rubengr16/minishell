@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 22:03:21 by rgallego          #+#    #+#             */
-/*   Updated: 2023/06/14 22:03:23 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:20:08 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,9 @@
 # include <sys/types.h>
 # include <signal.h>
 # include <dirent.h>
-//# include "libft/libft.h"
+# include "global.h"
+# include "parser.h"
+# include "lexer.h"
+# include "executor.h"
 
-// Lista
-/*
-typedef struct s_node
-{
-
-}t_node;
-
-typedef struct command
-{
-	char	*name;
-	char	*path;
-	char	**redirectin;
-	char	**redirectout;
-};
-*/
 #endif

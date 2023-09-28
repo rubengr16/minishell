@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 20:34:37 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/16 23:18:04 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:14:05 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ void	ft_pwd(void)
 	pwd = getcwd(NULL, 0);
 	printf("%s\n", pwd);
 	free(pwd);
-	errno = 0;
+	g_sigenv.our_errno = 0;
 }

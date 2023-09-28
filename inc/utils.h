@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:55:34 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/21 16:29:12 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:12:04 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,11 @@
 # define TOO_MANY_ARGS_MSG "too many arguments"
 # define UNEXPECTED_TK_MSG "syntax error near unexpected token"
 # define UNCLOSED_Q_MSG "unclosed quotes found"
+# define FILE_ARG_REQ_MSG "filename argument required"
+# define FILE_ARG_REQ_2_MSG ".: usage: . filename [arguments]"
 # define EXEC_DENIED_MSG "permission denied"
-# define CMD_NOT_FOUND_MSG "command not found..."
+# define IS_DIR_MSG "Is a directory"
+# define CMD_NOT_FOUND_MSG "command not found"
 # define NOT_FILE_DIR "Not such file or directory"
 
 # define SYS_ERR -1
@@ -39,7 +42,9 @@
 # define TOO_MANY_ARGS_ERR 1
 # define UNEXPECTED_TK_ERR 2
 # define SYNTAX_ERR 2
+# define FILE_ARG_REQ_ERR 2
 # define EXEC_DENIED_ERR 126
+# define IS_DIR_ERR 126
 # define CMD_NOT_FOUND_ERR 127
 # define EXPORT_ERR -2
 

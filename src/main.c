@@ -6,33 +6,27 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 18:48:06 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/21 11:11:19 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:13:04 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "global.h"
-#include "parser.h"
-#include "lexer.h"
-#include "executor.h"
 
 t_global	g_sigenv;
 
-static char	*get_line(int safe_errno)
+static char	*get_line(void)
 {
 	char	*line;
 
 	line = readline("minishell$ ");
 	if (g_sigenv.signal == SIGINT)
-		errno = 1;
+		g_sigenv.our_errno = 1;
 	if (line && *line)
 		add_history(line);
-	if (g_sigenv.signal != SIGINT)
-		errno = safe_errno;
 	return (line);
 }
 
-char	*aux_func(char *line, t_token_list *list, t_cmd *cmd_list)
+static char	*aux_func(char *line, t_token_list *list, t_cmd *cmd_list)
 {
 	if (isstrspace(line))
 		free(line);
@@ -53,7 +47,7 @@ char	*aux_func(char *line, t_token_list *list, t_cmd *cmd_list)
 		signal(SIGINT, sig_normal);
 		signal(SIGQUIT, SIG_IGN);
 	}
-	return (get_line(errno));
+	return (get_line());
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -68,7 +62,7 @@ int	main(int argc, char **argv, char **envp)
 	g_sigenv.signal = 0;
 	signal(SIGINT, sig_normal);
 	signal(SIGQUIT, SIG_IGN);
-	line = get_line(errno);
+	line = get_line();
 	create_my_env(envp);
 	while (line)
 		line = aux_func(line, list, cmd_list);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:08:49 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/17 16:30:02 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/09/04 00:10:49 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,29 @@ static t_cmd	*manage_redir(t_cmd *cmd, t_token **token,
 	return (cmd);
 }
 
-static t_cmd	*manage_other(t_cmd *cmd, char **splitted_token, char *token)
+static t_cmd	*manage_other(t_cmd *cmd, t_token **token)
 {
-	unsigned int	split_len;
-	int				i;
+	char			**splitted_token;
+	unsigned int	i;
 
-	if (!splitted_token && ft_strlen(token))
+	(*token)->token = get_real_token((*token)->token, 0);
+	splitted_token = ft_split((*token)->token, TRANS_SPACE);
+	if (splitted_token && !splitted_token[0])
+		empty_token_split(&splitted_token);
+	if (!splitted_token)
 		return (mini_error(NULL, NULL, SYS_ERR, NULL));
-	split_len = len_char_double_ptr(splitted_token);
-	i = -1;
-	while ((i < 0 || splitted_token[i]) && splitted_token[++i])
-		splitted_token[i] = get_real_token(splitted_token[i], 0);
-	if ((0 <= i && !splitted_token[i] && (unsigned int)i < split_len))
-		return ((t_cmd *)free_double_char_ptr(splitted_token));
 	i = 0;
 	if (!cmd->cmd)
 		cmd->cmd = splitted_token[i];
-	while (0 <= i && splitted_token[i])
-	{
-		if (!add_to_char_double_ptr(&cmd->args, splitted_token[i]))
-			i = -2;
+	while (splitted_token[i]
+		&& add_to_char_double_ptr(&cmd->args, splitted_token[i]))
 		i++;
+	if (splitted_token[i] && !cmd->args[i])
+	{
+		free(splitted_token);
+		return (NULL);
 	}
 	free(splitted_token);
-	if (i < 0)
-		return (NULL);
 	return (cmd);
 }
 
@@ -80,9 +78,7 @@ static t_cmd	*get_cmd(t_cmd **cmd_list, t_cmd *cmd, t_token **token)
 	while (*token && cmd && type != PIPE)
 	{
 		if (type == OTHER)
-			cmd = manage_other(cmd,
-					ft_split((*token)->token, TRANS_SPACE),
-					(*token)->token);
+			cmd = manage_other(cmd, token);
 		if (type == R_IN || type == R_IN_HERE_DOC
 			|| type == R_OUT || type == R_OUT_APPEND)
 			cmd = manage_redir(cmd, token, type);

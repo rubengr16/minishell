@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 17:57:50 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/21 18:27:22 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:16:31 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void	*mini_error(char *s1, char *s2, int errcode, void *to_free)
 	if (s2 && errcode < 0)
 		ft_putstr_fd(": ", STDERR_FILENO);
 	if (0 < errcode)
-		errno = errcode;
+		g_sigenv.our_errno = errcode;
 	else
 	{
-		errno = errno;
+		g_sigenv.our_errno = errno;
 		ft_putstr_fd(strerror(errno), STDERR_FILENO);
 	}
 	ft_putchar_fd('\n', STDERR_FILENO);

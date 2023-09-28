@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   global.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 08:59:54 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/14 15:12:51 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/09/07 18:11:40 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 typedef struct s_global
 {
 	char	**envp;
+	int		our_errno;
 	int		signal;
 }	t_global;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: socana-b <socana-b@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 19:54:48 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/17 16:25:00 by socana-b         ###   ########.fr       */
+/*   Updated: 2023/09/04 18:46:23 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ typedef struct s_cmd
 
 /* ***************************** FUNC DECLARATION ************************** */
 /* --------------------------------- UTILS --------------------------------- */
-
 enum e_token_type	get_token_type(char *token);
-void				ft_strrepl(char *str, char old_char, char new_char);
+void				empty_token_split(char ***splitted_token);
+void				ft_strreplset(char *str, char *set, char new_char);
 /* --------------------------------- REDIR --------------------------------- */
 t_redir				*insert_to_redir_list(t_redir **list, char *file,
 						enum e_token_type type);

@@ -6,7 +6,7 @@
 /*   By: rgallego <rgallego@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/16 19:13:08 by rgallego          #+#    #+#             */
-/*   Updated: 2023/08/21 17:11:36 by rgallego         ###   ########.fr       */
+/*   Updated: 2023/09/05 19:54:39 by rgallego         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,24 +91,6 @@ void	*delete_token_list(t_token_list **list)
 	free(*list);
 	*list = NULL;
 	return (NULL);
-}
-
-// TODO: DELETE
-void	print_list(t_token_list *list)
-{
-	t_token	*aux;
-	int		i;
-
-	i = 1;
-	if (!list)
-		return ;
-	aux = list->start;
-	while (aux)
-	{
-		printf("Token %d: token = %s\n", i, aux->token);
-		i++;
-		aux = aux->next;
-	}
 }
 
 /**
